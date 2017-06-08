@@ -1,8 +1,8 @@
+/* eslint no-console: 0 */
 const ghpages = require('gh-pages');
-const path = require('path');
 const colors = require('colors');
 
-ghpages.publish('dist', function (err) {
+ghpages.publish('dist', (err) => {
   if (err) {
     console.log(err);
   }
