@@ -25,3 +25,9 @@ To build in production mode we can use:
 ```bash
 npm run build
 ```
+
+To publish in gh-pages (staging mode):
+
+```bash
+npm run publish
+```

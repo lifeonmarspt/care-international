@@ -7,7 +7,8 @@
     "build": "webpack --config ./webpack/production.js --colors --progress",
     "lint": "eslint --ext .js --ext .jsx .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run serve"
+    "start": "npm run serve",
+    "publish": "npm run build && node ./tasks/publish"
   },
   "repository": {
     "type": "git",
@@ -21,8 +22,10 @@
   },
   "homepage": "https://github.com/Vizzuality/care-international#readme",
   "devDependencies": {
+    "colors": "^1.1.2",
     "eslint": "^3.19.0",
-    "eslint-config-vizzuality": "^1.0.5"
+    "eslint-config-vizzuality": "^1.0.5",
+    "gh-pages": "^1.0.0"
   },
   "dependencies": {
     "autoprefixer": "^7.1.1",
