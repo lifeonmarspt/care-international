@@ -4,7 +4,8 @@ const colors = require('colors');
 
 ghpages.publish('dist', (err) => {
   if (err) {
-    console.log(err);
+    console.log(colors.red(err));
+  } else {
+    console.log(colors.green('Success! Application has been published correctly.'));
   }
-  console.log(colors.green('Success! Application has been published correctly.'));
 });
