@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/Vizzuality/care-international.svg?branch=develop)](https://travis-ci.org/Vizzuality/care-international)
 
+![CARE International Screenshot](screenshot.png)
+
 ## Installation
 
 Requirements:
