@@ -1,0 +1,89 @@
+@import "../../../styles/colors.sass"
+
+.bar__container
+
+.bar
+  background-color: white
+  margin-right: .5em
+
+.bar__current
+  display: block
+  position: relative
+  background-color: black
+  height: 100%
+  text-align: right
+
+.bar__label
+  display: block
+  padding: 10px
+  white-space: nowrap
+
+.bar__current__before
+  content: ""
+  top: 100%
+  right: 0%
+  width: 0px
+  height: 0px
+  border-top: 3px solid pink
+  border-left: 3px solid transparent
+  position: absolute
+
+.bar
+  height: 6px
+  width: 100px
+  display: inline-block
+  vertical-align: middle
+
+.overall.bar
+  background-color: $color-3
+.overall.bar
+  .bar__current
+    background-color: $color-accent-1
+.overall.bar
+  .bar__current__before
+    border-top-color: $color-accent-1
+
+.humanitarian.bar
+  background-color: $color-3
+.humanitarian.bar
+  .bar__current
+    background-color: $color-accent-2
+.humanitarian.bar
+  .bar__current__before
+    border-top-color: $color-accent-2
+
+.sex-health.bar
+  background-color: $color-3
+.sex-health.bar
+  .bar__current
+    background-color: $color-accent-4
+.sex-health.bar
+  .bar__current__before
+    border-top-color: $color-accent-4
+
+.life-violence.bar
+  background-color: $color-3
+.life-violence.bar
+  .bar__current
+    background-color: $color-accent-5
+.life-violence.bar
+  .bar__current__before
+    border-top-color: $color-accent-5
+
+.nutrition-security.bar
+  background-color: $color-3
+.nutrition-security.bar
+  .bar__current
+    background-color: $color-accent-6
+.nutrition-security.bar
+  .bar__current__before
+    border-top-color: $color-accent-6
+
+.women-econ.bar
+  background-color: $color-3
+.women-econ.bar
+  .bar__current
+    background-color: $color-accent-3
+.women-econ.bar
+  .bar__current__before
+    border-top-color: $color-accent-3

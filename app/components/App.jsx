@@ -1,15 +1,20 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
-import Map from "components/areas/Map";
-import Sidebar from "components/areas/Sidebar";
+import Layout from "components/Layout";
 
 class App extends React.Component {
 
   render() {
-    return (<div id="app">
-      <Sidebar />
-      <Map />
-    </div>);
+    return (<Router>
+      <Layout>
+        <Switch>
+          <Redirect from="/" to="/reach" />
+          <Route exact path="/reach" />
+          <Route exact path="/impact" />
+        </Switch>
+      </Layout>
+    </Router>);
   }
 }
 
