@@ -1,0 +1,33 @@
+@import "colors.sass"
+
+@mixin absolute-fills-container
+  position: absolute
+  top: 0
+  left: 0
+  bottom: 0
+  right: 0
+
+$sidebar-width: 20%
+
+body
+  width: 100%
+
+#app
+  @include absolute-fills-container
+
+  #sidebar
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    width: $sidebar-width
+
+  #map
+    position: absolute
+    top: 0
+    left: $sidebar-width
+    right: 0
+    bottom: 0
+
+    .leaflet-container
+      @include absolute-fills-container

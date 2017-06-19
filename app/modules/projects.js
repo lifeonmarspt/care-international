@@ -1,8 +1,8 @@
-import fetch from 'isomorphic-fetch';
+import fetch from "isomorphic-fetch";
 
-const FETCH_PROJECTS_SUCCESS = 'FETCH_PROJECTS_SUCCESS';
-const FETCH_PROJECTS_ERROR = 'FETCH_PROJECTS_ERROR';
-const FETCH_PROJECTS_LOADING = 'FETCH_PROJECTS_LOADING';
+const FETCH_PROJECTS_SUCCESS = "FETCH_PROJECTS_SUCCESS";
+const FETCH_PROJECTS_ERROR = "FETCH_PROJECTS_ERROR";
+const FETCH_PROJECTS_LOADING = "FETCH_PROJECTS_LOADING";
 
 const initialState = {
   data: {},
@@ -31,7 +31,7 @@ export function fetchProjects() {
     dispatch({ type: FETCH_PROJECTS_LOADING });
 
     fetch(`${process.env.OTP_API}/projects`, {
-      method: 'GET'
+      method: "GET"
     })
       .then((response) => {
         if (response.ok) return response.json();
