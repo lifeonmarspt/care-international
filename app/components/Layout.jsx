@@ -8,7 +8,9 @@ class Layout extends React.Component {
   render() {
     return (<div id="app">
       <Map />
-      <Sidebar />
+      <Sidebar>
+        {this.props.children}
+      </Sidebar>
     </div>);
   }
 }

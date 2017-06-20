@@ -11,10 +11,8 @@
     "classnames": "^2.2.5",
     "colors": "^1.1.2",
     "history": "^4.6.1",
-    "leaflet": "^1.0.3",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-leaflet": "^1.3.0",
     "react-router-dom": "^4.1.1",
     "resetcss": "^1.0.3"
   },

@@ -1,5 +1,5 @@
 import React from "react";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import config from "config.json";
 
 class MapArea extends React.Component {
 
@@ -12,18 +12,33 @@ class MapArea extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.map = window.L.map("map").setView([0, 0], 3);
+
+    // set a base layer
+    window.L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "Map data © <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors",
+    }).addTo(this.map);
+
+    // add the cartodb layer
+    let layerSource = {
+      user_name: config.cartodb.account,
+      type: "cartodb",
+      sublayers: [
+        {
+          sql: "select * from impact_data",
+          cartocss: "#layer { polygon-fill: #F00; polygon-opacity: 0.3; line-color: #F00; }",
+        },
+      ],
+    };
+
+    window.cartodb.createLayer(this.map, layerSource).addTo(this.map);
+
+  }
+
+
   render() {
-    const position = [this.state.lat, this.state.lng];
-    return (<div id="map">
-      <Map center={position} zoom={this.state.zoom}>
-        <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
-        <Marker position={position}>
-          <Popup>
-            <span>A pretty CSS3 popup. <br/> Easily customizable.</span>
-          </Popup>
-        </Marker>
-      </Map>
-    </div>);
+    return (<div id="map" />);
   }
 
 }

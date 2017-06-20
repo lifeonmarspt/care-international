@@ -1,54 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import RadioButton from "components/elements/radio";
-import Bar from "components/elements/bar";
+import RadioButton from "components/elements/Radio";
+import Bar from "components/elements/Bar";
 
 import imgCare from "images/care.png";
 import "./style.sass";
 
-const filters = [
-  {
-    name: "Humanitarian response",
-    values: {
-      direct: 11632688,
-      indirect: 28718596,
-    },
-    colorClass: "humanitarian",
-  },
-  {
-    name: "Women's economic empowerment",
-    values: {
-      direct: 2695688,
-      indirect: 14251779,
-    },
-    colorClass: "women-econ",
-  },
-  {
-    name: "The right to sexual, reproductive and maternal health",
-    values: {
-      direct: 50097850,
-      indirect: 59515215,
-    },
-    colorClass: "sex-health",
-  },
-  {
-    name: "Life Free from Violence",
-    values: {
-      direct: 1628130,
-      indirect: 8238240,
-    },
-    colorClass: "life-violence",
-  },
-  {
-    name: "Food and nutrition security and climate change resilience",
-    values: {
-      direct: 28662424,
-      indirect: 33632878,
-    },
-    colorClass: "nutrition-security",
-  },
-];
+import filters from "resources/mock/reach.json";
 
 class SidebarArea extends React.Component {
 
@@ -100,7 +59,6 @@ class SidebarArea extends React.Component {
 
       <div className="filters">
         <h1>Filter by outcome</h1>
-
         <ul>
           {filters.map((filter, n) => (<li key={n}>
             <RadioButton id={`radio-${n}`} name="outcome-filter">{filter.name}</RadioButton>

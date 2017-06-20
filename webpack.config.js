@@ -14,7 +14,10 @@ const basePlugins = [
   new VirtualModulePlugin({
     moduleName: "app/config.json",
     contents: {
-      derp: 123,
+      cartodb: {
+        account: process.env.CARTODB_ACCOUNT,
+        apikey: process.env.CARTODB_API_KEY,
+      },
     },
   }),
 ];
