@@ -1,0 +1,29 @@
+@import "../../../styles/colors.sass"
+
+.custom-radio
+  display: flex
+  align-items: center
+
+  input[type="radio"]
+    display: none
+
+  label
+    color: $color-6
+    display: inline-block
+    margin-left: 5px
+    cursor: pointer
+
+  div.fake-radio
+    display: inline-block
+    width: 14px
+    min-width: 14px
+    height: 14px
+    border-radius: 50%
+    border: 1px solid $color-6
+    background-color: transparent
+    vertical-align: middle
+    cursor: pointer
+
+
+  input[type="radio"]:checked + div.fake-radio
+    background-color: $color-6

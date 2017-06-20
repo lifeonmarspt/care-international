@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+import RadioButton from "components/elements/radio";
 import Bar from "components/elements/bar";
 
 import imgCare from "images/care.png";
@@ -102,8 +103,7 @@ class SidebarArea extends React.Component {
 
         <ul>
           {filters.map((filter, n) => (<li key={n}>
-            <input id={`filter-outcome-${n}`} type="radio" />
-            <label htmlFor={`filter-outcome-${n}`}>{filter.name}</label>
+            <RadioButton id={`radio-${n}`} name="outcome-filter">{filter.name}</RadioButton>
             <Bar value={filter.values.direct}
               maxValue={filter.values.direct*3}
               colorClass={filter.colorClass}>
