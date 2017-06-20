@@ -2,6 +2,9 @@
   "name": "care-international",
   "description": "Map based visualization that explores projects, initiatives and stories.",
   "version": "1.0.0",
+  "engines": {
+    "node": "7.9.0"
+  },
   "author": "Vizzuality",
   "bugs": {
     "url": "https://github.com/Vizzuality/care-international/issues"
@@ -14,7 +17,8 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router-dom": "^4.1.1",
-    "resetcss": "^1.0.3"
+    "resetcss": "^1.0.3",
+    "squel": "^5.10.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.1",

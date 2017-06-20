@@ -1,8 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
 import RadioButton from "components/elements/Radio";
-import Bar from "components/elements/Bar";
+import PercentageBar from "components/elements/PercentageBar";
+import ValueBar from "components/elements/ValueBar";
 
 import imgCare from "images/care.png";
 import "./style.sass";
@@ -10,6 +12,14 @@ import "./style.sass";
 import filters from "resources/mock/reach.json";
 
 class SidebarArea extends React.Component {
+
+  static propTypes = {
+    reach: PropTypes.bool,
+    impact: PropTypes.bool,
+    region: PropTypes.string,
+    country: PropTypes.string,
+    data: PropTypes.object.isRequired,
+  };
 
   render() {
     return (<div id="sidebar">
@@ -36,21 +46,23 @@ class SidebarArea extends React.Component {
       <div className="content">
         <dl>
           <dt>Projects and Initiatives</dt>
-          <dd>1044</dd>
+          <dd>{this.props.data.sum_num_projects_and_initiatives.toLocaleString()}</dd>
           <dt>Participants reached</dt>
           <dd>
             <ul>
               <li>
                 <div>Direct (?)</div>
-                <Bar value={30} maxValue={100} label="42% of women">
-                  123456789
-                </Bar>
+                <PercentageBar value={this.props.data.sum_women_total_direct_particip}
+                  maxValue={this.props.data.sum_total_num_direct_participants}>
+                  {this.props.data.sum_total_num_direct_participants.toLocaleString()}
+                </PercentageBar>
               </li>
               <li>
                 <div>Indirect (?)</div>
-                <Bar value={90} maxValue={100} label="38% of women">
-                  123456789
-                </Bar>
+                <PercentageBar value={this.props.data.sum_women_total_indirect_particip}
+                  maxValue={this.props.data.sum_total_num_indirect_participants}>
+                  {this.props.data.sum_total_num_indirect_participants.toLocaleString()}
+                </PercentageBar>
               </li>
             </ul>
           </dd>
@@ -62,20 +74,21 @@ class SidebarArea extends React.Component {
         <ul>
           {filters.map((filter, n) => (<li key={n}>
             <RadioButton id={`radio-${n}`} name="outcome-filter">{filter.name}</RadioButton>
-            <Bar value={filter.values.direct}
+            <ValueBar value={filter.values.direct}
               maxValue={filter.values.direct*3}
-              colorClass={filter.colorClass}>
+              colorClass={filter.id}>
               {filter.values.direct.toLocaleString()} direct
-            </Bar>
-            <Bar value={filter.values.indirect}
+            </ValueBar>
+            <ValueBar value={filter.values.indirect}
               maxValue={filter.values.indirect*1.4}
-              colorClass={filter.colorClass}>
+              colorClass={filter.id}>
               {filter.values.indirect.toLocaleString()} indirect
-            </Bar>
+            </ValueBar>
           </li>))}
         </ul>
       </div>
     </div>);
+
   }
 
 }
