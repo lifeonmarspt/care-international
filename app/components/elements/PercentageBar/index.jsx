@@ -7,14 +7,9 @@ import "./style.sass";
 class PercentageBar extends React.Component {
 
   static propTypes = {
-    colorClass: PropTypes.string,
-    label: PropTypes.string,
+    colorClass: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
     maxValue: PropTypes.number.isRequired,
-  };
-
-  static defaultProps = {
-    colorClass: "overall",
   };
 
   render() {
@@ -31,7 +26,7 @@ class PercentageBar extends React.Component {
       <span className={barClasses}>
         <span className="percentagebar__current" style={styles.current}>
           <span className="percentagebar__label">
-            {percentage}
+            {percentage} women
           </span>
         </span>
       </span>

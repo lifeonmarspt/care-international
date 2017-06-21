@@ -7,14 +7,9 @@ import "./style.sass";
 class ValueBar extends React.Component {
 
   static propTypes = {
-    colorClass: PropTypes.string,
-    label: PropTypes.string,
+    colorClass: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
     maxValue: PropTypes.number.isRequired,
-  };
-
-  static defaultProps = {
-    colorClass: "overall",
   };
 
   render() {

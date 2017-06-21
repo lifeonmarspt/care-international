@@ -15,11 +15,6 @@ class App extends React.Component {
     country: PropTypes.string,
   };
 
-  constructor(...args) {
-    super(...args);
-
-  }
-
   render() {
     return (<div id="app">
       <Header />

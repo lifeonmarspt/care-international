@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import RadioButton from "components/elements/Radio";
+import BarWrapper from "components/elements/BarWrapper";
 import PercentageBar from "components/elements/PercentageBar";
 import ValueBar from "components/elements/ValueBar";
 
 import "./style.sass";
 
 import meta from "resources/meta.json";
+
 
 class SidebarArea extends React.Component {
 
@@ -24,8 +26,6 @@ class SidebarArea extends React.Component {
 
     let { reach, impact, region, country, data } = this.context;
 
-
-
     return (<div id="sidebar">
 
       {(region || country) && (<div className="breadcrumbs">
@@ -39,23 +39,21 @@ class SidebarArea extends React.Component {
       <div className="content">
         <dl>
           <dt>Projects and Initiatives</dt>
-          <dd>{data.sum_num_projects_and_initiatives.toLocaleString()}</dd>
+          <dd>{(data.sum_num_projects_and_initiatives || 0).toLocaleString()}</dd>
           <dt>Participants reached</dt>
           <dd>
             <ul>
               <li>
                 <div>Direct (?)</div>
-                <PercentageBar value={data.sum_women_total_direct_particip}
-                  maxValue={data.sum_total_num_direct_participants}>
-                  {data.sum_total_num_direct_participants.toLocaleString()}
-                </PercentageBar>
+                <BarWrapper bar={PercentageBar}
+                  value={data.sum_women_total_direct_particip}
+                  maxValue={data.sum_total_num_direct_participants} />
               </li>
               <li>
                 <div>Indirect (?)</div>
-                <PercentageBar value={data.sum_women_total_indirect_particip}
-                  maxValue={data.sum_total_num_indirect_participants}>
-                  {data.sum_total_num_indirect_participants.toLocaleString()}
-                </PercentageBar>
+                <BarWrapper bar={PercentageBar}
+                  value={data.sum_women_total_indirect_particip}
+                  maxValue={data.sum_total_num_indirect_participants} />
               </li>
             </ul>
           </dd>
@@ -73,16 +71,16 @@ class SidebarArea extends React.Component {
 
             return (<li key={n}>
               <RadioButton id={`radio-${n}`} name="outcome-filter">{variable.name}</RadioButton>
-              <ValueBar value={directValue}
+              <BarWrapper bar={ValueBar}
+                value={directValue}
                 maxValue={maxValue}
-                colorClass={variable.id}>
-                {directValue.toLocaleString()} direct
-              </ValueBar>
-              <ValueBar value={indirectValue}
+                colorClass={variable.id}
+                formatter={(v) => `${v.toLocaleString()} direct`} />
+              <BarWrapper bar={ValueBar}
+                value={indirectValue}
                 maxValue={maxValue}
-                colorClass={variable.id}>
-                {indirectValue.toLocaleString()} indirect
-              </ValueBar>
+                colorClass={variable.id}
+                formatter={(v) => `${v.toLocaleString()} indirect`} />
             </li>);
 
           })}
@@ -93,5 +91,6 @@ class SidebarArea extends React.Component {
   }
 
 }
+
 
 export default SidebarArea;
