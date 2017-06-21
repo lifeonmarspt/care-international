@@ -17,7 +17,7 @@ nginx configuration. Check the repo for details on its syntax. Sample file:
     {
       "root": "dist/",
       "routes": {
-        "/*": "index.html"
+        "/**": "index.html"
       }
     }
 
