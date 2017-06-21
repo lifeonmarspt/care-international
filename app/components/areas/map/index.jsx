@@ -1,4 +1,5 @@
 import React from "react";
+
 import config from "config.json";
 
 class MapArea extends React.Component {

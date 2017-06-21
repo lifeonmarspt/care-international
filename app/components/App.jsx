@@ -5,6 +5,8 @@ import Squel from "squel";
 import Map from "components/areas/map";
 import Sidebar from "components/areas/sidebar";
 
+import config from "config.json";
+
 window.Squel = Squel;
 
 class App extends React.Component {
@@ -25,7 +27,7 @@ class App extends React.Component {
     };
 
     // eslint-disable-next-line
-    this.cartoSQL = window.cartodb.SQL({ user: "hugopeixoto" }, { https: true });
+    this.cartoSQL = window.cartodb.SQL({ user: config.cartodb.account, sql_api_template: "https://{user}.cartodb.com" });
   }
 
   componentWillMount() {
@@ -54,7 +56,7 @@ class App extends React.Component {
           loading: false,
           data: result.rows[0],
         });
-      })
+      });
   }
 
   render() {

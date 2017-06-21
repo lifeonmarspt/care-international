@@ -9,7 +9,7 @@ import ValueBar from "components/elements/ValueBar";
 import imgCare from "images/care.png";
 import "./style.sass";
 
-import filters from "resources/mock/reach.json";
+import meta from "resources/meta.json";
 
 class SidebarArea extends React.Component {
 
@@ -72,19 +72,27 @@ class SidebarArea extends React.Component {
       <div className="filters">
         <h1>Filter by outcome</h1>
         <ul>
-          {filters.map((filter, n) => (<li key={n}>
-            <RadioButton id={`radio-${n}`} name="outcome-filter">{filter.name}</RadioButton>
-            <ValueBar value={filter.values.direct}
-              maxValue={filter.values.direct*3}
-              colorClass={filter.id}>
-              {filter.values.direct.toLocaleString()} direct
-            </ValueBar>
-            <ValueBar value={filter.values.indirect}
-              maxValue={filter.values.indirect*1.4}
-              colorClass={filter.id}>
-              {filter.values.indirect.toLocaleString()} indirect
-            </ValueBar>
-          </li>))}
+          {meta.variables.map((variable, n) => {
+
+            let directValue = this.props.data[`sum_num_${variable.id}_direct_particip`];
+            let indirectValue = this.props.data[`sum_num_${variable.id}_indirect_particip`];
+            let maxValue = directValue + indirectValue;
+
+            return (<li key={n}>
+              <RadioButton id={`radio-${n}`} name="outcome-filter">{variable.name}</RadioButton>
+              <ValueBar value={directValue}
+                maxValue={maxValue}
+                colorClass={variable.id}>
+                {directValue.toLocaleString()} direct
+              </ValueBar>
+              <ValueBar value={indirectValue}
+                maxValue={maxValue}
+                colorClass={variable.id}>
+                {indirectValue.toLocaleString()} indirect
+              </ValueBar>
+            </li>);
+
+          })}
         </ul>
       </div>
     </div>);
