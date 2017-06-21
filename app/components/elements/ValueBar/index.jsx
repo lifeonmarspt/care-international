@@ -20,7 +20,7 @@ class ValueBar extends React.Component {
   render() {
     let styles = {
       current: {
-        width: (100 * this.props.value / this.props.maxValue)  + "%",
+        width: (100 * this.props.value / (this.props.maxValue || 1))  + "%",
       },
     };
 

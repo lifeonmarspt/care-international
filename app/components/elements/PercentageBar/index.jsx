@@ -18,20 +18,21 @@ class PercentageBar extends React.Component {
   };
 
   render() {
+    let percentage = Math.round(100 * this.props.value / (this.props.maxValue || 1)) + "%";
     let styles = {
       current: {
-        width: (100 * this.props.value / this.props.maxValue)  + "%",
+        width: percentage,
       },
     };
+    console.log(this.props.value, this.props.maxValue);
 
     let barClasses = classNames(["percentagebar", this.props.colorClass]);
-    let percentage = Math.round(100 * this.props.value / this.props.maxValue);
 
     return (<div className="percentagebar__container">
       <span className={barClasses}>
         <span className="percentagebar__current" style={styles.current}>
           <span className="percentagebar__label">
-            {percentage}%
+            {percentage}
           </span>
         </span>
       </span>
