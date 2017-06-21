@@ -25,7 +25,7 @@ class App extends React.Component {
     };
 
     // eslint-disable-next-line
-    this.cartoSQL = window.cartodb.SQL({ user: "hugopeixoto" });
+    this.cartoSQL = window.cartodb.SQL({ user: "hugopeixoto" }, { https: true });
   }
 
   componentWillMount() {

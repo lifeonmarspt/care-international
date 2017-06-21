@@ -16,7 +16,7 @@ class MapArea extends React.Component {
     this.map = window.L.map("map").setView([0, 0], 3);
 
     // set a base layer
-    window.L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "Map data © <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors",
     }).addTo(this.map);
 
@@ -32,7 +32,9 @@ class MapArea extends React.Component {
       ],
     };
 
-    window.cartodb.createLayer(this.map, layerSource).addTo(this.map);
+    window.cartodb.createLayer(this.map, layerSource, {
+      https: true,
+    }).addTo(this.map);
 
   }
 
