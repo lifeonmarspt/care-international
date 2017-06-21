@@ -17,6 +17,10 @@ class DataProvider extends React.Component {
 
   static childContextTypes = {
     data: PropTypes.object,
+    reach: PropTypes.bool,
+    impact: PropTypes.bool,
+    region: PropTypes.string,
+    country: PropTypes.string,
   }
 
   constructor(...args) {
@@ -34,6 +38,10 @@ class DataProvider extends React.Component {
   getChildContext() {
     return {
       data: this.state.data,
+      reach: this.state.reach,
+      impact: this.state.impact,
+      region: this.state.region,
+      country: this.state.country,
     };
   }
 
@@ -65,8 +73,12 @@ class DataProvider extends React.Component {
     this.cartoSQL.execute(query.toString())
       .done((result) => {
         this.setState({
-          loading: false,
           data: result.rows[0],
+          reach: this.props.reach,
+          impact: this.props.impact,
+          region: this.props.region,
+          country: this.props.country,
+          loading: false,
         });
       });
   }
@@ -77,7 +89,7 @@ class DataProvider extends React.Component {
 
   componentWillReceiveProps() {
     this.setState({
-      loading: true,
+      loading: false,
     }, () => {
       this.fetchRemoteData();
     });

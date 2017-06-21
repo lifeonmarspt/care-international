@@ -24,7 +24,6 @@ class PercentageBar extends React.Component {
         width: percentage,
       },
     };
-    console.log(this.props.value, this.props.maxValue);
 
     let barClasses = classNames(["percentagebar", this.props.colorClass]);
 
