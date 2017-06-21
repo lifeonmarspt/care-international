@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Header from "components/areas/Header";
 import Map from "components/areas/Map";
 import Sidebar from "components/areas/Sidebar";
-import Data from "providers/Data";
+import Data from "components/providers/Data";
 
 class App extends React.Component {
 
@@ -18,16 +18,14 @@ class App extends React.Component {
   constructor(...args) {
     super(...args);
 
-
   }
-
 
   render() {
     return (<div id="app">
       <Header />
-      <Data>
+      <Data {...this.props}>
         <Map />
-        <Sidebar {...this.props} data={this.state.data} />
+        <Sidebar {...this.props} />
       </Data>
     </div>);
   }

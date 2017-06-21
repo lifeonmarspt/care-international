@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import config from "config.json";
 
@@ -11,6 +12,10 @@ class MapArea extends React.Component {
       lng: -0.09,
       zoom: 13,
     };
+  }
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired,
   }
 
   componentDidMount() {
@@ -27,15 +32,29 @@ class MapArea extends React.Component {
       type: "cartodb",
       sublayers: [
         {
-          sql: "select * from impact_data",
+          sql: "select * from reach_data",
           cartocss: "#layer { polygon-fill: #F00; polygon-opacity: 0.3; line-color: #F00; }",
+          interactivity: "country, region",
         },
       ],
     };
 
     window.cartodb.createLayer(this.map, layerSource, {
       https: true,
-    }).addTo(this.map);
+    }).addTo(this.map).on('done', (layer) => {
+
+      let subLayer = layer.getSubLayer(0);
+      subLayer.setInteraction(true);
+
+      subLayer.on('featureClick', (e, latlng, pos, data, layer) => {
+        let url = "/reach/" + encodeURIComponent(data.country);
+        this.context.router.history.push(url);
+      });
+
+    }).on('error', (err) => {
+      console.error("some error occurred: " + err);
+    });
+;
 
   }
 

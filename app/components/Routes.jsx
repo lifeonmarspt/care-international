@@ -10,8 +10,7 @@ class Routes extends React.Component {
       <Switch>
         <Redirect exact from="/" to="/reach" />
         <Route exact path="/reach" component={() => <App reach />} />
-        <Route exact path="/reach/:region" component={({ match }) => <App reach region={match.params.region} />} />
-        <Route exact path="/reach/:region/:country" component={({ match }) => <App reach region={match.params.region} country={match.params.country} />} />
+        <Route exact path="/reach/:country" component={({ match }) => <App reach country={match.params.country} />} />
         <Route exact path="/impact" component={() => <App impact />} />
         <Route exact path="/impact/:region" component={({ match }) => <App impact region={match.params.region} />} />
         <Route exact path="/impact/:region/:country" component={({ match }) => <App impact region={match.params.region} country={match.params.country} />} />

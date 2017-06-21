@@ -16,6 +16,7 @@ class DataProvider extends React.Component {
     super(...args);
 
     this.state = {
+      loading: true,
       data: {},
     };
 
@@ -59,7 +60,11 @@ class DataProvider extends React.Component {
   }
 
   render() {
-    return !this.state.loading && this.props.children;
+    if (this.state.loading) {
+      return (<h1>lodin</h1>);
+    }
+
+    return (<div>{this.props.children}</div>);
   }
 
 }

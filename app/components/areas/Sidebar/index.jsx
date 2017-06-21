@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import RadioButton from "components/elements/Radio";
 import PercentageBar from "components/elements/PercentageBar";
@@ -16,35 +17,42 @@ class SidebarArea extends React.Component {
     impact: PropTypes.bool,
     region: PropTypes.string,
     country: PropTypes.string,
-    data: PropTypes.object.isRequired,
+  };
+
+  static contextTypes = {
+    data: PropTypes.object,
   };
 
   render() {
     return (<div id="sidebar">
 
-      <div className="breadcrumbs">
-        World
-      </div>
+      {(this.props.region || this.props.country) && (<div className="breadcrumbs">
+        <ul>
+          <li><Link to="/reach">World</Link></li>
+          {this.props.region && (<li>{this.props.region}</li>)}
+          {this.props.country && (<li>{this.props.country}</li>)}
+        </ul>
+      </div>)}
 
       <div className="content">
         <dl>
           <dt>Projects and Initiatives</dt>
-          <dd>{this.props.data.sum_num_projects_and_initiatives.toLocaleString()}</dd>
+          <dd>{this.context.data.sum_num_projects_and_initiatives.toLocaleString()}</dd>
           <dt>Participants reached</dt>
           <dd>
             <ul>
               <li>
                 <div>Direct (?)</div>
-                <PercentageBar value={this.props.data.sum_women_total_direct_particip}
-                  maxValue={this.props.data.sum_total_num_direct_participants}>
-                  {this.props.data.sum_total_num_direct_participants.toLocaleString()}
+                <PercentageBar value={this.context.data.sum_women_total_direct_particip}
+                  maxValue={this.context.data.sum_total_num_direct_participants}>
+                  {this.context.data.sum_total_num_direct_participants.toLocaleString()}
                 </PercentageBar>
               </li>
               <li>
                 <div>Indirect (?)</div>
-                <PercentageBar value={this.props.data.sum_women_total_indirect_particip}
-                  maxValue={this.props.data.sum_total_num_indirect_participants}>
-                  {this.props.data.sum_total_num_indirect_participants.toLocaleString()}
+                <PercentageBar value={this.context.data.sum_women_total_indirect_particip}
+                  maxValue={this.context.data.sum_total_num_indirect_participants}>
+                  {this.context.data.sum_total_num_indirect_participants.toLocaleString()}
                 </PercentageBar>
               </li>
             </ul>
@@ -57,8 +65,8 @@ class SidebarArea extends React.Component {
         <ul>
           {meta.variables.map((variable, n) => {
 
-            let directValue = this.props.data[`sum_num_${variable.id}_direct_particip`];
-            let indirectValue = this.props.data[`sum_num_${variable.id}_indirect_particip`];
+            let directValue = this.context.data[`sum_num_${variable.id}_direct_particip`];
+            let indirectValue = this.context.data[`sum_num_${variable.id}_indirect_particip`];
             let maxValue = directValue + indirectValue;
 
             return (<li key={n}>

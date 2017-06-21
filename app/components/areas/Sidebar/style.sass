@@ -19,8 +19,24 @@
   .breadcrumbs, .content, .filters
     padding: 4% 8% 4% 8%
 
-  .breadcrumbs, .content
-    background-color: $bg-color-1
+  .breadcrumbs
+    text-transform: uppercase
+    background-color: $bg-color-3
+    color: $font-color-1
+
+    a
+      color: $font-color-3
+
+    ul
+      display: flex
+      flex-direction: row
+
+      li + li
+        margin-left: .5em
+
+      li + li::before
+        margin-right: .5em
+        content: "-"
 
   .content
     dl
