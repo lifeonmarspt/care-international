@@ -1,0 +1,39 @@
+@import "../../../styles/colors.sass"
+@import "../../../styles/values.sass"
+
+#header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  background-color: $bg-color-2
+
+  div.menu
+    height: 100%
+
+    ul
+      height: 100%
+      display: flex
+      align-items: flex-start
+
+      li
+        height: 100%
+        margin-left: 40px
+
+    a
+      display: flex
+      align-items: center
+      height: 100%
+      box-sizing: border-box
+      color: $font-color-2
+      border-bottom: 4px solid transparent
+      text-transform: uppercase
+
+    a.active
+      color: $font-color-2
+      border-bottom: 4px solid $accent-color-1
+
+
+  div.logo
+    img
+      height: 30px
+      margin-right: 40px

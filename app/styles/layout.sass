@@ -1,13 +1,6 @@
 @import "colors.sass"
 @import "values.sass"
-
-@mixin absolute-fills-container
-  position: absolute
-  top: 0
-  left: 0
-  bottom: 0
-  right: 0
-
+@import "mixins.sass"
 
 body
   width: 100%
@@ -15,12 +8,26 @@ body
 #app
   @include absolute-fills-container
 
+  #header
+    width: 100%
+    height: $header-height
+    top: 0
+    left: 0
+    right: 0
+
   #map
     position: absolute
-    top: 0
+    top: $header-height
     left: $sidebar-width
     right: 0
     bottom: 0
 
     .leaflet-container
       @include absolute-fills-container
+
+  #sidebar
+    position: absolute
+    top: $header-height
+    left: 0
+    bottom: 0
+    width: $sidebar-width

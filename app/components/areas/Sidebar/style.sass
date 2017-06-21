@@ -1,19 +1,8 @@
 @import "../../../styles/colors.sass"
 @import "../../../styles/values.sass"
 
-
 #sidebar
-  position: absolute
-  top: 0
-  left: 0
-  bottom: 0
-  width: $sidebar-width
-
-
-  .logo
-    text-align: center
-    img
-      width: 120px
+  overflow-y: auto
 
   .menu
     ul
@@ -27,20 +16,11 @@
         flex-grow: 1
         width: 20%
 
-    a
-      display: block
-      width: 100%
-      height: 2em
-      color: $color-4
-
-    a.active
-      border-bottom: 2px solid $color-accent-1
-
   .breadcrumbs, .content, .filters
     padding: 4% 8% 4% 8%
 
   .breadcrumbs, .content
-    background-color: $color-2
+    background-color: $bg-color-1
 
   .content
     dl

@@ -1,12 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
 
 import RadioButton from "components/elements/Radio";
 import PercentageBar from "components/elements/PercentageBar";
 import ValueBar from "components/elements/ValueBar";
 
-import imgCare from "images/care.png";
 import "./style.sass";
 
 import meta from "resources/meta.json";
@@ -23,21 +21,6 @@ class SidebarArea extends React.Component {
 
   render() {
     return (<div id="sidebar">
-
-      <div className="logo">
-        <img alt="care" src={imgCare} />
-      </div>
-
-      <div className="menu">
-        <ul className="menu">
-          <li>
-            <NavLink to="/reach" activeClassName="active">reach</NavLink>
-          </li>
-          <li>
-            <NavLink to="/impact" activeClassName="active">impact</NavLink>
-          </li>
-        </ul>
-      </div>
 
       <div className="breadcrumbs">
         World
