@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import "./style.sass";
 import config from "config.json";
 
 class MapArea extends React.Component {
@@ -41,17 +42,25 @@ class MapArea extends React.Component {
 
     window.cartodb.createLayer(this.map, layerSource, {
       https: true,
-    }).addTo(this.map).on('done', (layer) => {
+    }).addTo(this.map).on("done", (layer) => {
 
       let subLayer = layer.getSubLayer(0);
       subLayer.setInteraction(true);
 
-      subLayer.on('featureClick', (e, latlng, pos, data, layer) => {
+      subLayer.on("featureClick", (e, latlng, pos, data, layer) => {
         let url = "/reach/" + encodeURIComponent(data.country);
         this.context.router.history.push(url);
       });
 
-    }).on('error', (err) => {
+      subLayer.on('featureOver', (e, latlng, pos, data, subLayerIndex) => {
+        document.getElementById("map").classList.add("clickable");
+      });
+
+      subLayer.on("featureOut", (e, latlng, pos, data, subLayerIndex) => {
+        document.getElementById("map").classList.remove("clickable");
+      });
+
+    }).on("error", (err) => {
       console.error("some error occurred: " + err);
     });
 ;
