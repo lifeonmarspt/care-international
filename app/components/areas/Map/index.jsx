@@ -1,23 +1,35 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import Squel from "squel";
 
+import humanize from "lib/humanize";
 import range from "lib/range";
 import config from "config.json";
 
 import "./style.sass";
 
-const buckets = 7;
+const numBuckets = 5;
+const mainColor = (opacity = 1) => `rgba(18, 158, 173, ${opacity})`;
+
 
 class MapArea extends React.Component {
 
   constructor(...args) {
     super(...args);
+
     this.state = {
       lat: 51.505,
       lng: -0.09,
       zoom: 13,
+      buckets: [],
     };
+
+    // eslint-disable-next-line
+    this.cartoSQL = window.cartodb.SQL({
+      user: config.cartodb.account,
+      sql_api_template: "https://{user}.cartodb.com",
+    });
   }
 
   static contextTypes = {
@@ -27,7 +39,7 @@ class MapArea extends React.Component {
   getSQL() {
     let fields = [
       "*",
-      `NTILE(${buckets}) OVER(ORDER BY total_num_direct_participants + total_num_indirect_participants) AS bucket`,
+      `NTILE(${numBuckets}) OVER(ORDER BY total_num_direct_participants + total_num_indirect_participants) AS bucket`,
     ];
     let query = Squel.select().fields(fields).from("reach_data");
 
@@ -35,20 +47,19 @@ class MapArea extends React.Component {
   }
 
   getCartoCSS() {
-    const main = "#129EAD";
-    return range(1, buckets)
+    return range(1, numBuckets)
       .map((n) => `
         #layer[bucket=${n}] {
-          polygon-fill: ${main};
-          polygon-opacity: ${n/buckets};
-          line-color: ${main};
+          polygon-fill: ${mainColor()};
+          polygon-opacity: ${n/numBuckets};
+          line-color: ${mainColor()};
         }
       `)
       .join(" ");
   }
 
   componentDidMount() {
-    this.map = window.L.map("map").setView([0, 0], 3);
+    this.map = window.L.map("leaflet").setView([0, 0], 3);
 
     // set a base layer
     window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -92,10 +103,45 @@ class MapArea extends React.Component {
       console.error("some error occurred: " + err);
     });
 
+    let query = `WITH buckets as (
+      SELECT NTILE(${numBuckets}) OVER(ORDER BY total_num_direct_participants + total_num_indirect_participants) AS position, total_num_direct_participants + total_num_indirect_participants as total_participants
+      FROM reach_data
+    )
+    SELECT buckets.position, MIN(buckets.total_participants) AS min, MAX(buckets.total_participants) AS max
+    FROM buckets
+    GROUP BY position
+    ORDER BY position`;
+
+    this.cartoSQL.execute(query)
+      .done((result) => {
+        this.setState({
+          buckets: result.rows,
+        });
+      });
+
+
   }
 
   render() {
-    return (<div id="map" />);
+    return (
+      <div id="map">
+        <div id="leaflet" />
+        <div id="legend">
+          <Link to="#">Show Regions</Link>
+          <p>Participants reached by country</p>
+          <ul>
+            {this.state.buckets.map((bucket, n) => {
+              let liStyle = {
+                backgroundColor: mainColor((n+1) / numBuckets),
+              };
+              return (<li key={n} style={liStyle}>
+                <span>{humanize(bucket.max)}</span>
+              </li>);
+            })}
+          </ul>
+        </div>
+      </div>
+    );
   }
 
 }

@@ -1,3 +1,51 @@
+@import "../../../styles/colors.sass"
+@import "../../../styles/values.sass"
+
 #map
-  &.clickable
-    cursor: pointer
+
+  #leaflet
+    &.clickable
+      cursor: pointer
+
+    .leaflet-control-attribution
+      display: none
+
+  #legend
+    position: absolute
+    bottom: 20px
+    right: 20px
+    background-color: white
+    border: 1px solid black
+    padding: 1em 1.5em
+
+    ul
+      position: relative
+      display: flex
+      align-items: flex-start
+
+      li
+        height: 10px
+        width: 50px
+        margin-bottom: 1em
+
+        span
+          position: relative
+          top: 2px
+          left: 25px
+          display: block
+          width: 50px
+          text-align: center
+
+      &::before
+        content: "0"
+        position: absolute
+        top: 19px
+        left: -24px
+        display: block
+        width: 50px
+        text-align: center
+
+      li::before, &::after
+        content: ""
+        height: 15px
+        border-left: 1px solid black
