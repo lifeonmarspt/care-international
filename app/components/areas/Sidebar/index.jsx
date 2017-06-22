@@ -23,7 +23,7 @@ class SidebarArea extends React.Component {
     country: PropTypes.string,
   };
 
-  handleFilterClick(variable) {
+  handleFilterChange(variable) {
     let qs = queryString.stringify({
       outcome: variable,
     });
@@ -119,7 +119,7 @@ class SidebarArea extends React.Component {
                 id={`radio-${n}`}
                 name="outcome-filter"
                 checked={qs.outcome === variable.id}
-                onClick={this.handleFilterClick.bind(this, variable.id)}>
+                onChange={this.handleFilterChange.bind(this, variable.id)}>
                 {variable.label}
               </RadioButton>
               <BarWrapper bar={ValueBar}

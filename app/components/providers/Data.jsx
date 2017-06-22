@@ -36,7 +36,7 @@ class DataProvider extends React.Component {
     // eslint-disable-next-line
     this.cartoSQL = window.cartodb.SQL({
       user: config.cartodb.account,
-      sql_api_template: "https://{user}.cartodb.com"
+      sql_api_template: "https://{user}.cartodb.com",
     });
   }
 
