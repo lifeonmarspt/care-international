@@ -1,24 +1,26 @@
 {
-  "variables": [
-    {
-      "id": "hum",
-      "name": "Humanitarian response"
-    },
-    {
-      "id": "wee",
-      "name": "Women's economic empowerment"
-    },
-    {
-      "id": "srmh",
-      "name": "The right to sexual, reproductive and maternal health"
-    },
-    {
-      "id": "lffv",
-      "name": "Life Free from Violence"
-    },
-    {
-      "id": "fnscc",
-      "name": "Food and nutrition security and climate change resilience"
-    }
-  ]
+  "reach": {
+    "filters": [
+      {
+        "id": "hum",
+        "label": "Humanitarian response"
+      },
+      {
+        "id": "wee",
+        "label": "Women's economic empowerment"
+      },
+      {
+        "id": "srmh",
+        "label": "The right to sexual, reproductive and maternal health"
+      },
+      {
+        "id": "lffv",
+        "label": "Life Free from Violence"
+      },
+      {
+        "id": "fnscc",
+        "label": "Food and nutrition security and climate change resilience"
+      }
+    ]
+  }
 }

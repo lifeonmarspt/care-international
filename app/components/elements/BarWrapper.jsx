@@ -13,7 +13,7 @@ class BarWrapper extends React.Component {
   }
 
   static defaultProps = {
-    colorClass: "overall",
+    colorClass: "neutral",
     formatter: (value, maxValue) => maxValue.toLocaleString(),
   }
 
