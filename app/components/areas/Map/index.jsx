@@ -5,15 +5,31 @@ import Squel from "squel";
 
 import humanize from "lib/humanize";
 import range from "lib/range";
+
 import config from "config.json";
+import meta from "resources/meta.json";
 
 import "./style.sass";
 
 const numBuckets = 5;
-const mainColor = (opacity = 1) => `rgba(18, 158, 173, ${opacity})`;
+const mainColor = (colorClass = "neutral", opacity = 0.8) =>
+  `rgba(${meta.colors[colorClass].map((c) => c.toString(10))}, ${opacity})`;
 
 
 class MapArea extends React.Component {
+
+  static propTypes = {
+    outcome: PropTypes.string,
+  }
+
+  static defaultProps = {
+    outcome: "overall",
+  }
+
+  static contextTypes = {
+    buckets: PropTypes.array.isRequired,
+    router: PropTypes.object.isRequired,
+  }
 
   constructor(...args) {
     super(...args);
@@ -32,11 +48,6 @@ class MapArea extends React.Component {
     });
   }
 
-  static contextTypes = {
-    buckets: PropTypes.array.isRequired,
-    router: PropTypes.object.isRequired,
-  }
-
   getSQL() {
     let fields = [
       "*",
@@ -51,22 +62,24 @@ class MapArea extends React.Component {
     return range(1, numBuckets)
       .map((n) => `
         #layer[bucket=${n}] {
-          polygon-fill: ${mainColor()};
+          polygon-fill: ${mainColor(this.props.outcome)};
           polygon-opacity: ${n/numBuckets};
-          line-color: ${mainColor()};
+          line-color: ${mainColor(this.props.outcome)};
         }
       `)
       .join(" ");
   }
 
-  componentDidMount() {
+  initLeaflet() {
     this.map = window.L.map("leaflet").setView([0, 0], 3);
 
     // set a base layer
     window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "Map data © <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors",
     }).addTo(this.map);
+  }
 
+  initCartoDBLayer() {
     // add the cartodb layer
     let layerSource = {
       user_name: config.cartodb.account,
@@ -84,7 +97,9 @@ class MapArea extends React.Component {
       https: true,
     }).addTo(this.map).on("done", (layer) => {
 
-      let subLayer = layer.getSubLayer(0);
+      this.layer = layer;
+
+      let subLayer = this.layer.getSubLayer(0);
       subLayer.setInteraction(true);
 
       subLayer.on("featureClick", (e, latlng, pos, data) => {
@@ -93,18 +108,38 @@ class MapArea extends React.Component {
       });
 
       subLayer.on("featureOver", () => {
-        document.getElementById("map").classList.add("clickable");
+        document.getElementById("leaflet").classList.add("clickable");
       });
 
       subLayer.on("featureOut", () => {
-        document.getElementById("map").classList.remove("clickable");
+        document.getElementById("leaflet").classList.remove("clickable");
       });
 
     }).on("error", (err) => {
+      // eslint-disable-next-line
       console.error("some error occurred: " + err);
     });
 
+  }
 
+  destroyLeaflet() {
+    this.map.remove();
+  }
+
+  destroyCartoDBLayer() {
+    this.layer.remove();
+  }
+
+  componentDidMount() {
+    this.initLeaflet();
+    this.initCartoDBLayer();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.outcome !== this.props.outcome) {
+      this.destroyCartoDBLayer();
+      this.initCartoDBLayer();
+    }
   }
 
   render() {
@@ -117,7 +152,7 @@ class MapArea extends React.Component {
           <ul>
             {this.context.buckets.map((bucket, n) => {
               let liStyle = {
-                backgroundColor: mainColor((n+1) / this.context.buckets.length),
+                backgroundColor: mainColor(this.props.outcome, (n+1) / this.context.buckets.length),
               };
               return (<li key={n} style={liStyle}>
                 <span>{humanize(bucket.max)}</span>
