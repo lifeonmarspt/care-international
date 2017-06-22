@@ -1,8 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Squel from "squel";
+
+import range from "lib/range";
+import config from "config.json";
 
 import "./style.sass";
-import config from "config.json";
+
+const buckets = 7;
 
 class MapArea extends React.Component {
 
@@ -19,6 +24,29 @@ class MapArea extends React.Component {
     router: PropTypes.object.isRequired,
   }
 
+  getSQL() {
+    let fields = [
+      "*",
+      `NTILE(${buckets}) OVER(ORDER BY total_num_direct_participants + total_num_indirect_participants) AS bucket`,
+    ];
+    let query = Squel.select().fields(fields).from("reach_data");
+
+    return query.toString();
+  }
+
+  getCartoCSS() {
+    const main = "#129EAD";
+    return range(1, buckets)
+      .map((n) => `
+        #layer[bucket=${n}] {
+          polygon-fill: ${main};
+          polygon-opacity: ${n/buckets};
+          line-color: ${main};
+        }
+      `)
+      .join(" ");
+  }
+
   componentDidMount() {
     this.map = window.L.map("map").setView([0, 0], 3);
 
@@ -33,8 +61,8 @@ class MapArea extends React.Component {
       type: "cartodb",
       sublayers: [
         {
-          sql: "select * from reach_data",
-          cartocss: "#layer { polygon-fill: #F00; polygon-opacity: 0.3; line-color: #F00; }",
+          sql: this.getSQL(),
+          cartocss: this.getCartoCSS(),
           interactivity: "country, region",
         },
       ],
@@ -47,26 +75,24 @@ class MapArea extends React.Component {
       let subLayer = layer.getSubLayer(0);
       subLayer.setInteraction(true);
 
-      subLayer.on("featureClick", (e, latlng, pos, data, layer) => {
+      subLayer.on("featureClick", (e, latlng, pos, data) => {
         let url = "/reach/" + encodeURIComponent(data.country);
         this.context.router.history.push(url);
       });
 
-      subLayer.on('featureOver', (e, latlng, pos, data, subLayerIndex) => {
+      subLayer.on("featureOver", () => {
         document.getElementById("map").classList.add("clickable");
       });
 
-      subLayer.on("featureOut", (e, latlng, pos, data, subLayerIndex) => {
+      subLayer.on("featureOut", () => {
         document.getElementById("map").classList.remove("clickable");
       });
 
     }).on("error", (err) => {
       console.error("some error occurred: " + err);
     });
-;
 
   }
-
 
   render() {
     return (<div id="map" />);
