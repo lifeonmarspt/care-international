@@ -13,17 +13,19 @@
     margin-left: 5px
     cursor: pointer
 
-  div.fake-radio
-    display: inline-block
-    width: 14px
+  svg
     min-width: 14px
-    height: 14px
-    border-radius: 50%
-    border: 1px solid $accent-color-3
-    background-color: transparent
-    vertical-align: middle
-    cursor: pointer
+    circle.inner
+      fill: none
+      stroke: none
 
+    circle.outer
+      stroke: $accent-color-2
 
-  input[type="radio"]:checked + div.fake-radio
-    background-color: $accent-color-3
+  input[type="radio"]:checked + svg
+    circle.inner
+      fill: $variable-color-1
+      stroke: $variable-color-1
+
+    circle.outer
+      stroke: $variable-color-1
