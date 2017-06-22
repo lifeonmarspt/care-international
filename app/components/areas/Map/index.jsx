@@ -33,6 +33,7 @@ class MapArea extends React.Component {
   }
 
   static contextTypes = {
+    buckets: PropTypes.array.isRequired,
     router: PropTypes.object.isRequired,
   }
 
@@ -103,22 +104,6 @@ class MapArea extends React.Component {
       console.error("some error occurred: " + err);
     });
 
-    let query = `WITH buckets as (
-      SELECT NTILE(${numBuckets}) OVER(ORDER BY total_num_direct_participants + total_num_indirect_participants) AS position, total_num_direct_participants + total_num_indirect_participants as total_participants
-      FROM reach_data
-    )
-    SELECT buckets.position, MIN(buckets.total_participants) AS min, MAX(buckets.total_participants) AS max
-    FROM buckets
-    GROUP BY position
-    ORDER BY position`;
-
-    this.cartoSQL.execute(query)
-      .done((result) => {
-        this.setState({
-          buckets: result.rows,
-        });
-      });
-
 
   }
 
@@ -130,9 +115,9 @@ class MapArea extends React.Component {
           <Link to="#">Show Regions</Link>
           <p>Participants reached by country</p>
           <ul>
-            {this.state.buckets.map((bucket, n) => {
+            {this.context.buckets.map((bucket, n) => {
               let liStyle = {
-                backgroundColor: mainColor((n+1) / numBuckets),
+                backgroundColor: mainColor((n+1) / this.context.buckets.length),
               };
               return (<li key={n} style={liStyle}>
                 <span>{humanize(bucket.max)}</span>

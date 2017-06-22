@@ -8,6 +8,8 @@ import config from "config.json";
 // @FIXME remove this eventually
 window.Squel = Squel;
 
+const numBuckets = 5;
+
 class DataProvider extends React.Component {
 
   static propTypes = {
@@ -19,6 +21,7 @@ class DataProvider extends React.Component {
 
   static childContextTypes = {
     data: PropTypes.object,
+    buckets: PropTypes.array,
     reach: PropTypes.bool,
     impact: PropTypes.bool,
     region: PropTypes.string,
@@ -43,6 +46,7 @@ class DataProvider extends React.Component {
   getChildContext() {
     return {
       data: this.state.data,
+      buckets: this.state.buckets,
       reach: this.state.reach,
       impact: this.state.impact,
       region: this.state.region,
@@ -75,10 +79,34 @@ class DataProvider extends React.Component {
       query = query.where("country = ?", this.props.country);
     }
 
-    this.cartoSQL.execute(query.toString())
-      .done((result) => {
+    let getStatistics = new window.Promise((resolve, reject) => {
+      this.cartoSQL.execute(query.toString())
+        .done((result) => resolve(result))
+        .error((error) => reject(error));
+    });
+
+
+    query = `WITH buckets as (
+      SELECT NTILE(${numBuckets}) OVER(ORDER BY total_num_direct_participants + total_num_indirect_participants) AS position,
+             total_num_direct_participants + total_num_indirect_participants AS total_participants
+      FROM reach_data
+    )
+    SELECT buckets.position, MIN(buckets.total_participants) AS min, MAX(buckets.total_participants) AS max
+    FROM buckets
+    GROUP BY position
+    ORDER BY position`;
+
+    let getBuckets = new window.Promise((resolve, reject) => {
+      this.cartoSQL.execute(query)
+        .done((result) => resolve(result))
+        .error((error) => reject(error));
+    });
+
+    window.Promise.all([getStatistics, getBuckets])
+      .then(([statistics, buckets]) => {
         this.setState({
-          data: result.rows[0],
+          data: statistics.rows[0],
+          buckets: buckets.rows,
           reach: this.props.reach,
           impact: this.props.impact,
           region: this.props.region,
@@ -86,6 +114,7 @@ class DataProvider extends React.Component {
           loading: false,
         });
       });
+
   }
 
   componentDidMount() {
