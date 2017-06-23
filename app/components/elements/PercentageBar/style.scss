@@ -1,0 +1,61 @@
+@import "../../../styles/colors.scss";
+
+.percentagebar__container {
+  margin-bottom: 1.5em;
+}
+
+.percentagebar {
+  background-color: white;
+  margin-right: .5em;
+  height: 6px;
+  width: 100px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.percentagebar__current {
+  display: block;
+  position: relative;
+  background-color: black;
+  height: 100%;
+  text-align: right;
+}
+
+.percentagebar__label {
+  display: block;
+  padding: 10px;
+  white-space: nowrap;
+}
+
+.percentagebar__current::before {
+  content: "";
+  top: 100%;
+  right: 0%;
+  width: 0px;
+  height: 0px;
+  border-top: 3px solid pink;
+  border-left: 3px solid transparent;
+  position: absolute;
+}
+
+.neutral.valuebar {
+  .valuebar__current {
+    background-color: $accent-color-2;
+  }
+}
+
+@each $outcome, $color in $outcomeColors {
+  .#{$outcome}.percentagebar {
+    background-color: $color;
+  }
+  .#{$outcome}.percentagebar {
+    .percentagebar__current {
+      background-color: $color;
+    }
+  }
+  .#{$outcome}.percentagebar {
+    .percentagebar__current::before {
+      border-top-color: $color;
+    }
+  }
+}

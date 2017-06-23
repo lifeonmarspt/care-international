@@ -7,7 +7,7 @@ import App from "components/App";
 
 const AppWrapper = ({ reach, impact, match }, { router }) => {
   let qs = queryString.parse(router.route.location.search);
-console.log("appwrapper", match.params.country)
+
   return (<App
     reach={reach}
     impact={impact}

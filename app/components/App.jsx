@@ -63,13 +63,11 @@ class App extends React.PureComponent {
   }
 
   handleCountryChange(country) {
-    console.log("navigating to", country);
     this.navigate(this.state.reach, this.state.impact, country, this.state.outcome);
   }
 
 
   fetchRemoteData() {
-    console.log("fetching", this.props);
     fetchRemoteData(this.props.country, this.state.outcome || "overall")
       .then(([statistics, buckets]) => {
         this.setState({
