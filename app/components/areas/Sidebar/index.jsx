@@ -18,6 +18,7 @@ class SidebarArea extends React.Component {
   };
 
   static propTypes = {
+    loading: PropTypes.bool.isRequired,
     statistics: PropTypes.object.isRequired,
     buckets: PropTypes.array.isRequired,
     reach: PropTypes.bool,
@@ -33,8 +34,12 @@ class SidebarArea extends React.Component {
   };
 
   render() {
-    let { reach, impact, region, country, statistics } = this.props;
-console.log(this.props)
+    let { loading, reach, impact, region, country, statistics } = this.props;
+
+    if (loading) {
+      return (<div id="sidebar" />);
+    }
+
     return (<div id="sidebar">
 
       {(region || country) && (<div className="breadcrumbs">

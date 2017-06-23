@@ -26,6 +26,10 @@ class App extends React.PureComponent {
 
     this.state = {
       loading: true,
+      statistics: {},
+      buckets: [],
+      reach: false,
+      impact: false,
     };
   }
 
@@ -92,10 +96,6 @@ class App extends React.PureComponent {
   }
 
   render() {
-    if (this.state.loading) {
-      return (<h1>LOADIN'</h1>);
-    }
-
     return (<div id="app">
       <Header />
       <Map
@@ -104,6 +104,7 @@ class App extends React.PureComponent {
         handleCountryChange={this.handleCountryChange.bind(this)}
       />
       <Sidebar
+        loading={this.state.loading}
         statistics={this.state.statistics}
         buckets={this.state.buckets}
         reach={this.state.reach}
