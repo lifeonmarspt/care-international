@@ -152,7 +152,7 @@ class MapArea extends React.Component {
         <div id="legend">
           <Link to="#">Show Regions</Link>
           <p>Participants reached by country</p>
-          <ul>
+          <ul className="scale">
             {this.context.buckets.map((bucket, n) => {
               let liStyle = {
                 backgroundColor: mainColor(this.props.outcome, (n+1) / this.context.buckets.length),
@@ -161,6 +161,14 @@ class MapArea extends React.Component {
                 <span>{humanize(bucket.max)}</span>
               </li>);
             })}
+          </ul>
+          <ul className="exceptions">
+            <li className="no-data">
+              <span>No data</span>
+            </li>
+            <li className="care-member">
+              <span>Care international members</span>
+            </li>
           </ul>
         </div>
       </div>

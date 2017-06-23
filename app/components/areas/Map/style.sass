@@ -22,6 +22,10 @@
       position: relative
       display: flex
       align-items: flex-start
+      font-size: 0.8em
+
+    ul.scale
+      margin-bottom: 1.5em
 
       li
         height: 10px
@@ -49,3 +53,27 @@
         content: ""
         height: 15px
         border-left: 1px solid black
+
+    ul.exceptions
+      li
+        display: flex
+        align-items: flex-start
+
+      li::before
+        content: ""
+        display: inline-block
+        width: 15px
+        height: 15px
+        border: 1px solid #888
+        margin-right: .4em
+
+      li.no-data::before
+        background-color: rgba(136, 136, 136, 0.6)
+
+      li.care-member::before
+        background-image: url(http://com.cartodb.users-assets.production.s3.amazonaws.com/patterns/diagonal_1px_med.png)
+
+      span
+        height: 17px
+        line-height: 17px
+        margin-right: 1em
