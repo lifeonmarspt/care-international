@@ -24,39 +24,44 @@ class App extends React.Component {
   constructor(...args) {
     super(...args);
 
-    let qs = queryString.parse(this.context.router.route.location.search);
-
     this.state = {
       loading: true,
-      outcome: qs.outcome,
     };
   }
 
-  handleOutcomeChange(outcome) {
+  navigate(reach, impact, country, outcome) {
     let qs = queryString.stringify({
       outcome: outcome,
     });
 
-    let location = this.context.router.route.location.pathname +
-      (qs ? `?${qs}` : "");
+    let parts = [];
 
-    this.setState({
-      outcome: outcome,
-    }, () => {
-      this.context.router.history.push(location);
-    });
+    if (reach) {
+      parts.push("reach");
+    }
 
+    if (impact) {
+      parts.push("impact");
+    }
+
+    if (country) {
+      parts.push(encodeURIComponent(country));
+    }
+
+    let location = "/" + parts.join("/") + (qs ? `?${qs}` : "");
+
+    this.context.router.history.push(location);
+
+  }
+
+  handleOutcomeChange(outcome) {
+    this.navigate(this.state.reach, this.state.impact, this.state.country, outcome);
   }
 
   handleCountryChange(country) {
-    let qs = queryString.stringify({
-      outcome: this.state.outcome,
-    });
-
-    let url = "/reach/" + encodeURIComponent(country) +
-      (qs ? `?${qs}` : "");
-    this.context.router.history.push(url);
+    this.navigate(this.state.reach, this.state.impact, country, this.state.outcome);
   }
+
 
   fetchRemoteData() {
     fetchRemoteData(this.props.country, this.state.outcome || "overall")
@@ -69,6 +74,7 @@ class App extends React.Component {
           impact: this.props.impact,
           region: this.props.region,
           country: this.props.country,
+          outcome: this.props.outcome,
         });
       });
   }

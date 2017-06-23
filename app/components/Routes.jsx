@@ -1,7 +1,25 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import queryString from "query-string";
 
 import App from "components/App";
+
+const AppWrapper = ({ reach, impact, match }, { router }) => {
+  let qs = queryString.parse(router.route.location.search);
+
+  return (<App
+    reach={reach}
+    impact={impact}
+    country={match.params.country}
+    region={match.params.region}
+    outcome={qs.outcome}
+  />);
+};
+
+AppWrapper.contextTypes = {
+  router: PropTypes.object.isRequired,
+};
 
 class Routes extends React.Component {
 
@@ -11,11 +29,11 @@ class Routes extends React.Component {
     return (<Router>
       <Switch>
         <Redirect exact from="/" to="/reach" />
-        <Route exact path="/reach" component={() => <App reach />} />
-        <Route exact path="/reach/:country" component={({ match }) => <App reach country={match.params.country} />} />
-        <Route exact path="/impact" component={() => <App impact />} />
-        <Route exact path="/impact/:region" component={({ match }) => <App impact region={match.params.region} />} />
-        <Route exact path="/impact/:region/:country" component={({ match }) => <App impact region={match.params.region} country={match.params.country} />} />
+        <Route exact path="/reach" component={(props) => <AppWrapper reach {...props} />} />
+        <Route exact path="/reach/:country" component={(props) => <AppWrapper reach {...props} />} />
+        <Route exact path="/impact" component={(props) => <AppWrapper impact {...props} />} />
+        <Route exact path="/impact/:region" component={(props) => <App impact {...props} />} />
+        <Route exact path="/impact/:region/:country" component={(props) => <App impact {...props} />} />
       </Switch>
     </Router>);
   }
