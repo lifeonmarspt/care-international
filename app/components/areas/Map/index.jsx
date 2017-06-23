@@ -18,6 +18,7 @@ const mainColor = (colorClass = "neutral", opacity = 0.8) =>
 class MapArea extends React.Component {
 
   static propTypes = {
+    buckets: PropTypes.array.isRequired,
     outcome: PropTypes.string,
   }
 
@@ -26,7 +27,6 @@ class MapArea extends React.Component {
   }
 
   static contextTypes = {
-    buckets: PropTypes.array.isRequired,
     router: PropTypes.object.isRequired,
   }
 
@@ -153,9 +153,9 @@ class MapArea extends React.Component {
           <Link to="#">Show Regions</Link>
           <p>Participants reached by country</p>
           <ul className="scale">
-            {this.context.buckets.map((bucket, n) => {
+            {this.props.buckets.map((bucket, n) => {
               let liStyle = {
-                backgroundColor: mainColor(this.props.outcome, (n+1) / this.context.buckets.length),
+                backgroundColor: mainColor(this.props.outcome, (n+1) / this.props.buckets.length),
               };
               return (<li key={n} style={liStyle}>
                 <span>{humanize(bucket.max)}</span>

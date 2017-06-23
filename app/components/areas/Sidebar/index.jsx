@@ -15,14 +15,15 @@ class SidebarArea extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object,
-    data: PropTypes.object,
+  };
+
+  static propTypes = {
+    statistics: PropTypes.object.isRequired,
+    buckets: PropTypes.array.isRequired,
     reach: PropTypes.bool,
     impact: PropTypes.bool,
     region: PropTypes.string,
     country: PropTypes.string,
-  };
-
-  static propTypes = {
     outcome: PropTypes.string,
     handleOutcomeChange: PropTypes.func,
   }
@@ -32,7 +33,7 @@ class SidebarArea extends React.Component {
   };
 
   render() {
-    let { reach, impact, region, country, data } = this.context;
+    let { reach, impact, region, country, statistics } = this.props;
 
     return (<div id="sidebar">
 
@@ -47,7 +48,7 @@ class SidebarArea extends React.Component {
       {this.props.outcome === "overall" && (<div className="content">
         <dl>
           <dt>Projects and Initiatives</dt>
-          <dd>{(data.num_projects_and_initiatives || 0).toLocaleString()}</dd>
+          <dd>{(statistics.num_projects_and_initiatives || 0).toLocaleString()}</dd>
           <dt>Participants reached</dt>
           <dd>
             <ul>
@@ -55,15 +56,15 @@ class SidebarArea extends React.Component {
                 <div>Direct (?)</div>
                 <BarWrapper bar={PercentageBar}
                   colorClass="overall"
-                  value={data["total_direct_participants_women"]}
-                  maxValue={data["total_direct_participants"]} />
+                  value={statistics["total_direct_participants_women"]}
+                  maxValue={statistics["total_direct_participants"]} />
               </li>
               <li>
                 <div>Indirect (?)</div>
                 <BarWrapper bar={PercentageBar}
                   colorClass="overall"
-                  value={data["total_indirect_participants_women"]}
-                  maxValue={data["total_indirect_participants"]} />
+                  value={statistics["total_indirect_participants_women"]}
+                  maxValue={statistics["total_indirect_participants"]} />
               </li>
             </ul>
           </dd>
@@ -73,7 +74,7 @@ class SidebarArea extends React.Component {
       {this.props.outcome !== "overall" && (<div className="content">
         <dl>
           <dt>Projects and Initiatives ({this.props.outcome.toUpperCase()})</dt>
-          <dd>{(data.num_projects_and_initiatives || 0).toLocaleString()}</dd>
+          <dd>{(statistics.num_projects_and_initiatives || 0).toLocaleString()}</dd>
           <dt>Participants reached ({this.props.outcome.toUpperCase()})</dt>
           <dd>
             <ul>
@@ -81,21 +82,21 @@ class SidebarArea extends React.Component {
                 <div>Direct (?)</div>
                 <BarWrapper bar={ValueBar}
                   colorClass={this.props.outcome}
-                  value={data[`${this.props.outcome}_direct_participants`]}
-                  maxValue={data["total_direct_participants"]} />
+                  value={statistics[`${this.props.outcome}_direct_participants`]}
+                  maxValue={statistics["total_direct_participants"]} />
                 <BarWrapper bar={ValueBar}
-                  value={data["total_direct_participants"] - data[`${this.props.outcome}_direct_participants`]}
-                  maxValue={data["total_direct_participants"]} />
+                  value={statistics["total_direct_participants"] - statistics[`${this.props.outcome}_direct_participants`]}
+                  maxValue={statistics["total_direct_participants"]} />
               </li>
               <li>
                 <div>Indirect (?)</div>
                 <BarWrapper bar={ValueBar}
                   colorClass={this.props.outcome}
-                  value={data[`${this.props.outcome}_indirect_participants`]}
-                  maxValue={data["total_indirect_participants"]} />
+                  value={statistics[`${this.props.outcome}_indirect_participants`]}
+                  maxValue={statistics["total_indirect_participants"]} />
                 <BarWrapper bar={ValueBar}
-                  value={data["total_indirect_participants"] - data[`${this.props.outcome}_indirect_participants`]}
-                  maxValue={data["total_indirect_participants"]} />
+                  value={statistics["total_indirect_participants"] - statistics[`${this.props.outcome}_indirect_participants`]}
+                  maxValue={statistics["total_indirect_participants"]} />
               </li>
             </ul>
           </dd>
@@ -107,8 +108,8 @@ class SidebarArea extends React.Component {
         <ul>
           {meta.programs.map((program, n) => {
 
-            let directValue = data[`${program.id}_direct_participants`];
-            let indirectValue = data[`${program.id}_indirect_participants`];
+            let directValue = statistics[`${program.id}_direct_participants`];
+            let indirectValue = statistics[`${program.id}_indirect_participants`];
             let maxValue = directValue + indirectValue;
 
             return (<li key={n}>
