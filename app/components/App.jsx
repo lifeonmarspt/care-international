@@ -28,7 +28,7 @@ class App extends React.Component {
 
     this.state = {
       loading: true,
-      outcome: qs.outcome || "overall",
+      outcome: qs.outcome,
     };
   }
 
@@ -49,13 +49,17 @@ class App extends React.Component {
   }
 
   handleCountryChange(country) {
+    let qs = queryString.stringify({
+      outcome: this.state.outcome,
+    });
 
-
+    let url = "/reach/" + encodeURIComponent(country) +
+      (qs ? `?${qs}` : "");
+    this.context.router.history.push(url);
   }
 
   fetchRemoteData() {
-    console.log(this.state)
-    fetchRemoteData(this.props.country, this.state.outcome)
+    fetchRemoteData(this.props.country, this.state.outcome || "overall")
       .then(([statistics, buckets]) => {
         this.setState({
           loading: false,

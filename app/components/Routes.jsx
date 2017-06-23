@@ -6,6 +6,8 @@ import App from "components/App";
 class Routes extends React.Component {
 
   render() {
+
+
     return (<Router>
       <Switch>
         <Redirect exact from="/" to="/reach" />

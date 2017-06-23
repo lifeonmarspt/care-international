@@ -20,14 +20,11 @@ class MapArea extends React.Component {
   static propTypes = {
     buckets: PropTypes.array.isRequired,
     outcome: PropTypes.string,
+    handleCountryChange: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     outcome: "overall",
-  }
-
-  static contextTypes = {
-    router: PropTypes.object.isRequired,
   }
 
   constructor(...args) {
@@ -101,9 +98,7 @@ class MapArea extends React.Component {
 
       subLayer.on("featureClick", (e, latlng, pos, data) => {
         if (data.bucket === null) return;
-
-        let url = "/reach/" + encodeURIComponent(data.country);
-        this.context.router.history.push(url);
+        this.props.handleCountryChange(data.country);
       });
 
       subLayer.on("featureOver", (e, latlng, pos, data) => {
