@@ -49,7 +49,8 @@ class App extends React.Component {
   render() {
     return (<div id="app">
       <Header />
-      <Data {...this.props}>
+      <Data {...this.props}
+        outcome={this.state.outcome} >
         <Map outcome={this.state.outcome} />
         <Sidebar {...this.props}
           handleOutcomeChange={this.handleOutcomeChange.bind(this)}

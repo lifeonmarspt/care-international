@@ -1,17 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import Squel from "squel";
 
 import humanize from "lib/humanize";
 import range from "lib/range";
+import { numBuckets, getReachMapSQL } from "lib/queries";
 
 import config from "config.json";
 import meta from "resources/meta.json";
 
 import "./style.sass";
 
-const numBuckets = 5;
 const mainColor = (colorClass = "neutral", opacity = 0.8) =>
   `rgba(${meta.colors[colorClass].map((c) => c.toString(10))}, ${opacity})`;
 
@@ -38,7 +37,6 @@ class MapArea extends React.Component {
       lat: 51.505,
       lng: -0.09,
       zoom: 13,
-      buckets: [],
     };
 
     // eslint-disable-next-line
@@ -46,16 +44,6 @@ class MapArea extends React.Component {
       user: config.cartodb.account,
       sql_api_template: "https://{user}.cartodb.com",
     });
-  }
-
-  getSQL() {
-    let fields = [
-      "*",
-      `NTILE(${numBuckets}) OVER(ORDER BY total_num_direct_participants + total_num_indirect_participants) AS bucket`,
-    ];
-    let query = Squel.select().fields(fields).from("reach_data");
-
-    return query.toString();
   }
 
   getCartoCSS() {
@@ -67,7 +55,16 @@ class MapArea extends React.Component {
           line-color: ${mainColor(this.props.outcome)};
         }
       `)
-      .join(" ");
+      .join(" ") + `
+      #layer[bucket=null] {
+        polygon-fill: #888;
+        polygon-opacity: 0.6;
+        line-color: #888;
+      }
+      #layed[care_member=true] {
+        polygon-pattern-file: url(http://com.cartodb.users-assets.production.s3.amazonaws.com/patterns/diagonal_1px_med.png);
+      }
+      `;
   }
 
   initLeaflet() {
@@ -86,9 +83,9 @@ class MapArea extends React.Component {
       type: "cartodb",
       sublayers: [
         {
-          sql: this.getSQL(),
+          sql: getReachMapSQL(this.props.outcome),
           cartocss: this.getCartoCSS(),
-          interactivity: "country, region",
+          interactivity: "bucket, country, region",
         },
       ],
     };
@@ -103,12 +100,18 @@ class MapArea extends React.Component {
       subLayer.setInteraction(true);
 
       subLayer.on("featureClick", (e, latlng, pos, data) => {
+        if (data.bucket === null) return;
+
         let url = "/reach/" + encodeURIComponent(data.country);
         this.context.router.history.push(url);
       });
 
-      subLayer.on("featureOver", () => {
-        document.getElementById("leaflet").classList.add("clickable");
+      subLayer.on("featureOver", (e, latlng, pos, data) => {
+        if (data.bucket === null) {
+          document.getElementById("leaflet").classList.remove("clickable");
+        } else {
+          document.getElementById("leaflet").classList.add("clickable");
+        }
       });
 
       subLayer.on("featureOut", () => {
