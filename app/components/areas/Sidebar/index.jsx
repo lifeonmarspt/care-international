@@ -34,7 +34,7 @@ class SidebarArea extends React.Component {
 
   render() {
     let { reach, impact, region, country, statistics } = this.props;
-
+console.log(this.props)
     return (<div id="sidebar">
 
       {(region || country) && (<div className="breadcrumbs">
@@ -48,7 +48,7 @@ class SidebarArea extends React.Component {
       {this.props.outcome === "overall" && (<div className="content">
         <dl>
           <dt>Projects and Initiatives</dt>
-          <dd>{(statistics.num_projects_and_initiatives || 0).toLocaleString()}</dd>
+          <dd>{(statistics.projects_and_initiatives || 0).toLocaleString()}</dd>
           <dt>Participants reached</dt>
           <dd>
             <ul>
@@ -74,7 +74,7 @@ class SidebarArea extends React.Component {
       {this.props.outcome !== "overall" && (<div className="content">
         <dl>
           <dt>Projects and Initiatives ({this.props.outcome.toUpperCase()})</dt>
-          <dd>{(statistics.num_projects_and_initiatives || 0).toLocaleString()}</dd>
+          <dd>{(statistics.projects_and_initiatives || 0).toLocaleString()}</dd>
           <dt>Participants reached ({this.props.outcome.toUpperCase()})</dt>
           <dd>
             <ul>
