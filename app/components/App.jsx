@@ -58,7 +58,7 @@ class App extends React.PureComponent {
 
   }
 
-  handleprogramChange(program) {
+  handleProgramChange(program) {
     this.navigate(this.state.reach, this.state.impact, this.state.country, program);
   }
 
@@ -97,6 +97,7 @@ class App extends React.PureComponent {
     return (<div id="app">
       <Header />
       <Map
+        country={this.state.country}
         program={this.state.program}
         buckets={this.state.buckets}
         handleCountryChange={this.handleCountryChange.bind(this)}
@@ -110,7 +111,7 @@ class App extends React.PureComponent {
         region={this.state.region}
         country={this.state.country}
         program={this.state.program}
-        handleprogramChange={this.handleprogramChange.bind(this)}
+        handleProgramChange={this.handleProgramChange.bind(this)}
       />
 
     </div>);

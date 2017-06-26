@@ -26,7 +26,7 @@ class SidebarArea extends React.Component {
     region: PropTypes.string,
     country: PropTypes.string,
     program: PropTypes.string,
-    handleprogramChange: PropTypes.func,
+    handleProgramChange: PropTypes.func,
   }
 
   static defaultProps = {
@@ -131,7 +131,7 @@ class SidebarArea extends React.Component {
                 id={`radio-${n}`}
                 name="program-filter"
                 checked={this.props.program === program.id}
-                onChange={() => this.props.handleprogramChange(program.id)}>
+                onChange={() => this.props.handleProgramChange(program.id)}>
                 {program.label}
               </RadioButton>
               <BarWrapper bar={ValueBar}

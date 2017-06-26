@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import humanize from "lib/humanize";
 import range from "lib/range";
 import { numBuckets, getReachMapSQL } from "lib/queries";
+import { fetchBounds } from "lib/remote";
 
 import config from "config.json";
 import meta from "resources/meta.json";
@@ -18,7 +19,9 @@ const mainColor = (colorClass = "neutral", opacity = 0.8) =>
 class MapArea extends React.Component {
 
   static propTypes = {
+    country: PropTypes.string,
     buckets: PropTypes.array.isRequired,
+    bounds: PropTypes.array,
     program: PropTypes.string,
     handleCountryChange: PropTypes.func.isRequired,
   }
@@ -35,12 +38,6 @@ class MapArea extends React.Component {
       lng: -0.09,
       zoom: 13,
     };
-
-    // eslint-disable-next-line
-    this.cartoSQL = window.cartodb.SQL({
-      user: config.cartodb.account,
-      sql_api_template: "https://{user}.carto.com",
-    });
   }
 
   getCartoCSS() {
@@ -138,6 +135,13 @@ class MapArea extends React.Component {
     if (prevProps.program !== this.props.program) {
       this.destroyCartoDBLayer();
       this.initCartoDBLayer();
+    }
+
+    if (prevProps.country !== this.props.country) {
+      fetchBounds(this.props.country)
+        .then((bounds) => {
+          this.map.fitBounds(bounds);
+        });
     }
   }
 

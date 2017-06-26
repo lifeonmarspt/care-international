@@ -69,5 +69,21 @@ const getReachStatisticsSQL = (country) => {
   return query.toString();
 };
 
+const getReachBoundsSQL = (country) => {
+  let query = Squel.select("the_geom").from("reach_data");
 
-export { numBuckets, getReachStatisticsSQL, getReachBucketsSQL, getReachMapSQL };
+  if (country) {
+    query = query.where("country = ?", country);
+  }
+
+  return query.toString();
+};
+
+
+export {
+  numBuckets,
+  getReachStatisticsSQL,
+  getReachBucketsSQL,
+  getReachMapSQL,
+  getReachBoundsSQL,
+};
