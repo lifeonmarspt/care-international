@@ -2,13 +2,13 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 import imgCare from "images/care.png";
-import "./style.sass";
+import "./style.scss";
 
 class HeaderArea extends React.Component {
 
   render() {
     return (<div id="header">
-    
+
       <div className="menu">
         <ul className="menu">
           <li>

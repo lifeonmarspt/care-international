@@ -9,7 +9,7 @@ import { numBuckets, getReachMapSQL } from "lib/queries";
 import config from "config.json";
 import meta from "resources/meta.json";
 
-import "./style.sass";
+import "./style.scss";
 
 const mainColor = (colorClass = "neutral", opacity = 0.8) =>
   `rgba(${meta.colors[colorClass].map((c) => c.toString(10))}, ${opacity})`;

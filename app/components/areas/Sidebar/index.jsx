@@ -9,7 +9,7 @@ import ValueBar from "components/elements/ValueBar";
 
 import meta from "resources/meta.json";
 
-import "./style.sass";
+import "./style.scss";
 
 class SidebarArea extends React.Component {
 

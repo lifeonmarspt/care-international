@@ -4,8 +4,8 @@ import ReactDOM from "react-dom";
 import Routes from "components/Routes";
 
 import "resetcss/reset.css";
-import "styles/layout.sass";
-import "styles/style.sass";
+import "styles/layout.scss";
+import "styles/style.scss";
 
 
 ReactDOM.render(<Routes />, document.getElementById("root"));

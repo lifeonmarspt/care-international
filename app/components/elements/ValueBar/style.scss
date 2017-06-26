@@ -1,0 +1,63 @@
+@import "../../../styles/colors.scss";
+
+.valuebar__container {
+  margin-bottom: 1em;
+}
+
+.valuebar {
+  margin-right: 0.5em;
+  height: 6px;
+  width: 100px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.valuebar__current {
+  display: block;
+  position: relative;
+  background-color: black;
+  height: 100%;
+  text-align: right;
+}
+
+.neutral.valuebar {
+  .valuebar__current {
+    background-color: $accent-color-2;
+  }
+}
+
+.overall.valuebar {
+  .valuebar__current {
+    background-color: $variable-color-1;
+  }
+}
+
+.hum.valuebar {
+  .valuebar__current {
+    background-color: $variable-color-2;
+  }
+}
+
+.srmh.valuebar {
+  .valuebar__current {
+    background-color: $variable-color-4;
+  }
+}
+
+.lffv.valuebar {
+  .valuebar__current {
+    background-color: $variable-color-5;
+  }
+}
+
+.fnscc.valuebar {
+  .valuebar__current {
+    background-color: $variable-color-6;
+  }
+}
+
+.wee.valuebar {
+  .valuebar__current {
+    background-color: $variable-color-3;
+  }
+}

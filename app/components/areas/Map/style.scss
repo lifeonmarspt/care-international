@@ -1,0 +1,95 @@
+@import "../../../styles/colors.scss";
+@import "../../../styles/values.scss";
+
+#map {
+  #leaflet {
+    &.clickable {
+      cursor: pointer;
+    }
+
+    .leaflet-control-attribution {
+      display: none;
+    }
+  }
+
+  #legend {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: white;
+    border: 1px solid black;
+    padding: 1em 1.5em;
+
+    ul {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      font-size: 0.8em;
+    }
+
+    ul.scale {
+      margin-bottom: 1.5em;
+
+      li {
+        height: 10px;
+        width: 50px;
+        margin-bottom: 1em;
+
+        span {
+          position: relative;
+          top: 2px;
+          left: 25px;
+          display: block;
+          width: 50px;
+          text-align: center;
+        }
+      }
+
+      &::before {
+        content: "0";
+        position: absolute;
+        top: 19px;
+        left: -24px;
+        display: block;
+        width: 50px;
+        text-align: center;
+      }
+
+      li::before, &::after {
+        content: "";
+        height: 15px;
+        border-left: 1px solid black;
+      }
+    }
+
+    ul.exceptions {
+      li {
+        display: flex;
+        align-items: flex-start;
+      }
+
+      li::before {
+        content: "";
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        border: 1px solid #888;
+        margin-right: 0.4em;
+      }
+
+      li.no-data::before {
+        background-color: rgba(136, 136, 136, 0.6);
+      }
+
+      li.care-member::before {
+        background-image: url(http://com.cartodb.users-assets.production.s3.amazonaws.com/patterns/diagonal_1px_med.png);
+      }
+
+      span {
+        height: 17px;
+        line-height: 17px;
+        margin-right: 1em;
+      }
+    }
+  }
+}
