@@ -19,12 +19,12 @@ class MapArea extends React.Component {
 
   static propTypes = {
     buckets: PropTypes.array.isRequired,
-    outcome: PropTypes.string,
+    program: PropTypes.string,
     handleCountryChange: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
-    outcome: "overall",
+    program: "overall",
   }
 
   constructor(...args) {
@@ -47,9 +47,9 @@ class MapArea extends React.Component {
     return range(1, numBuckets)
       .map((n) => `
         #layer[bucket=${n}] {
-          polygon-fill: ${mainColor(this.props.outcome)};
+          polygon-fill: ${mainColor(this.props.program)};
           polygon-opacity: ${n/numBuckets};
-          line-color: ${mainColor(this.props.outcome)};
+          line-color: ${mainColor(this.props.program)};
         }
       `)
       .join(" ") + `
@@ -80,7 +80,7 @@ class MapArea extends React.Component {
       type: "cartodb",
       sublayers: [
         {
-          sql: getReachMapSQL(this.props.outcome),
+          sql: getReachMapSQL(this.props.program),
           cartocss: this.getCartoCSS(),
           interactivity: "bucket, country, region",
         },
@@ -134,7 +134,7 @@ class MapArea extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.outcome !== this.props.outcome) {
+    if (prevProps.program !== this.props.program) {
       this.destroyCartoDBLayer();
       this.initCartoDBLayer();
     }
@@ -150,7 +150,7 @@ class MapArea extends React.Component {
           <ul className="scale">
             {this.props.buckets.map((bucket, n) => {
               let liStyle = {
-                backgroundColor: mainColor(this.props.outcome, (n+1) / this.props.buckets.length),
+                backgroundColor: mainColor(this.props.program, (n+1) / this.props.buckets.length),
               };
               return (<li key={n} style={liStyle}>
                 <span>{humanize(bucket.max)}</span>

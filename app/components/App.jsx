@@ -33,9 +33,9 @@ class App extends React.PureComponent {
     };
   }
 
-  navigate(reach, impact, country, outcome) {
+  navigate(reach, impact, country, program) {
     let qs = queryString.stringify({
-      outcome: outcome,
+      program: program,
     });
 
     let parts = [];
@@ -58,17 +58,17 @@ class App extends React.PureComponent {
 
   }
 
-  handleOutcomeChange(outcome) {
-    this.navigate(this.state.reach, this.state.impact, this.state.country, outcome);
+  handleprogramChange(program) {
+    this.navigate(this.state.reach, this.state.impact, this.state.country, program);
   }
 
   handleCountryChange(country) {
-    this.navigate(this.state.reach, this.state.impact, country, this.state.outcome);
+    this.navigate(this.state.reach, this.state.impact, country, this.state.program);
   }
 
 
   fetchRemoteData() {
-    fetchRemoteData(this.props.country, this.state.outcome || "overall")
+    fetchRemoteData(this.props.country, this.state.program || "overall")
       .then(([statistics, buckets]) => {
         this.setState({
           loading: false,
@@ -78,7 +78,7 @@ class App extends React.PureComponent {
           impact: this.props.impact,
           region: this.props.region,
           country: this.props.country,
-          outcome: this.props.outcome,
+          program: this.props.program,
         });
       });
   }
@@ -97,7 +97,7 @@ class App extends React.PureComponent {
     return (<div id="app">
       <Header />
       <Map
-        outcome={this.state.outcome}
+        program={this.state.program}
         buckets={this.state.buckets}
         handleCountryChange={this.handleCountryChange.bind(this)}
       />
@@ -109,8 +109,8 @@ class App extends React.PureComponent {
         impact={this.state.impact}
         region={this.state.region}
         country={this.state.country}
-        outcome={this.state.outcome}
-        handleOutcomeChange={this.handleOutcomeChange.bind(this)}
+        program={this.state.program}
+        handleprogramChange={this.handleprogramChange.bind(this)}
       />
 
     </div>);

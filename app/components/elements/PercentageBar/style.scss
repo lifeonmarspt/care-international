@@ -44,21 +44,21 @@
   }
 }
 
-@each $outcome, $color in $outcomeColors {
-  .#{$outcome}.percentagebar {
+@each $program, $color in $programColors {
+  .#{$program}.percentagebar {
     background-color: $accent-color-2;
   }
-  .#{$outcome}.percentagebar {
+  .#{$program}.percentagebar {
     .percentagebar__current {
       background-color: $color;
     }
   }
-  .#{$outcome}.percentagebar {
+  .#{$program}.percentagebar {
     .percentagebar__current::before {
       border-top-color: $color;
     }
   }
-  .#{$outcome}.no-data {
+  .#{$program}.no-data {
     color: $color
   }
 }

@@ -6,7 +6,7 @@ const cartoSQL = window.cartodb.SQL({
   sql_api_template: "https://{user}.cartodb.com",
 });
 
-const fetchRemoteData = (country, outcome) => {
+const fetchRemoteData = (country, program) => {
 
   let getStatistics = new window.Promise((resolve, reject) => {
     cartoSQL.execute(getReachStatisticsSQL(country))
@@ -15,7 +15,7 @@ const fetchRemoteData = (country, outcome) => {
   });
 
   let getBuckets = new window.Promise((resolve, reject) => {
-    cartoSQL.execute(getReachBucketsSQL(outcome))
+    cartoSQL.execute(getReachBucketsSQL(program))
       .done((result) => resolve(result))
       .error((error) => reject(error));
   });

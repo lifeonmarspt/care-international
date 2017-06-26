@@ -11,12 +11,12 @@ const variables = {
   fnscc: ["num_fnscc_direct_particip", "num_fnscc_indirect_particip"],
 };
 
-const getReachMapSQL = (outcome)  => {
-  const whereClause = variables[outcome].map((f) => `${f} IS NOT NULL`).join(" AND ");
+const getReachMapSQL = (program)  => {
+  const whereClause = variables[program].map((f) => `${f} IS NOT NULL`).join(" AND ");
 
   let fields = [
     "*",
-    `CASE WHEN ${whereClause} THEN NTILE(${numBuckets}) OVER(PARTITION BY ${whereClause} ORDER BY ${variables[outcome].join("+")}) ELSE null END AS bucket`,
+    `CASE WHEN ${whereClause} THEN NTILE(${numBuckets}) OVER(PARTITION BY ${whereClause} ORDER BY ${variables[program].join("+")}) ELSE null END AS bucket`,
     "category ILIKE '%member%' AS care_member",
   ];
   let query = Squel.select({ replaceSingleQuotes: true }).fields(fields).from("reach_data");
@@ -25,12 +25,12 @@ const getReachMapSQL = (outcome)  => {
 
 };
 
-const getReachBucketsSQL = (outcome) => {
+const getReachBucketsSQL = (program) => {
   let query = `WITH buckets as (
-    SELECT NTILE(${numBuckets}) OVER(ORDER BY ${variables[outcome].join("+")}) AS position,
-           ${variables[outcome]} AS total_participants
+    SELECT NTILE(${numBuckets}) OVER(ORDER BY ${variables[program].join("+")}) AS position,
+           ${variables[program]} AS total_participants
     FROM reach_data
-    WHERE ${variables[outcome].map((f) => `${f} IS NOT NULL`).join(" AND ")}
+    WHERE ${variables[program].map((f) => `${f} IS NOT NULL`).join(" AND ")}
   )
   SELECT buckets.position, MIN(buckets.total_participants) AS min, MAX(buckets.total_participants) AS max
   FROM buckets

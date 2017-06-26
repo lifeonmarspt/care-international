@@ -29,8 +29,8 @@
 }
 
 #sidebar {
-  @each $outcome, $color in $outcomeColors {
-    li.#{$outcome} {
+  @each $program, $color in $programColors {
+    li.#{$program} {
       input[type="radio"]:checked + label {
         svg {
           circle.inner {

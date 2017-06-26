@@ -13,7 +13,7 @@ const AppWrapper = ({ reach, impact, match }, { router }) => {
     impact={impact}
     country={match.params.country}
     region={match.params.region}
-    outcome={qs.outcome}
+    program={qs.program}
   />);
 };
 

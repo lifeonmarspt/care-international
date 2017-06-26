@@ -25,12 +25,12 @@ class SidebarArea extends React.Component {
     impact: PropTypes.bool,
     region: PropTypes.string,
     country: PropTypes.string,
-    outcome: PropTypes.string,
-    handleOutcomeChange: PropTypes.func,
+    program: PropTypes.string,
+    handleprogramChange: PropTypes.func,
   }
 
   static defaultProps = {
-    outcome: "overall",
+    program: "overall",
   };
 
   render() {
@@ -50,7 +50,7 @@ class SidebarArea extends React.Component {
         </ul>
       </div>)}
 
-      {this.props.outcome === "overall" && (<div className="content">
+      {this.props.program === "overall" && (<div className="content">
         <dl>
           <dt>
             <h1>Projects and Initiatives in 2016</h1>
@@ -82,11 +82,11 @@ class SidebarArea extends React.Component {
         </dl>
       </div>)}
 
-      {this.props.outcome !== "overall" && (<div className="content">
+      {this.props.program !== "overall" && (<div className="content">
         <dl>
           <dt>
             <h1>Projects and Initiatives in 2016</h1>
-            <h2>({meta.programs.find((p) => p.id === this.props.outcome).label})</h2>
+            <h2>({meta.programs.find((p) => p.id === this.props.program).label})</h2>
           </dt>
           <dd>{(statistics.projects_and_initiatives || 0).toLocaleString()}</dd>
           <dt>Participants reached in 2016</dt>
@@ -95,21 +95,21 @@ class SidebarArea extends React.Component {
               <li>
                 <div>Direct (?)</div>
                 <BarWrapper bar={ValueBar}
-                  colorClass={this.props.outcome}
-                  value={statistics[`${this.props.outcome}_direct_participants`]}
+                  colorClass={this.props.program}
+                  value={statistics[`${this.props.program}_direct_participants`]}
                   maxValue={statistics["total_direct_participants"]} />
                 <BarWrapper bar={ValueBar}
-                  value={statistics["total_direct_participants"] - statistics[`${this.props.outcome}_direct_participants`]}
+                  value={statistics["total_direct_participants"] - statistics[`${this.props.program}_direct_participants`]}
                   maxValue={statistics["total_direct_participants"]} />
               </li>
               <li>
                 <div>Indirect (?)</div>
                 <BarWrapper bar={ValueBar}
-                  colorClass={this.props.outcome}
-                  value={statistics[`${this.props.outcome}_indirect_participants`]}
+                  colorClass={this.props.program}
+                  value={statistics[`${this.props.program}_indirect_participants`]}
                   maxValue={statistics["total_indirect_participants"]} />
                 <BarWrapper bar={ValueBar}
-                  value={statistics["total_indirect_participants"] - statistics[`${this.props.outcome}_indirect_participants`]}
+                  value={statistics["total_indirect_participants"] - statistics[`${this.props.program}_indirect_participants`]}
                   maxValue={statistics["total_indirect_participants"]} />
               </li>
             </ul>
@@ -118,7 +118,7 @@ class SidebarArea extends React.Component {
       </div>)}
 
       <div className="filters">
-        <h1>Filter by outcome</h1>
+        <h1>Filter by program</h1>
         <ul>
           {meta.programs.map((program, n) => {
 
@@ -129,9 +129,9 @@ class SidebarArea extends React.Component {
             return (<li key={n} className={program.id}>
               <RadioButton
                 id={`radio-${n}`}
-                name="outcome-filter"
-                checked={this.props.outcome === program.id}
-                onChange={() => this.props.handleOutcomeChange(program.id)}>
+                name="program-filter"
+                checked={this.props.program === program.id}
+                onChange={() => this.props.handleprogramChange(program.id)}>
                 {program.label}
               </RadioButton>
               <BarWrapper bar={ValueBar}
@@ -148,7 +148,7 @@ class SidebarArea extends React.Component {
 
           })}
 
-          {this.props.outcome !== "overall" && (<li className="see-overall">
+          {this.props.program !== "overall" && (<li className="see-overall">
             <Link to={baseHref}>
               See overall
             </Link>
