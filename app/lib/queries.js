@@ -96,7 +96,7 @@ const getImpactStatisticsSQL = (region, country) => {
 };
 
 const getBoundsSQL = (table, country) => {
-  let query = Squel.select("the_geom").from(table);
+  let query = Squel.select({ replaceSingleQuotes: true }).field("the_geom").from(table);
 
   if (country) {
     query = query.where("country = ?", country);

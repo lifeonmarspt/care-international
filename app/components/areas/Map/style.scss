@@ -3,6 +3,8 @@
 
 #map {
   #leaflet {
+    background-color: #fff;
+
     &.clickable {
       cursor: pointer;
     }

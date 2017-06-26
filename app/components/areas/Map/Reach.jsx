@@ -16,6 +16,10 @@ const mainColor = (colorClass = "neutral", opacity = 0.8) =>
   `rgba(${meta.colors[colorClass].map((c) => c.toString(10))}, ${opacity})`;
 
 
+const baseLayerURL = "https://careinternational.carto.com/api/v2/viz/aa0b663e-b8af-4433-9ab0-4dbeb7c1b981/viz.json";
+
+const labelLayerURL = "https://careinternational.carto.com/api/v2/viz/3cb14d6b-49ab-423b-8290-7a19d374381e/viz.json";
+
 class ReachMapArea extends React.Component {
 
   static propTypes = {
@@ -54,10 +58,17 @@ class ReachMapArea extends React.Component {
   initLeaflet() {
     this.map = window.L.map("leaflet").setView([0, 0], 3);
 
-    // set a base layer
-    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "Map data © <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors",
-    }).addTo(this.map);
+    window.cartodb.createLayer(this.map, baseLayerURL, {
+      https: true,
+    }).addTo(this.map).done((layer) => {
+      layer.setZIndex(0);
+    });
+
+    window.cartodb.createLayer(this.map, labelLayerURL, {
+      https: true,
+    }).addTo(this.map).done((layer) => {
+      layer.setZIndex(2);
+    });
   }
 
   initCartoDBLayer() {
@@ -77,9 +88,11 @@ class ReachMapArea extends React.Component {
 
     window.cartodb.createLayer(this.map, layerSource, {
       https: true,
-    }).addTo(this.map).on("done", (layer) => {
+    }).addTo(this.map).done((layer) => {
 
       this.layer = layer;
+
+      layer.setZIndex(1);
 
       let subLayer = this.layer.getSubLayer(0);
       subLayer.setInteraction(true);
@@ -101,7 +114,7 @@ class ReachMapArea extends React.Component {
         document.getElementById("leaflet").classList.remove("clickable");
       });
 
-    }).on("error", (err) => {
+    }).error((err) => {
       // eslint-disable-next-line
       console.error("some error occurred: " + err);
     });
