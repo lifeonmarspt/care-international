@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import queryString from "query-string";
 
 import Header from "components/areas/Header";
 import Map from "components/areas/Map";
 import Sidebar from "components/areas/Sidebar";
 
+import getLocation from "lib/location";
 import { fetchRemoteData } from "lib/remote";
 
 class App extends React.PureComponent {
@@ -34,28 +34,8 @@ class App extends React.PureComponent {
   }
 
   navigate(reach, impact, country, program) {
-    let qs = queryString.stringify({
-      program: program,
-    });
-
-    let parts = [];
-
-    if (reach) {
-      parts.push("reach");
-    }
-
-    if (impact) {
-      parts.push("impact");
-    }
-
-    if (country) {
-      parts.push(encodeURIComponent(country));
-    }
-
-    let location = "/" + parts.join("/") + (qs ? `?${qs}` : "");
-
+    let location = getLocation(reach, impact, country, program);
     this.context.router.history.push(location);
-
   }
 
   handleProgramChange(program) {

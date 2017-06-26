@@ -7,6 +7,7 @@ import BarWrapper from "components/elements/BarWrapper";
 import PercentageBar from "components/elements/PercentageBar";
 import ValueBar from "components/elements/ValueBar";
 
+import getLocation from "lib/location";
 import meta from "resources/meta.json";
 
 import "./style.scss";
@@ -34,8 +35,11 @@ class SidebarArea extends React.Component {
   };
 
   render() {
-    let { loading, reach, impact, region, country, statistics } = this.props;
-    let baseHref = (reach && "/reach") || (impact && "/impact");
+    let { loading, reach, impact, region, country, program, statistics } = this.props;
+
+    let linkWorld = getLocation(reach, impact, null, program);
+    let linkOverall = getLocation(reach, impact, program, null);
+
     if (loading) {
       return (<div id="sidebar" />);
     }
@@ -44,7 +48,7 @@ class SidebarArea extends React.Component {
 
       {(region || country) && (<div className="breadcrumbs">
         <ul>
-          <li><Link to={baseHref}>World</Link></li>
+          <li><Link to={linkWorld}>World</Link></li>
           {region && (<li>{region}</li>)}
           {country && (<li>{country}</li>)}
         </ul>
@@ -149,7 +153,7 @@ class SidebarArea extends React.Component {
           })}
 
           {this.props.program !== "overall" && (<li className="see-overall">
-            <Link to={baseHref}>
+            <Link to={linkOverall}>
               See overall
             </Link>
           </li>)}
