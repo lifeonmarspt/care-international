@@ -46,7 +46,7 @@
 
 @each $outcome, $color in $outcomeColors {
   .#{$outcome}.percentagebar {
-    background-color: $color;
+    background-color: $accent-color-2;
   }
   .#{$outcome}.percentagebar {
     .percentagebar__current {
