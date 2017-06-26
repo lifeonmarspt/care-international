@@ -3,7 +3,7 @@ import config from "config.json";
 
 const cartoSQL = window.cartodb.SQL({
   user: config.cartodb.account,
-  sql_api_template: "https://{user}.cartodb.com",
+  sql_api_template: "https://{user}.carto.com",
 });
 
 const fetchRemoteData = (country, program) => {

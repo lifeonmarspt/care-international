@@ -39,7 +39,7 @@ class MapArea extends React.Component {
     // eslint-disable-next-line
     this.cartoSQL = window.cartodb.SQL({
       user: config.cartodb.account,
-      sql_api_template: "https://{user}.cartodb.com",
+      sql_api_template: "https://{user}.carto.com",
     });
   }
 
@@ -77,6 +77,7 @@ class MapArea extends React.Component {
     // add the cartodb layer
     let layerSource = {
       user_name: config.cartodb.account,
+      map_api_template: "https://{user}.carto.com",
       type: "cartodb",
       sublayers: [
         {
