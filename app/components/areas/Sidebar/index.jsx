@@ -52,9 +52,15 @@ class SidebarArea extends React.Component {
 
       {this.props.outcome === "overall" && (<div className="content">
         <dl>
-          <dt>Projects and Initiatives</dt>
-          <dd>{(statistics.projects_and_initiatives || 0).toLocaleString()}</dd>
-          <dt>Participants reached</dt>
+          <dt>
+            <h1>Projects and Initiatives in 2016</h1>
+          </dt>
+          <dd>
+            <span>{(statistics.projects_and_initiatives || 0).toLocaleString()}</span>
+          </dd>
+          <dt>
+            <h1>Participants reached</h1>
+          </dt>
           <dd>
             <ul>
               <li>
@@ -78,9 +84,12 @@ class SidebarArea extends React.Component {
 
       {this.props.outcome !== "overall" && (<div className="content">
         <dl>
-          <dt>Projects and Initiatives ({this.props.outcome.toUpperCase()})</dt>
+          <dt>
+            <h1>Projects and Initiatives in 2016</h1>
+            <h2>({meta.programs.find((p) => p.id === this.props.outcome).label})</h2>
+          </dt>
           <dd>{(statistics.projects_and_initiatives || 0).toLocaleString()}</dd>
-          <dt>Participants reached ({this.props.outcome.toUpperCase()})</dt>
+          <dt>Participants reached in 2016</dt>
           <dd>
             <ul>
               <li>
