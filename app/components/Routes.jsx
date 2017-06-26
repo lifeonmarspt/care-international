@@ -32,8 +32,8 @@ class Routes extends React.Component {
         <Route exact path="/reach" component={(props) => <AppWrapper reach {...props} />} />
         <Route exact path="/reach/:country" component={(props) => <AppWrapper reach {...props} />} />
         <Route exact path="/impact" component={(props) => <AppWrapper impact {...props} />} />
-        <Route exact path="/impact/:region" component={(props) => <App impact {...props} />} />
-        <Route exact path="/impact/:region/:country" component={(props) => <App impact {...props} />} />
+        <Route exact path="/impact/:region" component={(props) => <AppWrapper impact {...props} />} />
+        <Route exact path="/impact/:region/:country" component={(props) => <AppWrapper impact {...props} />} />
       </Switch>
     </Router>);
   }

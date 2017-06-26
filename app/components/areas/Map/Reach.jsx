@@ -16,28 +16,18 @@ const mainColor = (colorClass = "neutral", opacity = 0.8) =>
   `rgba(${meta.colors[colorClass].map((c) => c.toString(10))}, ${opacity})`;
 
 
-class MapArea extends React.Component {
+class ReachMapArea extends React.Component {
 
   static propTypes = {
     country: PropTypes.string,
     buckets: PropTypes.array.isRequired,
     bounds: PropTypes.array,
     program: PropTypes.string,
-    handleCountryChange: PropTypes.func.isRequired,
+    handleCountryChange: PropTypes.func,
   }
 
   static defaultProps = {
     program: "overall",
-  }
-
-  constructor(...args) {
-    super(...args);
-
-    this.state = {
-      lat: 51.505,
-      lng: -0.09,
-      zoom: 13,
-    };
   }
 
   getCartoCSS() {
@@ -131,6 +121,11 @@ class MapArea extends React.Component {
     this.initCartoDBLayer();
   }
 
+  componentWillUnmount() {
+    this.destroyCartoDBLayer();
+    this.destroyLeaflet();
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.program !== this.props.program) {
       this.destroyCartoDBLayer();
@@ -138,7 +133,7 @@ class MapArea extends React.Component {
     }
 
     if (prevProps.country !== this.props.country) {
-      fetchBounds(this.props.country)
+      fetchBounds("reach_data", this.props.country)
         .then((bounds) => {
           this.map.fitBounds(bounds);
         });
@@ -177,4 +172,4 @@ class MapArea extends React.Component {
 
 }
 
-export default MapArea;
+export default ReachMapArea;

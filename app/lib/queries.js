@@ -41,7 +41,6 @@ const getReachBucketsSQL = (program) => {
 };
 
 const getReachStatisticsSQL = (country) => {
-
   let fields = [
     "SUM(num_fnscc_direct_particip) AS fnscc_direct_participants",
     "SUM(num_fnscc_indirect_particip) AS fnscc_indirect_participants",
@@ -60,7 +59,9 @@ const getReachStatisticsSQL = (country) => {
     "SUM(COALESCE(percent_women_indirect_particip, 0) * total_num_indirect_participants) AS total_indirect_participants_women",
   ];
 
-  let query = Squel.select({ replaceSingleQuotes: true }).fields(fields).from("reach_data");
+  let query = Squel.select({ replaceSingleQuotes: true })
+    .fields(fields)
+    .from("reach_data");
 
   if (country) {
     query = query.where("country = ?", country);
@@ -69,8 +70,33 @@ const getReachStatisticsSQL = (country) => {
   return query.toString();
 };
 
-const getReachBoundsSQL = (country) => {
-  let query = Squel.select("the_geom").from("reach_data");
+const getImpactStatisticsSQL = (region, country) => {
+  let fields = [
+    "SUM(total_impact) AS total_impact",
+    "SUM(humanitarian_response) AS hum_impact",
+    "SUM(sexual_reproductive_and_maternal_health) AS srmh_impact",
+    "SUM(right_to_a_life_free_from_violence) AS lffv_impact",
+    "SUM(food_and_nutrition_security_and_resilience_to_climate_change) AS fnscc_impact",
+    "SUM(women_s_economic_empowerment) AS wee_impact",
+  ];
+
+  let query = Squel.select({ replaceSingleQuotes: true })
+    .fields(fields)
+    .from("impact_data");
+
+  if (country) {
+    query = query.where("country = ?", country);
+  }
+
+  if (region) {
+    query = query.where("region = ?", region);
+  }
+
+  return query.toString();
+};
+
+const getBoundsSQL = (table, country) => {
+  let query = Squel.select("the_geom").from(table);
 
   if (country) {
     query = query.where("country = ?", country);
@@ -78,12 +104,12 @@ const getReachBoundsSQL = (country) => {
 
   return query.toString();
 };
-
 
 export {
   numBuckets,
   getReachStatisticsSQL,
   getReachBucketsSQL,
   getReachMapSQL,
-  getReachBoundsSQL,
+  getImpactStatisticsSQL,
+  getBoundsSQL,
 };

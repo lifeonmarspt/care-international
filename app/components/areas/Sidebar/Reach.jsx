@@ -12,7 +12,7 @@ import meta from "resources/meta.json";
 
 import "./style.scss";
 
-class SidebarArea extends React.Component {
+class ReachSidebarArea extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object,
@@ -22,8 +22,6 @@ class SidebarArea extends React.Component {
     loading: PropTypes.bool.isRequired,
     statistics: PropTypes.object.isRequired,
     buckets: PropTypes.array.isRequired,
-    reach: PropTypes.bool,
-    impact: PropTypes.bool,
     region: PropTypes.string,
     country: PropTypes.string,
     program: PropTypes.string,
@@ -35,11 +33,17 @@ class SidebarArea extends React.Component {
   };
 
   render() {
-    let { loading, reach, impact, region, country, program, statistics } = this.props;
+    let {
+      loading,
+      region,
+      country,
+      program,
+      statistics,
+      handleProgramChange,
+    } = this.props;
 
-    let linkWorld = getLocation(reach, impact, null, program);
-    let linkOverall = getLocation(reach, impact, program, null);
-
+    let linkWorld = getLocation(true, false, undefined, program);
+    let linkOverall = getLocation(true, false, country, undefined);
     if (loading) {
       return (<div id="sidebar" />);
     }
@@ -54,13 +58,13 @@ class SidebarArea extends React.Component {
         </ul>
       </div>)}
 
-      {this.props.program === "overall" && (<div className="content">
+      {program === "overall" && (<div className="content">
         <dl>
           <dt>
             <h1>Projects and Initiatives in 2016</h1>
           </dt>
           <dd>
-            <span>{(statistics.projects_and_initiatives || 0).toLocaleString()}</span>
+            {(statistics.projects_and_initiatives || 0).toLocaleString()}
           </dd>
           <dt>
             <h1>Participants reached</h1>
@@ -86,34 +90,38 @@ class SidebarArea extends React.Component {
         </dl>
       </div>)}
 
-      {this.props.program !== "overall" && (<div className="content">
+      {program !== "overall" && (<div className="content">
         <dl>
           <dt>
             <h1>Projects and Initiatives in 2016</h1>
-            <h2>({meta.programs.find((p) => p.id === this.props.program).label})</h2>
+            <h2>({meta.programs.find((p) => p.id === program).label})</h2>
           </dt>
-          <dd>{(statistics.projects_and_initiatives || 0).toLocaleString()}</dd>
-          <dt>Participants reached in 2016</dt>
+          <dd>
+            {(statistics.projects_and_initiatives || 0).toLocaleString()}
+          </dd>
+          <dt>
+            <h1>Participants reached in 2016</h1>
+          </dt>
           <dd>
             <ul>
               <li>
                 <div>Direct (?)</div>
                 <BarWrapper bar={ValueBar}
-                  colorClass={this.props.program}
-                  value={statistics[`${this.props.program}_direct_participants`]}
+                  colorClass={program}
+                  value={statistics[`${program}_direct_participants`]}
                   maxValue={statistics["total_direct_participants"]} />
                 <BarWrapper bar={ValueBar}
-                  value={statistics["total_direct_participants"] - statistics[`${this.props.program}_direct_participants`]}
+                  value={statistics["total_direct_participants"] - statistics[`${program}_direct_participants`]}
                   maxValue={statistics["total_direct_participants"]} />
               </li>
               <li>
                 <div>Indirect (?)</div>
                 <BarWrapper bar={ValueBar}
-                  colorClass={this.props.program}
-                  value={statistics[`${this.props.program}_indirect_participants`]}
+                  colorClass={program}
+                  value={statistics[`${program}_indirect_participants`]}
                   maxValue={statistics["total_indirect_participants"]} />
                 <BarWrapper bar={ValueBar}
-                  value={statistics["total_indirect_participants"] - statistics[`${this.props.program}_indirect_participants`]}
+                  value={statistics["total_indirect_participants"] - statistics[`${program}_indirect_participants`]}
                   maxValue={statistics["total_indirect_participants"]} />
               </li>
             </ul>
@@ -122,43 +130,44 @@ class SidebarArea extends React.Component {
       </div>)}
 
       <div className="filters">
-        <h1>Filter by program</h1>
+        <h1>Participants by program area</h1>
         <ul>
-          {meta.programs.map((program, n) => {
+          {meta.programs.map((p, n) => {
 
-            let directValue = statistics[`${program.id}_direct_participants`];
-            let indirectValue = statistics[`${program.id}_indirect_participants`];
+            let directValue = statistics[`${p.id}_direct_participants`];
+            let indirectValue = statistics[`${p.id}_indirect_participants`];
             let maxValue = directValue + indirectValue;
 
-            return (<li key={n} className={program.id}>
+            return (<li key={n} className={p.id}>
               <RadioButton
                 id={`radio-${n}`}
                 name="program-filter"
-                checked={this.props.program === program.id}
-                onChange={() => this.props.handleProgramChange(program.id)}>
-                {program.label}
+                checked={program === p.id}
+                onChange={() => handleProgramChange(p.id)}>
+                {p.label}
               </RadioButton>
               <BarWrapper bar={ValueBar}
                 value={directValue}
                 maxValue={maxValue}
-                colorClass={program.id}
+                colorClass={p.id}
                 formatter={(v) => `${v.toLocaleString()} direct`} />
               <BarWrapper bar={ValueBar}
                 value={indirectValue}
                 maxValue={maxValue}
-                colorClass={program.id}
+                colorClass={p.id}
                 formatter={(v) => `${v.toLocaleString()} indirect`} />
             </li>);
 
           })}
 
-          {this.props.program !== "overall" && (<li className="see-overall">
+          {program !== "overall" && (<li className="see-overall">
             <Link to={linkOverall}>
               See overall
             </Link>
           </li>)}
         </ul>
       </div>
+
     </div>);
 
   }
@@ -166,4 +175,4 @@ class SidebarArea extends React.Component {
 }
 
 
-export default SidebarArea;
+export default ReachSidebarArea;

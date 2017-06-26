@@ -1,7 +1,8 @@
 import {
   getReachStatisticsSQL,
   getReachBucketsSQL,
-  getReachBoundsSQL,
+  getImpactStatisticsSQL,
+  getBoundsSQL,
 } from "lib/queries";
 import config from "config.json";
 
@@ -11,8 +12,7 @@ const cartoSQL = window.cartodb.SQL({
   sql_api_template: "https://{user}.carto.com",
 });
 
-const fetchRemoteData = (country, program) => {
-
+const fetchReachData = (country, program) => {
   let getStatistics = new window.Promise((resolve, reject) => {
     cartoSQL.execute(getReachStatisticsSQL(country))
       .done((result) => resolve(result))
@@ -26,18 +26,28 @@ const fetchRemoteData = (country, program) => {
   });
 
   return window.Promise.all([getStatistics, getBuckets]);
-
 };
 
-const fetchBounds = (country) => {
+const fetchImpactData = (region, country) => {
+  let getStatistics = new window.Promise((resolve, reject) => {
+    cartoSQL.execute(getImpactStatisticsSQL(region, country))
+      .done((result) => resolve(result))
+      .error((error) => reject(error));
+  });
+
+  return getStatistics;
+};
+
+const fetchBounds = (table, country) => {
   return new window.Promise((resolve, reject) => {
-    cartoSQL.getBounds(getReachBoundsSQL(country))
+    cartoSQL.getBounds(getBoundsSQL(table, country))
       .done((result) => resolve(result))
       .error((error) => reject(error));
   });
 };
 
 export {
-  fetchRemoteData,
+  fetchReachData,
+  fetchImpactData,
   fetchBounds,
 };

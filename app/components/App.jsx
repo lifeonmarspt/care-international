@@ -2,11 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import Header from "components/areas/Header";
-import Map from "components/areas/Map";
-import Sidebar from "components/areas/Sidebar";
+import ReachMap from "components/areas/Map/Reach";
+import ReachSidebar from "components/areas/Sidebar/Reach";
+import ImpactMap from "components/areas/Map/Impact";
+import ImpactSidebar from "components/areas/Sidebar/Impact";
 
 import getLocation from "lib/location";
-import { fetchRemoteData } from "lib/remote";
+import { fetchReachData, fetchImpactData } from "lib/remote";
 
 class App extends React.PureComponent {
 
@@ -48,19 +50,37 @@ class App extends React.PureComponent {
 
 
   fetchRemoteData() {
-    fetchRemoteData(this.props.country, this.state.program || "overall")
-      .then(([statistics, buckets]) => {
-        this.setState({
-          loading: false,
-          statistics: statistics.rows[0],
-          buckets: buckets.rows,
-          reach: this.props.reach,
-          impact: this.props.impact,
-          region: this.props.region,
-          country: this.props.country,
-          program: this.props.program,
+    // lol ifs ¯\_(ツ)_/¯
+    if (this.props.reach) {
+      fetchReachData(this.props.country, this.state.program || "overall")
+        .then(([statistics, buckets]) => {
+          this.setState({
+            loading: false,
+            statistics: statistics.rows[0],
+            buckets: buckets.rows,
+            reach: this.props.reach,
+            impact: this.props.impact,
+            region: this.props.region,
+            country: this.props.country,
+            program: this.props.program,
+          });
         });
-      });
+    } else if (this.props.impact) {
+      fetchImpactData(this.props.region, this.props.country)
+        .then((statistics) => {
+          this.setState({
+            loading: false,
+            statistics: statistics.rows[0],
+            reach: this.props.reach,
+            impact: this.props.impact,
+            region: this.props.region,
+            country: this.props.country,
+            program: this.props.program,
+          });
+        });
+    } else {
+      console.error("derp omg");
+    }
   }
 
   componentDidMount() {
@@ -74,26 +94,26 @@ class App extends React.PureComponent {
   }
 
   render() {
+    let MapComponent = this.props.reach ? ReachMap : ImpactMap;
+    let SidebarComponent = this.props.reach ? ReachSidebar : ImpactSidebar;
+
     return (<div id="app">
       <Header />
-      <Map
+      <MapComponent
         country={this.state.country}
         program={this.state.program}
         buckets={this.state.buckets}
         handleCountryChange={this.handleCountryChange.bind(this)}
       />
-      <Sidebar
+      <SidebarComponent
         loading={this.state.loading}
         statistics={this.state.statistics}
         buckets={this.state.buckets}
-        reach={this.state.reach}
-        impact={this.state.impact}
         region={this.state.region}
         country={this.state.country}
         program={this.state.program}
         handleProgramChange={this.handleProgramChange.bind(this)}
       />
-
     </div>);
   }
 }
