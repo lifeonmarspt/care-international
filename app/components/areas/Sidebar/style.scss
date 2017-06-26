@@ -73,9 +73,28 @@
     }
 
     ul {
+
       li {
         margin-bottom: 1em;
       }
+
+      li.see-overall {
+        width: 100%;
+        margin-top: 1em;
+
+        a {
+          width: 100%;
+          display: block;
+          box-sizing: border-box;
+          padding: 5px 0;
+          text-align: center;
+          border: 1px solid $bg-color-2;
+          border-radius: 2px;
+          color: $font-color-3;
+        }
+
+      }
     }
   }
+
 }

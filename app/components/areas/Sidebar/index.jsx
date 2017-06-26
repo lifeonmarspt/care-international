@@ -35,7 +35,7 @@ class SidebarArea extends React.Component {
 
   render() {
     let { loading, reach, impact, region, country, statistics } = this.props;
-
+    let baseHref = (reach && "/reach") || (impact && "/impact");
     if (loading) {
       return (<div id="sidebar" />);
     }
@@ -44,7 +44,7 @@ class SidebarArea extends React.Component {
 
       {(region || country) && (<div className="breadcrumbs">
         <ul>
-          <li><Link to={(reach && "/reach") || (impact && "/impact")}>World</Link></li>
+          <li><Link to={baseHref}>World</Link></li>
           {region && (<li>{region}</li>)}
           {country && (<li>{country}</li>)}
         </ul>
@@ -117,7 +117,7 @@ class SidebarArea extends React.Component {
             let indirectValue = statistics[`${program.id}_indirect_participants`];
             let maxValue = directValue + indirectValue;
 
-            return (<li key={n}>
+            return (<li key={n} className={program.id}>
               <RadioButton
                 id={`radio-${n}`}
                 name="outcome-filter"
@@ -139,11 +139,9 @@ class SidebarArea extends React.Component {
 
           })}
 
-          {this.props.outcome && (<li>
-            <Link to="">
-              <button>
-                see overall
-              </button>
+          {this.props.outcome !== "overall" && (<li className="see-overall">
+            <Link to={baseHref}>
+              See overall
             </Link>
           </li>)}
         </ul>

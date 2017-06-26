@@ -58,4 +58,7 @@
       border-top-color: $color;
     }
   }
+  .#{$outcome}.no-data {
+    color: $color
+  }
 }
