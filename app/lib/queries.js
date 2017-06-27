@@ -3,12 +3,12 @@ import Squel from "squel";
 const numBuckets = 5;
 
 const variables = {
-  overall: ["total_num_direct_participants", "total_num_indirect_participants"],
-  hum: ["num_hum_direct_particip", "num_hum_indirect_particip"],
-  wee: ["num_wee_direct_particip", "num_wee_indirect_particip"],
-  srmh: ["num_srmh_direct_particip", "num_srmh_indirect_particip"],
-  lffv: ["num_lffv_direct_particip", "num_lffv_indirect_particip"],
-  fnscc: ["num_fnscc_direct_particip", "num_fnscc_indirect_particip"],
+  overall: ["num_direct_participants", "num_indirect_participants"],
+  hum: ["num_hum_direct_participants", "num_hum_indirect_participants"],
+  wee: ["num_wee_direct_participants", "num_wee_indirect_participants"],
+  srmh: ["num_srmh_direct_participants", "num_srmh_indirect_participants"],
+  lffv: ["num_lffv_direct_participants", "num_lffv_indirect_participants"],
+  fnscc: ["num_fnscc_direct_participants", "num_fnscc_indirect_participants"],
 };
 
 const getReachMapSQL = (program)  => {
@@ -42,21 +42,21 @@ const getReachBucketsSQL = (program) => {
 
 const getReachStatisticsSQL = (country) => {
   let fields = [
-    "SUM(num_fnscc_direct_particip) AS fnscc_direct_participants",
-    "SUM(num_fnscc_indirect_particip) AS fnscc_indirect_participants",
-    "SUM(num_hum_direct_particip) AS hum_direct_participants",
-    "SUM(num_hum_indirect_particip) AS hum_indirect_participants",
-    "SUM(num_lffv_direct_particip) AS lffv_direct_participants",
-    "SUM(num_lffv_indirect_particip) AS lffv_indirect_participants",
-    "SUM(num_wee_direct_particip) AS wee_direct_participants",
-    "SUM(num_wee_indirect_particip) AS wee_indirect_participants",
-    "SUM(num_srmh_direct_particip) AS srmh_direct_participants",
-    "SUM(num_srmh_indirect_particip) AS srmh_indirect_participants",
+    "SUM(num_fnscc_direct_participants) AS fnscc_direct_participants",
+    "SUM(num_fnscc_indirect_participants) AS fnscc_indirect_participants",
+    "SUM(num_hum_direct_participants) AS hum_direct_participants",
+    "SUM(num_hum_indirect_participants) AS hum_indirect_participants",
+    "SUM(num_lffv_direct_participants) AS lffv_direct_participants",
+    "SUM(num_lffv_indirect_participants) AS lffv_indirect_participants",
+    "SUM(num_wee_direct_participants) AS wee_direct_participants",
+    "SUM(num_wee_indirect_participants) AS wee_indirect_participants",
+    "SUM(num_srmh_direct_participants) AS srmh_direct_participants",
+    "SUM(num_srmh_indirect_participants) AS srmh_indirect_participants",
     "SUM(num_projects_and_initiatives) AS projects_and_initiatives",
-    "SUM(total_num_direct_participants) AS total_direct_participants",
-    "SUM(total_num_indirect_participants) AS total_indirect_participants",
-    "SUM(COALESCE(percent_women_direct_particip, 0) * total_num_direct_participants) AS total_direct_participants_women",
-    "SUM(COALESCE(percent_women_indirect_particip, 0) * total_num_indirect_participants) AS total_indirect_participants_women",
+    "SUM(num_direct_participants) AS total_direct_participants",
+    "SUM(num_indirect_participants) AS total_indirect_participants",
+    "SUM(COALESCE(percent_women_of_direct_participants, 0) * num_direct_participants) AS total_direct_participants_women",
+    "SUM(COALESCE(percent_women_of_indirect_participants, 0) * num_indirect_participants) AS total_indirect_participants_women",
   ];
 
   let query = Squel.select({ replaceSingleQuotes: true })
