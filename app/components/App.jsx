@@ -39,8 +39,8 @@ class App extends React.PureComponent {
     };
   }
 
-  navigate(reach, impact, country, program) {
-    let location = getLocation(reach, impact, country, program);
+  navigate(reach, impact, region, country, program) {
+    let location = getLocation(reach, impact, region, country, program);
     this.context.router.history.push(location);
   }
 
