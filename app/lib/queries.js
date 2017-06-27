@@ -101,10 +101,9 @@ const getImpactStatisticsSQL = (region, country) => {
   return query.toString();
 };
 
-const getImpactRegionDataSQL = () => {
+const getImpactRegionDataSQL = (region) => {
 
   let subfields = [
-    "region",
     "ST_Centroid(ST_Union(the_geom)) AS region_center",
     "SUM(total_impact) AS overall_impact",
     `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(total_impact) DESC) AS overall_position`,
@@ -120,10 +119,20 @@ const getImpactRegionDataSQL = () => {
     `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(women_s_economic_empowerment) DESC) AS wee_position`,
   ];
 
+  if (!region) {
+    subfields.push("region");
+  }
+
   let subquery = SquelPostgres.select({ replaceSingleQuotes: true })
     .fields(subfields)
-    .from("impact_data")
-    .group("region");
+    .from("impact_data");
+
+  if (!region) {
+    subquery = subquery.group("region");
+  } else {
+    subquery = subquery.where("region = ?", region);
+    subquery = subquery.group("country");
+  }
 
   let fields = [
     "ST_X(region_center) AS region_center_x",

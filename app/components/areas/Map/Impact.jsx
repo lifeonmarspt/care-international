@@ -36,7 +36,7 @@ class ImpactMapArea extends React.Component {
     regions: PropTypes.array,
     bounds: PropTypes.array,
     program: PropTypes.string,
-    handleCountryChange: PropTypes.func,
+    handleRegionChange: PropTypes.func,
   }
 
   static defaultProps = {
@@ -75,7 +75,9 @@ class ImpactMapArea extends React.Component {
 
       return window.L.marker([region.region_center_y, region.region_center_x], {
         icon: getSVGIcon(value, this.props.program, bucketSize[region[`${this.props.program}_position`]]),
-      }).addTo(this.map);
+      }).addTo(this.map).on("click", () => {
+        this.props.handleRegionChange(region.region);
+      });
 
     }).filter((s) => s);
   }

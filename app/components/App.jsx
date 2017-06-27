@@ -45,11 +45,15 @@ class App extends React.PureComponent {
   }
 
   handleProgramChange(program) {
-    this.navigate(this.state.reach, this.state.impact, this.state.country, program);
+    this.navigate(this.state.reach, this.state.impact, this.state.region, this.state.country, program);
   }
 
   handleCountryChange(country) {
-    this.navigate(this.state.reach, this.state.impact, country, this.state.program);
+    this.navigate(this.state.reach, this.state.impact, this.state.region, country, this.state.program);
+  }
+
+  handleRegionChange(region) {
+    this.navigate(this.state.reach, this.state.impact, region, this.state.country, this.state.program);
   }
 
   fetchRemoteData() {
@@ -107,6 +111,7 @@ class App extends React.PureComponent {
         buckets={this.state.buckets}
         regions={this.state.regions}
         handleCountryChange={this.handleCountryChange.bind(this)}
+        handleRegionChange={this.handleRegionChange.bind(this)}
       />
       <SidebarComponent
         loading={this.state.loading}

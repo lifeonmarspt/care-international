@@ -38,7 +38,7 @@ const fetchImpactData = (region, country) => {
   });
 
   let getRegionData = new window.Promise((resolve, reject) => {
-    cartoSQL.execute(getImpactRegionDataSQL())
+    cartoSQL.execute(getImpactRegionDataSQL(region))
       .done((result) => resolve(result))
       .error((error) => reject(error));
   });
