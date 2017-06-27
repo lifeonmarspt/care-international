@@ -104,7 +104,7 @@ const getImpactStatisticsSQL = (region, country) => {
 const getImpactRegionDataSQL = (region) => {
 
   let subfields = [
-    "ST_Centroid(ST_Union(the_geom)) AS region_center",
+    "ST_Centroid(ST_Collect(the_geom)) AS region_center",
     "SUM(total_impact) AS overall_impact",
     `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(total_impact) DESC) AS overall_position`,
     "SUM(humanitarian_response) AS hum_impact",
