@@ -67,17 +67,14 @@ class ImpactMapArea extends React.Component {
   initMarkers() {
     this.markers = this.props.regions.map((region) => {
 
-      let value = this.props.program === "overall" ?
-        region["total_impact"] :
-        region[`${this.props.program}_impact`];
+      let value = region[`${this.props.program}_impact`];
 
       if (!value) {
         return null;
       }
 
-      let bucket = this.props.buckets.find((bucket) => bucket.region === region.region);
       return window.L.marker([region.region_center_y, region.region_center_x], {
-        icon: getSVGIcon(value, this.props.program, bucketSize[bucket.position]),
+        icon: getSVGIcon(value, this.props.program, bucketSize[region[`${this.props.program}_position`]]),
       }).addTo(this.map);
 
     }).filter((s) => s);

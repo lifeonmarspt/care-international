@@ -30,7 +30,7 @@ const fetchReachData = (country, program) => {
   return window.Promise.all([getStatistics, getBuckets]);
 };
 
-const fetchImpactData = (region, country, program) => {
+const fetchImpactData = (region, country) => {
   let getStatistics = new window.Promise((resolve, reject) => {
     cartoSQL.execute(getImpactStatisticsSQL(region, country))
       .done((result) => resolve(result))
@@ -43,13 +43,7 @@ const fetchImpactData = (region, country, program) => {
       .error((error) => reject(error));
   });
 
-  let getBuckets = new window.Promise((resolve, reject) => {
-    cartoSQL.execute(getImpactBucketsSQL(program))
-      .done((result) => resolve(result))
-      .error((error) => reject(error));
-  });
-
-  return window.Promise.all([getStatistics, getRegionData, getBuckets]);
+  return window.Promise.all([getStatistics, getRegionData]);
 };
 
 const fetchBounds = (table, country) => {

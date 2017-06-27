@@ -52,7 +52,6 @@ class App extends React.PureComponent {
     this.navigate(this.state.reach, this.state.impact, country, this.state.program);
   }
 
-
   fetchRemoteData() {
     // lol ifs ¯\_(ツ)_/¯
     if (this.props.reach) {
@@ -70,13 +69,12 @@ class App extends React.PureComponent {
           });
         });
     } else if (this.props.impact) {
-      fetchImpactData(this.props.region, this.props.country, this.props.program)
-        .then(([statistics, regions, buckets]) => {
+      fetchImpactData(this.props.region, this.props.country)
+        .then(([statistics, regions]) => {
           this.setState({
             loading: false,
             statistics: statistics.rows[0],
             regions: regions.rows,
-            buckets: buckets.rows,
             reach: this.props.reach,
             impact: this.props.impact,
             region: this.props.region,
@@ -84,8 +82,6 @@ class App extends React.PureComponent {
             program: this.props.program,
           });
         });
-    } else {
-      console.error("derp omg");
     }
   }
 

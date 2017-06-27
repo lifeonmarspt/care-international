@@ -17,15 +17,6 @@ const reachVariables = {
   fnscc: ["num_fnscc_direct_participants", "num_fnscc_indirect_participants"],
 };
 
-const impactVariables = {
-  overall: "total_impact",
-  hum: "humanitarian_response",
-  wee: "women_s_economic_empowerment",
-  srmh: "sexual_reproductive_and_maternal_health",
-  lffv: "right_to_a_life_free_from_violence",
-  fnscc: "food_and_nutrition_security_and_resilience_to_climate_change",
-};
-
 const getReachMapSQL = (program)  => {
   const whereClause = reachVariables[program].map((f) => `${f} IS NOT NULL`).join(" AND ");
 
@@ -115,12 +106,18 @@ const getImpactRegionDataSQL = () => {
   let subfields = [
     "region",
     "ST_Centroid(ST_Union(the_geom)) AS region_center",
-    "SUM(total_impact) AS total_impact",
+    "SUM(total_impact) AS overall_impact",
+    `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(total_impact) DESC) AS overall_position`,
     "SUM(humanitarian_response) AS hum_impact",
+    `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(humanitarian_response) DESC) AS hum_position`,
     "SUM(sexual_reproductive_and_maternal_health) AS srmh_impact",
+    `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(sexual_reproductive_and_maternal_health) DESC) AS srmh_position`,
     "SUM(right_to_a_life_free_from_violence) AS lffv_impact",
+    `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(right_to_a_life_free_from_violence) DESC) AS lffv_position`,
     "SUM(food_and_nutrition_security_and_resilience_to_climate_change) AS fnscc_impact",
+    `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(food_and_nutrition_security_and_resilience_to_climate_change) DESC) AS fnscc_position`,
     "SUM(women_s_economic_empowerment) AS wee_impact",
+    `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(women_s_economic_empowerment) DESC) AS wee_position`,
   ];
 
   let subquery = SquelPostgres.select({ replaceSingleQuotes: true })
@@ -139,24 +136,6 @@ const getImpactRegionDataSQL = () => {
     .from(subquery, "sq");
 
   return query.toString();
-
-};
-
-const getImpactBucketsSQL = (program) => {
-  let query = `WITH buckets as (
-    SELECT NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(${impactVariables[program]}) DESC) AS position,
-           SUM(${impactVariables[program]}) AS impact,
-           region AS region
-    FROM impact_data
-    WHERE ${impactVariables[program]} IS NOT NULL
-    GROUP BY region
-  )
-  SELECT buckets.position, buckets.region, buckets.impact
-  FROM buckets
-  GROUP BY position, region, impact
-  ORDER BY position`;
-
-  return query;
 };
 
 const getBoundsSQL = (table, country) => {
@@ -176,6 +155,5 @@ export {
   getReachMapSQL,
   getImpactStatisticsSQL,
   getImpactRegionDataSQL,
-  getImpactBucketsSQL,
   getBoundsSQL,
 };
