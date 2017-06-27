@@ -23,6 +23,10 @@ class App extends React.PureComponent {
     country: PropTypes.string,
   };
 
+  static defaultProps = {
+    program: "overall",
+  }
+
   constructor(...args) {
     super(...args);
 
@@ -52,7 +56,7 @@ class App extends React.PureComponent {
   fetchRemoteData() {
     // lol ifs ¯\_(ツ)_/¯
     if (this.props.reach) {
-      fetchReachData(this.props.country, this.state.program || "overall")
+      fetchReachData(this.props.country, this.props.program)
         .then(([statistics, buckets]) => {
           this.setState({
             loading: false,
@@ -66,11 +70,13 @@ class App extends React.PureComponent {
           });
         });
     } else if (this.props.impact) {
-      fetchImpactData(this.props.region, this.props.country)
-        .then((statistics) => {
+      fetchImpactData(this.props.region, this.props.country, this.props.program)
+        .then(([statistics, regions, buckets]) => {
           this.setState({
             loading: false,
             statistics: statistics.rows[0],
+            regions: regions.rows,
+            buckets: buckets.rows,
             reach: this.props.reach,
             impact: this.props.impact,
             region: this.props.region,
@@ -103,6 +109,7 @@ class App extends React.PureComponent {
         country={this.state.country}
         program={this.state.program}
         buckets={this.state.buckets}
+        regions={this.state.regions}
         handleCountryChange={this.handleCountryChange.bind(this)}
       />
       <SidebarComponent

@@ -2,6 +2,8 @@ import {
   getReachStatisticsSQL,
   getReachBucketsSQL,
   getImpactStatisticsSQL,
+  getImpactRegionDataSQL,
+  getImpactBucketsSQL,
   getBoundsSQL,
 } from "lib/queries";
 import config from "config.json";
@@ -28,14 +30,26 @@ const fetchReachData = (country, program) => {
   return window.Promise.all([getStatistics, getBuckets]);
 };
 
-const fetchImpactData = (region, country) => {
+const fetchImpactData = (region, country, program) => {
   let getStatistics = new window.Promise((resolve, reject) => {
     cartoSQL.execute(getImpactStatisticsSQL(region, country))
       .done((result) => resolve(result))
       .error((error) => reject(error));
   });
 
-  return getStatistics;
+  let getRegionData = new window.Promise((resolve, reject) => {
+    cartoSQL.execute(getImpactRegionDataSQL())
+      .done((result) => resolve(result))
+      .error((error) => reject(error));
+  });
+
+  let getBuckets = new window.Promise((resolve, reject) => {
+    cartoSQL.execute(getImpactBucketsSQL(program))
+      .done((result) => resolve(result))
+      .error((error) => reject(error));
+  });
+
+  return window.Promise.all([getStatistics, getRegionData, getBuckets]);
 };
 
 const fetchBounds = (table, country) => {
