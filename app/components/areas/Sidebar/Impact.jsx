@@ -101,6 +101,7 @@ class ImpactSidebarArea extends React.Component {
               <BarWrapper bar={ValueBar}
                 value={value}
                 maxValue={maxValue}
+                formatter={(v) => v.toLocaleString()}
                 colorClass={p.id} />
             </li>);
 
