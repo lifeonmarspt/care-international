@@ -26,38 +26,12 @@
   }
 }
 
-.overall.valuebar {
-  .valuebar__current {
-    background-color: $variable-color-1;
+
+@each $program, $color in $programColors {
+  .#{$program}.valuebar {
+    .valuebar__current {
+      background-color: $color;
+    }
   }
 }
 
-.hum.valuebar {
-  .valuebar__current {
-    background-color: $variable-color-2;
-  }
-}
-
-.srmh.valuebar {
-  .valuebar__current {
-    background-color: $variable-color-4;
-  }
-}
-
-.lffv.valuebar {
-  .valuebar__current {
-    background-color: $variable-color-5;
-  }
-}
-
-.fnscc.valuebar {
-  .valuebar__current {
-    background-color: $variable-color-6;
-  }
-}
-
-.wee.valuebar {
-  .valuebar__current {
-    background-color: $variable-color-3;
-  }
-}
