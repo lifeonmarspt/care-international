@@ -42,8 +42,8 @@ class ReachSidebarArea extends React.Component {
       handleProgramChange,
     } = this.props;
 
-    let linkWorld = getLocation(true, false, undefined, program);
-    let linkOverall = getLocation(true, false, country, undefined);
+    let linkWorld = getLocation(true, false, undefined, undefined, program);
+    let linkOverall = getLocation(true, false, undefined, country, undefined);
     if (loading) {
       return (<div id="sidebar" />);
     }

@@ -43,8 +43,8 @@ class ImpactSidebarArea extends React.Component {
       handleProgramChange,
     } = this.props;
 
-    let linkWorld = getLocation(false, true, undefined, program);
-    let linkOverall = getLocation(false, true, country, undefined);
+    let linkWorld = getLocation(false, true, undefined, undefined, program);
+    let linkOverall = getLocation(false, true, undefined, country, undefined);
     if (loading) {
       return (<div id="sidebar" />);
     }
