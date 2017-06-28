@@ -62,7 +62,7 @@ class ImpactSidebarArea extends React.Component {
       {program === "overall" && (<div className="content">
         <dl>
           <dt>
-            <h1>Total Population impacted in 2016</h1>
+            Total Population impacted in 2016
           </dt>
           <dd>
             <span>{statistics.total_impact.toLocaleString()}</span>
@@ -73,7 +73,7 @@ class ImpactSidebarArea extends React.Component {
       {program !== "overall" && (<div className="content">
         <dl>
           <dt>
-            <h1>Total Population impacted in 2016</h1>
+            Total Population impacted in 2016
             <h2>({meta.programs.find((p) => p.id === program).label})</h2>
           </dt>
           <dd>
@@ -83,36 +83,42 @@ class ImpactSidebarArea extends React.Component {
       </div>)}
 
       <div className="filters">
-        <h1>Participants by program area</h1>
-        <ul>
-          {meta.programs.map((p, n) => {
+        <dl>
+          <dt>
+            Participants by program area
+          </dt>
+          <dd>
+            <ul>
+              {meta.programs.map((p, n) => {
 
-            let value = statistics[`${p.id}_impact`];
-            let maxValue = statistics["total_impact"];
+                let value = statistics[`${p.id}_impact`];
+                let maxValue = statistics["total_impact"];
 
-            return (<li key={n} className={p.id}>
-              <RadioButton
-                id={`radio-${n}`}
-                name="program-filter"
-                checked={program === p.id}
-                onChange={() => handleProgramChange(p.id)}>
-                {p.label}
-              </RadioButton>
-              <BarWrapper bar={ValueBar}
-                value={value}
-                maxValue={maxValue}
-                formatter={(v) => v.toLocaleString()}
-                colorClass={p.id} />
-            </li>);
+                return (<li key={n} className={p.id}>
+                  <RadioButton
+                    id={`radio-${n}`}
+                    name="program-filter"
+                    checked={program === p.id}
+                    onChange={() => handleProgramChange(p.id)}>
+                    {p.label}
+                  </RadioButton>
+                  <BarWrapper bar={ValueBar}
+                    value={value}
+                    maxValue={maxValue}
+                    formatter={(v) => v.toLocaleString()}
+                    colorClass={p.id} />
+                </li>);
 
-          })}
+              })}
 
-          {program !== "overall" && (<li className="see-overall">
-            <Link to={linkOverall}>
-              See overall
-            </Link>
-          </li>)}
-        </ul>
+              {program !== "overall" && (<li className="see-overall">
+                <Link to={linkOverall}>
+                  See overall
+                </Link>
+              </li>)}
+            </ul>
+          </dd>
+        </dl>
       </div>
 
     </div>);

@@ -153,13 +153,18 @@ class ReachMapArea extends React.Component {
     }
   }
 
-  render() {
-    return (
-      <div id="map">
-        <div id="leaflet" />
-        <div id="legend">
+  renderLegend() {
+    return (<div id="legend">
+      <ul>
+        <li>
           <Link to="#">Show Regions</Link>
-          <p>Participants reached by country</p>
+        </li>
+        <li>
+          <p>
+            Direct participants reached in 2016 by country
+          </p>
+        </li>
+        <li>
           <ul className="scale">
             {this.props.buckets.map((bucket, n) => {
               let liStyle = {
@@ -178,9 +183,16 @@ class ReachMapArea extends React.Component {
               <span>Care international members</span>
             </li>
           </ul>
-        </div>
-      </div>
-    );
+        </li>
+      </ul>
+    </div>);
+  }
+
+  render() {
+    return (<div id="map">
+      <div id="leaflet" />
+      {this.renderLegend()}
+    </div>);
   }
 
 }

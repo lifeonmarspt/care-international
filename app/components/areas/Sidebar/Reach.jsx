@@ -61,13 +61,18 @@ class ReachSidebarArea extends React.Component {
       {program === "overall" && (<div className="content">
         <dl>
           <dt>
-            <h1>Projects and Initiatives in 2016</h1>
+            Projects and Initiatives in 2016
           </dt>
           <dd>
             {(statistics.projects_and_initiatives || 0).toLocaleString()}
           </dd>
+        </dl>
+      </div>)}
+
+      {program === "overall" && (<div className="content">
+        <dl>
           <dt>
-            <h1>Participants reached</h1>
+            Participants reached in 2016
           </dt>
           <dd>
             <ul>
@@ -93,14 +98,19 @@ class ReachSidebarArea extends React.Component {
       {program !== "overall" && (<div className="content">
         <dl>
           <dt>
-            <h1>Projects and Initiatives in 2016</h1>
-            <h2>({meta.programs.find((p) => p.id === program).label})</h2>
+            Projects and Initiatives in 2016
+            ({meta.programs.find((p) => p.id === program).label})
           </dt>
           <dd>
             {(statistics.projects_and_initiatives || 0).toLocaleString()}
           </dd>
+        </dl>
+      </div>)}
+
+      {program !== "overall" && (<div className="content">
+        <dl>
           <dt>
-            <h1>Participants reached in 2016</h1>
+            Participants reached in 2016
           </dt>
           <dd>
             <ul>
@@ -130,42 +140,54 @@ class ReachSidebarArea extends React.Component {
       </div>)}
 
       <div className="filters">
-        <h1>Participants by program area</h1>
-        <ul>
-          {meta.programs.map((p, n) => {
 
-            let directValue = statistics[`${p.id}_direct_participants`];
-            let indirectValue = statistics[`${p.id}_indirect_participants`];
-            let maxValue = directValue + indirectValue;
+        <dl>
+          <dt>
+            Participants by program area
+          </dt>
+          <dd>
+            <ul>
+              {meta.programs.map((p, n) => {
+                let directValue = statistics[`${p.id}_direct_participants`];
+                let indirectValue = statistics[`${p.id}_indirect_participants`];
+                let maxValue = directValue + indirectValue;
 
-            return (<li key={n} className={p.id}>
-              <RadioButton
-                id={`radio-${n}`}
-                name="program-filter"
-                checked={program === p.id}
-                onChange={() => handleProgramChange(p.id)}>
-                {p.label}
-              </RadioButton>
-              <BarWrapper bar={ValueBar}
-                value={directValue}
-                maxValue={maxValue}
-                colorClass={p.id}
-                formatter={(v) => `${v.toLocaleString()} direct`} />
-              <BarWrapper bar={ValueBar}
-                value={indirectValue}
-                maxValue={maxValue}
-                colorClass={p.id}
-                formatter={(v) => `${v.toLocaleString()} indirect`} />
-            </li>);
-
-          })}
-
-          {program !== "overall" && (<li className="see-overall">
-            <Link to={linkOverall}>
-              See overall
-            </Link>
-          </li>)}
-        </ul>
+                return (<li key={n} className={p.id}>
+                  <RadioButton
+                    id={`radio-${n}`}
+                    name="program-filter"
+                    checked={program === p.id}
+                    onChange={() => handleProgramChange(p.id)}>
+                    {p.label}
+                  </RadioButton>
+                  <ul>
+                    <li>
+                      <BarWrapper bar={ValueBar}
+                        value={directValue}
+                        maxValue={maxValue}
+                        colorClass={p.id}
+                        formatter={(v) => `${v.toLocaleString()} direct`}
+                      />
+                    </li>
+                    <li>
+                      <BarWrapper bar={ValueBar}
+                        value={indirectValue}
+                        maxValue={maxValue}
+                        colorClass={p.id}
+                        formatter={(v) => `${v.toLocaleString()} indirect`}
+                      />
+                    </li>
+                  </ul>
+                </li>);
+              })}
+              {program !== "overall" && (<li className="see-overall">
+                <Link to={linkOverall}>
+                  See overall
+                </Link>
+              </li>)}
+            </ul>
+          </dd>
+        </dl>
       </div>
 
     </div>);

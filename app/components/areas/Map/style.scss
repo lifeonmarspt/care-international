@@ -15,14 +15,31 @@
   }
 
   #legend {
+    border: 1px solid $accent-color-5;
+    box-shadow: 0 0 7px 0 rgba(209,203,203,0.44);
     position: absolute;
     bottom: 20px;
     right: 20px;
     background-color: white;
-    border: 1px solid black;
-    padding: 1em 1.5em;
+    padding: 12px;
+    font-family: Helvetica;
+    font-size: 14px;
 
-    ul {
+    a {
+      color: $font-color-3;
+    }
+
+    p {
+      font-family: 'Libre Baskerville', serif;
+    }
+
+    > ul {
+      li:not(:last-child) {
+        margin-bottom: .5em;
+      }
+    }
+
+    ul.scale, ul.exceptions {
       position: relative;
       display: flex;
       align-items: flex-start;
@@ -34,7 +51,7 @@
 
       li {
         height: 10px;
-        width: 50px;
+        width: 68px;
         margin-bottom: 1em;
 
         span {

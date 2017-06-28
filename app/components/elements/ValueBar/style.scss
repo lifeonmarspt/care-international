@@ -1,13 +1,14 @@
 @import "../../../styles/colors.scss";
 
 .valuebar__container {
-  margin-bottom: 1em;
+  font-family: Helvetica;
+  font-size: 14px;
+  color: $accent-color-3;
 }
 
 .valuebar {
   margin-right: 0.5em;
   height: 6px;
-  width: 100px;
   display: inline-block;
   vertical-align: middle;
 }
