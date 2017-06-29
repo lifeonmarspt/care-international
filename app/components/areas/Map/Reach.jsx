@@ -43,7 +43,7 @@ class ReachMapArea extends React.Component {
       .map((n) => `
         #layer[bucket=${n}] {
           polygon-fill: ${choroColors[this.props.program][n-1]};
-          line-color: ${choroColors[this.props.program][n-1]};
+          line-color: #CCC;
         }
       `)
       .join(" ") + `

@@ -7,25 +7,24 @@
 
   label {
     display: flex;
-    align-items: center;
-    color: $accent-color-3;
+    align-items: flex-start;
+    color: $font-color-1;
     cursor: pointer;
-  }
 
-  svg {
-    margin-right: 5px;
-    min-width: 14px;
+    svg {
+      margin-right: 5px;
+      min-width: 14px;
 
-    circle.inner {
-      fill: none;
-      stroke: none;
+      circle.inner {
+        fill: none;
+        stroke: none;
+      }
+
+      circle.outer {
+        stroke: $accent-color-2;
+      }
     }
-
-    circle.outer {
-      stroke: $accent-color-2;
-    }
   }
-
 }
 
 #sidebar {

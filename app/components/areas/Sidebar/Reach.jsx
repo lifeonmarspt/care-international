@@ -99,7 +99,7 @@ class ReachSidebarArea extends React.Component {
         <dl>
           <dt>
             Projects and Initiatives in 2016
-            ({meta.programs.find((p) => p.id === program).label})
+            <span className="subtitle">({meta.programs.find((p) => p.id === program).label})</span>
           </dt>
           <dd>
             {(statistics.projects_and_initiatives || 0).toLocaleString()}

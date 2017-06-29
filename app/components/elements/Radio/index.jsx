@@ -25,7 +25,9 @@ class RadioButton extends React.Component {
           <circle className="outer" cx="7" cy="7" r="6" stroke="black" strokeWidth="1" fill="none" />
           <circle className="inner" cx="7" cy="7" r="3" stroke="black" strokeWidth="1" fill="black" />
         </svg>
-        {this.props.children}
+        <span>
+          {this.props.children}
+        </span>
       </label>
     </span>);
   }

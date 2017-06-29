@@ -1,1 +1,30 @@
-@import url('https://fonts.googleapis.com/css?family=Libre+Baskerville');
+@font-face {
+    font-family: ITC Officina Sans Std;
+    src: url("/app/fonts/ITC Officina Sans Std/OfficinaSansStd-Book.otf") format("opentype");
+}
+
+@font-face {
+    font-family: ITC Officina Sans Std;
+		font-weight: bold;
+    src: url("/app/fonts/ITC Officina Sans Std/OfficinaSansStd-Bold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: Libre Baskerville;
+    src: url("/app/fonts/Libre_Baskerville/LibreBaskerville-Regular.ttf") format("truetype");
+}
+
+/*
+import "fonts/ITC Officina Serif Std/OfficinaSerifStd-BookItalic.otf";
+import "fonts/ITC Officina Serif Std/OfficinaSerifStd-Book.otf";
+import "fonts/ITC Officina Serif Std/OfficinaSerifStd-BoldItalic.otf";
+import "fonts/ITC Officina Serif Std/OfficinaSerifStd-Bold.otf";
+import "fonts/ITC Officina Sans Std/OfficinaSansStd-BookItalic.otf";
+import "fonts/ITC Officina Sans Std/OfficinaSansStd-Book.otf";
+import "fonts/ITC Officina Sans Std/OfficinaSansStd-BoldItalic.otf";
+import "fonts/ITC Officina Sans Std/OfficinaSansStd-Bold.otf";
+import "fonts/Libre_Baskerville/LibreBaskerville-Regular.ttf";
+import "fonts/Libre_Baskerville/LibreBaskerville-Italic.ttf";
+import "fonts/Libre_Baskerville/LibreBaskerville-Bold.ttf";
+*/
+
