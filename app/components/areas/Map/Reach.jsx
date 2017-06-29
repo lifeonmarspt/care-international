@@ -53,7 +53,7 @@ class ReachMapArea extends React.Component {
         line-color: #888;
       }
       #layed[care_member=true] {
-        polygon-pattern-file: url(http://com.cartodb.users-assets.production.s3.amazonaws.com/patterns/diagonal_1px_med.png);
+        polygon-pattern-file: url(https://careinternational.herokuapp.com/stripes-pattern.png);
       }
       `;
   }
