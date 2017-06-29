@@ -1,0 +1,48 @@
+@import "../../../styles/colors.scss";
+@import "../../../styles/values.scss";
+
+#leaflet {
+  background-color: #fff;
+
+  &.clickable {
+    cursor: pointer;
+  }
+
+  .leaflet-control-attribution {
+    display: none;
+  }
+}
+
+#leaflet-custom-controls {
+  position: absolute;
+  top: 35px;
+  right: 35px;
+  z-index: 10;
+
+  > div {
+    width: 35px;
+    height: 35px;
+    border: 1px solid $accent-color-6;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  #leaflet-zoom-plus {
+    margin-bottom: 10px;
+    background-image: url("/plus.png");
+  }
+
+  #leaflet-zoom-minus {
+    margin-bottom: 15px;
+    background-image: url("/minus.png");
+  }
+
+  #leaflet-share {
+    background-color: $bg-color-2;
+    background-image: url("/share.png");
+  }
+
+}
+
+

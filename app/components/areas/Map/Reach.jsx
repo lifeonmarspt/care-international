@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 import humanize from "lib/humanize";
 import range from "lib/range";
+
 import { numBuckets, getReachMapSQL } from "lib/queries";
-import { fetchBounds } from "lib/remote";
 
 import config from "config.json";
 import meta from "resources/meta.json";
@@ -14,11 +14,6 @@ import "./style.scss";
 
 const mainColor = (colorClass = "neutral", opacity = 0.8) =>
   `rgba(${meta.colors[colorClass].map((c) => c.toString(10))}, ${opacity})`;
-
-
-const baseLayerURL = "https://careinternational.carto.com/api/v2/viz/aa0b663e-b8af-4433-9ab0-4dbeb7c1b981/viz.json";
-
-const labelLayerURL = "https://careinternational.carto.com/api/v2/viz/3cb14d6b-49ab-423b-8290-7a19d374381e/viz.json";
 
 class ReachMapArea extends React.Component {
 
@@ -34,6 +29,10 @@ class ReachMapArea extends React.Component {
     program: "overall",
   }
 
+  static contextTypes = {
+    map: PropTypes.object.isRequired,
+  };
+
   getCartoCSS() {
     return range(1, numBuckets)
       .map((n) => `
@@ -44,7 +43,7 @@ class ReachMapArea extends React.Component {
         }
       `)
       .join(" ") + `
-      #layer[bucket=null] {
+    #layer[bucket=null] {
         polygon-fill: #888;
         polygon-opacity: 0.6;
         line-color: #888;
@@ -53,22 +52,6 @@ class ReachMapArea extends React.Component {
         polygon-pattern-file: url(http://com.cartodb.users-assets.production.s3.amazonaws.com/patterns/diagonal_1px_med.png);
       }
       `;
-  }
-
-  initLeaflet() {
-    this.map = window.L.map("leaflet").setView([0, 0], 3);
-
-    window.cartodb.createLayer(this.map, baseLayerURL, {
-      https: true,
-    }).addTo(this.map).done((layer) => {
-      layer.setZIndex(0);
-    });
-
-    window.cartodb.createLayer(this.map, labelLayerURL, {
-      https: true,
-    }).addTo(this.map).done((layer) => {
-      layer.setZIndex(2);
-    });
   }
 
   initCartoDBLayer() {
@@ -86,9 +69,9 @@ class ReachMapArea extends React.Component {
       ],
     };
 
-    window.cartodb.createLayer(this.map, layerSource, {
+    window.cartodb.createLayer(this.context.map, layerSource, {
       https: true,
-    }).addTo(this.map).done((layer) => {
+    }).addTo(this.context.map).done((layer) => {
 
       this.layer = layer;
 
@@ -121,22 +104,16 @@ class ReachMapArea extends React.Component {
 
   }
 
-  destroyLeaflet() {
-    this.map.remove();
-  }
-
   destroyCartoDBLayer() {
     this.layer.remove();
   }
 
   componentDidMount() {
-    this.initLeaflet();
     this.initCartoDBLayer();
   }
 
   componentWillUnmount() {
     this.destroyCartoDBLayer();
-    this.destroyLeaflet();
   }
 
   componentDidUpdate(prevProps) {
@@ -144,16 +121,9 @@ class ReachMapArea extends React.Component {
       this.destroyCartoDBLayer();
       this.initCartoDBLayer();
     }
-
-    if (prevProps.country !== this.props.country) {
-      fetchBounds("reach_data", this.props.country)
-        .then((bounds) => {
-          this.map.fitBounds(bounds);
-        });
-    }
   }
 
-  renderLegend() {
+  render() {
     return (<div id="legend">
       <ul>
         <li>
@@ -185,13 +155,6 @@ class ReachMapArea extends React.Component {
           </ul>
         </li>
       </ul>
-    </div>);
-  }
-
-  render() {
-    return (<div id="map">
-      <div id="leaflet" />
-      {this.renderLegend()}
     </div>);
   }
 

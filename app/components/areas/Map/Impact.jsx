@@ -6,10 +6,6 @@ import CircleSVG from "components/svg/Circle";
 
 import "./style.scss";
 
-const baseLayerURL = "https://careinternational.carto.com/api/v2/viz/aa0b663e-b8af-4433-9ab0-4dbeb7c1b981/viz.json";
-
-const labelLayerURL = "https://careinternational.carto.com/api/v2/viz/3cb14d6b-49ab-423b-8290-7a19d374381e/viz.json";
-
 const bucketSize = {
   1: 150,
   2: 120,
@@ -44,24 +40,8 @@ class ImpactMapArea extends React.Component {
     regions: [],
   }
 
-  initLeaflet() {
-    this.map = window.L.map("leaflet").setView([0, 0], 3);
-
-    window.cartodb.createLayer(this.map, baseLayerURL, {
-      https: true,
-    }).addTo(this.map).done((layer) => {
-      layer.setZIndex(0);
-    });
-
-    window.cartodb.createLayer(this.map, labelLayerURL, {
-      https: true,
-    }).addTo(this.map).done((layer) => {
-      layer.setZIndex(2);
-    });
-  }
-
-  destroyLeaflet() {
-    this.map.remove();
+  static contextTypes = {
+    map: PropTypes.object.isRequired,
   }
 
   initMarkers() {
@@ -75,7 +55,7 @@ class ImpactMapArea extends React.Component {
 
       return window.L.marker([region.region_center_y, region.region_center_x], {
         icon: getSVGIcon(value, this.props.program, bucketSize[region[`${this.props.program}_position`]]),
-      }).addTo(this.map).on("click", () => {
+      }).addTo(this.context.map).on("click", () => {
         this.props.handleRegionChange(region.region);
       });
 
@@ -83,18 +63,16 @@ class ImpactMapArea extends React.Component {
   }
 
   destroyMarkers() {
-    this.markers.forEach((marker) => this.map.removeLayer(marker));
+    this.markers.forEach((marker) => this.context.map.removeLayer(marker));
     this.markers = [];
   }
 
   componentDidMount() {
-    this.initLeaflet();
     this.initMarkers();
   }
 
   componentWillUnmount() {
     this.destroyMarkers();
-    this.destroyLeaflet();
   }
 
   componentDidUpdate(prevProps) {
@@ -107,8 +85,8 @@ class ImpactMapArea extends React.Component {
 
   render() {
     return (
-      <div id="map">
-        <div id="leaflet" />
+      <div id="legend">
+        herp
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import LeafletProvider from "components/providers/Leaflet";
 import Header from "components/areas/Header";
 import ReachMap from "components/areas/Map/Reach";
 import ReachSidebar from "components/areas/Sidebar/Reach";
@@ -34,6 +35,7 @@ class App extends React.PureComponent {
       loading: true,
       statistics: {},
       buckets: [],
+      bounds: null,
       reach: false,
       impact: false,
     };
@@ -60,11 +62,12 @@ class App extends React.PureComponent {
     // lol ifs ¯\_(ツ)_/¯
     if (this.props.reach) {
       fetchReachData(this.props.country, this.props.program)
-        .then(([statistics, buckets]) => {
+        .then(([statistics, buckets, bounds]) => {
           this.setState({
             loading: false,
             statistics: statistics.rows[0],
             buckets: buckets.rows,
+            bounds: bounds,
             reach: this.props.reach,
             impact: this.props.impact,
             region: this.props.region,
@@ -105,14 +108,6 @@ class App extends React.PureComponent {
 
     return (<div id="app">
       <Header />
-      <MapComponent
-        country={this.state.country}
-        program={this.state.program}
-        buckets={this.state.buckets}
-        regions={this.state.regions}
-        handleCountryChange={this.handleCountryChange.bind(this)}
-        handleRegionChange={this.handleRegionChange.bind(this)}
-      />
       <SidebarComponent
         loading={this.state.loading}
         statistics={this.state.statistics}
@@ -122,6 +117,16 @@ class App extends React.PureComponent {
         program={this.state.program}
         handleProgramChange={this.handleProgramChange.bind(this)}
       />
+      <LeafletProvider bounds={this.state.bounds}>
+        <MapComponent
+          country={this.state.country}
+          program={this.state.program}
+          buckets={this.state.buckets}
+          regions={this.state.regions}
+          handleCountryChange={this.handleCountryChange.bind(this)}
+          handleRegionChange={this.handleRegionChange.bind(this)}
+        />
+      </LeafletProvider>
     </div>);
   }
 }
