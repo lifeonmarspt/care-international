@@ -8,12 +8,17 @@ import range from "lib/range";
 import { numBuckets, getReachMapSQL } from "lib/queries";
 
 import config from "config.json";
-import meta from "resources/meta.json";
 
 import "./style.scss";
 
-const mainColor = (colorClass = "neutral", opacity = 0.8) =>
-  `rgba(${meta.colors[colorClass].map((c) => c.toString(10))}, ${opacity})`;
+const choroColors = {
+  overall: ["#FFD8BD", "#FEBB8B", "#FF984E", "#F9781C", "#A03B0D"],
+  hum: ["#F8D0E1", "#F1A1C3", "#E972A5", "#E24387", "#DB1469"],
+  wee: ["#D2EFF2", "#93EAF3", "#57D0DD", "#129EAE", "#005760"],
+  srmh: ["#D2EFF2", "#93EAF3", "#57D0DD", "#129EAE", "#005760"],
+  lffv: ["#D2EFF2", "#93EAF3", "#57D0DD", "#129EAE", "#005760"],
+  fnscc: ["#D2EFF2", "#93EAF3", "#57D0DD", "#129EAE", "#005760"],
+};
 
 class ReachMapArea extends React.Component {
 
@@ -37,9 +42,8 @@ class ReachMapArea extends React.Component {
     return range(1, numBuckets)
       .map((n) => `
         #layer[bucket=${n}] {
-          polygon-fill: ${mainColor(this.props.program)};
-          polygon-opacity: ${n/numBuckets};
-          line-color: ${mainColor(this.props.program)};
+          polygon-fill: ${choroColors[this.props.program][n-1]};
+          line-color: ${choroColors[this.props.program][n-1]};
         }
       `)
       .join(" ") + `
@@ -138,7 +142,7 @@ class ReachMapArea extends React.Component {
           <ul className="scale">
             {this.props.buckets.map((bucket, n) => {
               let liStyle = {
-                backgroundColor: mainColor(this.props.program, (n+1) / this.props.buckets.length),
+                backgroundColor: choroColors[this.props.program][n],
               };
               return (<li key={n} style={liStyle}>
                 <span>{humanize(bucket.max)}</span>
