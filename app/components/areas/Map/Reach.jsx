@@ -54,6 +54,7 @@ class ReachMapArea extends React.Component {
       }
       #layed[care_member=true] {
         polygon-pattern-file: url(https://careinternational.herokuapp.com/stripes-pattern.png);
+        polygon-pattern-alignment: global;
       }
       `;
   }
