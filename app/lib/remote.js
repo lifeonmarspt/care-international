@@ -37,7 +37,7 @@ const fetchReachData = (country, program) => {
   return window.Promise.all([
     getStatistics,
     getBuckets,
-    country && getBounds("impact_data", country),
+    country && getBounds("reach_data", country),
   ]);
 };
 
