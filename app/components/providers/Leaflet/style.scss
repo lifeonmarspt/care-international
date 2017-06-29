@@ -30,17 +30,17 @@
 
   #leaflet-zoom-plus {
     margin-bottom: 10px;
-    background-image: url("/plus.png");
+    background-image: url(~images/plus.png);
   }
 
   #leaflet-zoom-minus {
     margin-bottom: 15px;
-    background-image: url("/minus.png");
+    background-image: url(~images/minus.png);
   }
 
   #leaflet-share {
     background-color: $bg-color-2;
-    background-image: url("/share.png");
+    background-image: url(~images/share.png);
   }
 
 }

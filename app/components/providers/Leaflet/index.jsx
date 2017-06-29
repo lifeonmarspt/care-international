@@ -2,9 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import "./style.scss";
-import "images/plus.png";
-import "images/minus.png";
-import "images/share.png";
 
 // @TODO: don't hardcode urls
 const baseLayerURL = "https://careinternational.carto.com/api/v2/viz/aa0b663e-b8af-4433-9ab0-4dbeb7c1b981/viz.json";
