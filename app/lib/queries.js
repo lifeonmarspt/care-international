@@ -22,6 +22,7 @@ const getReachMapSQL = (program)  => {
 
   let fields = [
     "*",
+    `'${program}' AS program`,
     `CASE WHEN ${whereClause} THEN NTILE(${numBuckets}) OVER(PARTITION BY ${whereClause} ORDER BY ${reachVariables[program].join("+")}) ELSE null END AS bucket`,
     "category ILIKE '%member%' AS care_member",
   ];

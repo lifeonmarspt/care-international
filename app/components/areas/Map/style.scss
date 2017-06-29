@@ -50,6 +50,14 @@
         width: 50px;
         text-align: center;
       }
+
+      @each $program, $colors in $choroColors {
+        @for $i from 1 through 5 {
+          &.program-#{$program}.bucket-#{$i} {
+            background-color: nth($colors, $i);
+          }
+        }
+      }
     }
 
     &::before {

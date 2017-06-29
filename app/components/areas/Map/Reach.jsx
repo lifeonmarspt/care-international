@@ -5,20 +5,14 @@ import { Link } from "react-router-dom";
 import humanize from "lib/humanize";
 import range from "lib/range";
 
-import { numBuckets, getReachMapSQL } from "lib/queries";
+import { getReachMapSQL } from "lib/queries";
 
 import config from "config.json";
 
 import "./style.scss";
 
-const choroColors = {
-  overall: ["#FFD8BD", "#FEBB8B", "#FF984E", "#F9781C", "#A03B0D"],
-  hum: ["#F8D0E1", "#F1A1C3", "#E972A5", "#E24387", "#DB1469"],
-  wee: ["#D2EFF2", "#93EAF3", "#57D0DD", "#129EAE", "#005760"],
-  srmh: ["#D2EFF2", "#93EAF3", "#57D0DD", "#129EAE", "#005760"],
-  lffv: ["#D2EFF2", "#93EAF3", "#57D0DD", "#129EAE", "#005760"],
-  fnscc: ["#D2EFF2", "#93EAF3", "#57D0DD", "#129EAE", "#005760"],
-};
+import cartocss from "!raw-loader!cartocss-loader!sass-loader?outputStyle=compressed!./style.carto.scss";
+
 
 class ReachMapArea extends React.Component {
 
@@ -39,24 +33,7 @@ class ReachMapArea extends React.Component {
   };
 
   getCartoCSS() {
-    return range(1, numBuckets)
-      .map((n) => `
-        #layer[bucket=${n}] {
-          polygon-fill: ${choroColors[this.props.program][n-1]};
-          line-color: #CCC;
-        }
-      `)
-      .join(" ") + `
-    #layer[bucket=null] {
-        polygon-fill: #888;
-        polygon-opacity: 0.6;
-        line-color: #888;
-      }
-      #layed[care_member=true] {
-        polygon-pattern-file: url(https://careinternational.herokuapp.com/stripes-pattern.png);
-        polygon-pattern-alignment: global;
-      }
-      `;
+    return cartocss;
   }
 
   initCartoDBLayer() {
@@ -142,10 +119,7 @@ class ReachMapArea extends React.Component {
         <li>
           <ul className="scale">
             {this.props.buckets.map((bucket, n) => {
-              let liStyle = {
-                backgroundColor: choroColors[this.props.program][n],
-              };
-              return (<li key={n} style={liStyle}>
+              return (<li key={n} className={`program-${this.props.program} bucket-${n + 1}`}>
                 <span>{humanize(bucket.max)}</span>
               </li>);
             })}

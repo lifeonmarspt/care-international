@@ -7,6 +7,15 @@ $programColors: (
   fnscc: #99B74D,
 );
 
+$choroColors: (
+  overall: #FFD8BD #FEBB8B #FF984E #F9781C #A03B0D,
+  hum: #F8D0E1 #F1A1C3 #E972A5 #E24387 #DB1469,
+  wee: #D2EFF2 #93EAF3 #57D0DD #129EAD #005760,
+  srmh: #D2EFF2 #93EAF3 #57D0DD #129EAE #005760,
+  lffv: #D2EFF2 #93EAF3 #57D0DD #129EAE #005760,
+  fnscc: #D2EFF2 #93EAF3 #57D0DD #129EAE #005760,
+);
+
 $bg-color-1: #FFFFFF;
 $bg-color-2: map-get($programColors, "overall");
 $bg-color-3: #F2F2F2;

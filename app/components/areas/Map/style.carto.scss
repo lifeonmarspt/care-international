@@ -1,0 +1,21 @@
+@import "../../../styles/colors.scss";
+
+@each $program, $colors in $choroColors {
+  @for $i from 1 through 5 {
+    #layer[bucket="carto(=,#{$i})"][program="#{$program}"] {
+      polygon-fill: nth($colors, $i);
+      line-color: #CCC;
+    }
+  }
+}
+
+#layer[bucket=null] {
+  polygon-fill: #888;
+  polygon-opacity: 0.6;
+  line-color: #888;
+}
+
+#layer[care_member=true] {
+  polygon-pattern-file: url(https://careinternational.herokuapp.com/stripes-pattern.png);
+  polygon-pattern-alignment: global;
+}

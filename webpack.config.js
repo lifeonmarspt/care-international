@@ -46,6 +46,9 @@ let plugins = (process.env.NODE_ENV || "production") === "production" ?
 
 module.exports = {
   entry: "./app/index.jsx",
+  resolveLoader: {
+    modules: [path.resolve(__dirname, "loaders"), "node_modules"],
+  },
   resolve: {
     extensions: [".js", ".jsx", ".json"],
     modules: [path.resolve(__dirname, "app"), "node_modules"],
