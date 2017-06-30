@@ -8,7 +8,7 @@ import PercentageBar from "components/elements/PercentageBar";
 import ValueBar from "components/elements/ValueBar";
 
 import getLocation from "lib/location";
-import meta from "resources/meta.json";
+import programs from "resources/programs.json";
 import imgHelp from "images/help.svg";
 
 
@@ -23,7 +23,6 @@ class ReachSidebarArea extends React.Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     statistics: PropTypes.object.isRequired,
-    buckets: PropTypes.array.isRequired,
     region: PropTypes.string,
     country: PropTypes.string,
     program: PropTypes.string,
@@ -101,7 +100,7 @@ class ReachSidebarArea extends React.Component {
         <dl>
           <dt>
             Projects and Initiatives in 2016
-            <span className="subtitle">({meta.programs.find((p) => p.id === program).label})</span>
+            <span className="subtitle">({programs.find((p) => p.id === program).label})</span>
           </dt>
           <dd>
             {(statistics.projects_and_initiatives || 0).toLocaleString()}
@@ -149,7 +148,7 @@ class ReachSidebarArea extends React.Component {
           </dt>
           <dd>
             <ul>
-              {meta.programs.map((p, n) => {
+              {programs.map((p, n) => {
                 let directValue = statistics[`${p.id}_direct_participants`];
                 let indirectValue = statistics[`${p.id}_indirect_participants`];
                 let maxValue = directValue + indirectValue;

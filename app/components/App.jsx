@@ -34,7 +34,6 @@ class App extends React.PureComponent {
     this.state = {
       loading: true,
       statistics: {},
-      buckets: [],
       bounds: null,
       reach: false,
       impact: false,
@@ -62,11 +61,10 @@ class App extends React.PureComponent {
     // lol ifs ¯\_(ツ)_/¯
     if (this.props.reach) {
       fetchReachData(this.props.country, this.props.program)
-        .then(([statistics, buckets, bounds]) => {
+        .then(([statistics, bounds]) => {
           this.setState({
             loading: false,
             statistics: statistics.rows[0],
-            buckets: buckets.rows,
             bounds: bounds,
             reach: this.props.reach,
             impact: this.props.impact,
@@ -111,7 +109,6 @@ class App extends React.PureComponent {
       <SidebarComponent
         loading={this.state.loading}
         statistics={this.state.statistics}
-        buckets={this.state.buckets}
         region={this.state.region}
         country={this.state.country}
         program={this.state.program}
@@ -121,7 +118,6 @@ class App extends React.PureComponent {
         <MapComponent
           country={this.state.country}
           program={this.state.program}
-          buckets={this.state.buckets}
           regions={this.state.regions}
           handleCountryChange={this.handleCountryChange.bind(this)}
           handleRegionChange={this.handleRegionChange.bind(this)}

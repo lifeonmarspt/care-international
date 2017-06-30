@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import humanize from "lib/humanize";
-import range from "lib/range";
 
 import { getReachMapSQL } from "lib/queries";
 
+import buckets from "resources/buckets.json";
 import config from "config.json";
 
 import "./style.scss";
@@ -18,7 +18,6 @@ class ReachMapArea extends React.Component {
 
   static propTypes = {
     country: PropTypes.string,
-    buckets: PropTypes.array.isRequired,
     bounds: PropTypes.array,
     program: PropTypes.string,
     handleCountryChange: PropTypes.func,
@@ -118,9 +117,9 @@ class ReachMapArea extends React.Component {
         </li>
         <li>
           <ul className="scale">
-            {this.props.buckets.map((bucket, n) => {
+            {buckets.map((bucket, n) => {
               return (<li key={n} className={`program-${this.props.program} bucket-${n + 1}`}>
-                <span>{humanize(bucket.max)}</span>
+                <span>{humanize(bucket[1]) + (n+1 === buckets.length ? "+" : "")}</span>
               </li>);
             })}
           </ul>

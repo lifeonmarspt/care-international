@@ -1,6 +1,5 @@
 import {
   getReachStatisticsSQL,
-  getReachBucketsSQL,
   getImpactStatisticsSQL,
   getImpactRegionDataSQL,
   getBoundsSQL,
@@ -21,22 +20,15 @@ const getBounds = (table, country) => {
   });
 };
 
-const fetchReachData = (country, program) => {
+const fetchReachData = (country) => {
   let getStatistics = new window.Promise((resolve, reject) => {
     cartoSQL.execute(getReachStatisticsSQL(country))
       .done((result) => resolve(result))
       .error((error) => reject(error));
   });
 
-  let getBuckets = new window.Promise((resolve, reject) => {
-    cartoSQL.execute(getReachBucketsSQL(program))
-      .done((result) => resolve(result))
-      .error((error) => reject(error));
-  });
-
   return window.Promise.all([
     getStatistics,
-    getBuckets,
     country && getBounds("reach_data", country),
   ]);
 };

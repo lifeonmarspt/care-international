@@ -1,0 +1,22 @@
+[
+  {
+    "id": "hum",
+    "label": "Humanitarian response"
+  },
+  {
+    "id": "wee",
+    "label": "Women's economic empowerment"
+  },
+  {
+    "id": "srmh",
+    "label": "The right to sexual, reproductive and maternal health"
+  },
+  {
+    "id": "lffv",
+    "label": "Life Free from Violence"
+  },
+  {
+    "id": "fnscc",
+    "label": "Food and nutrition security and climate change resilience"
+  }
+]

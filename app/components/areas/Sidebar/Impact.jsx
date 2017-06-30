@@ -7,7 +7,7 @@ import BarWrapper from "components/elements/BarWrapper";
 import ValueBar from "components/elements/ValueBar";
 
 import getLocation from "lib/location";
-import meta from "resources/meta.json";
+import programs from "resources/programs.json";
 
 import "./style.scss";
 
@@ -74,7 +74,7 @@ class ImpactSidebarArea extends React.Component {
         <dl>
           <dt>
             Total Population impacted in 2016
-            <h2>({meta.programs.find((p) => p.id === program).label})</h2>
+            <h2>({programs.find((p) => p.id === program).label})</h2>
           </dt>
           <dd>
             <span>{statistics[`${program}_impact`].toLocaleString()}</span>
@@ -89,7 +89,7 @@ class ImpactSidebarArea extends React.Component {
           </dt>
           <dd>
             <ul>
-              {meta.programs.map((p, n) => {
+              {programs.map((p, n) => {
 
                 let value = statistics[`${p.id}_impact`];
                 let maxValue = statistics["total_impact"];

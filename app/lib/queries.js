@@ -1,5 +1,6 @@
 import Squel from "squel";
 
+import buckets from "resources/buckets.json";
 // https://github.com/hiddentao/squel/issues/148
 const SquelPostgres = Squel.useFlavour("postgres");
 SquelPostgres.cls.DefaultQueryBuilderOptions.tableAliasQuoteCharacter = "\"";
@@ -18,33 +19,24 @@ const reachVariables = {
 };
 
 const getReachMapSQL = (program)  => {
-  const whereClause = reachVariables[program].map((f) => `${f} IS NOT NULL`).join(" AND ");
 
+  let directParticipantsVariable = reachVariables[program][0];
+  let caseColumn = buckets
+    .map((bucket, n) => n + 1 < buckets.length ?
+      `WHEN ${directParticipantsVariable} BETWEEN ${bucket[0]} AND ${bucket[1]} THEN ${n + 1}` :
+      `WHEN ${directParticipantsVariable} >= ${bucket[0]} THEN ${n + 1}`
+    )
+    .join(" ");
   let fields = [
     "*",
     `'${program}' AS program`,
-    `CASE WHEN ${whereClause} THEN NTILE(${numBuckets}) OVER(PARTITION BY ${whereClause} ORDER BY ${reachVariables[program].join("+")}) ELSE null END AS bucket`,
+    `CASE ${caseColumn} END AS bucket`,
     "category ILIKE '%member%' AS care_member",
   ];
   let query = SquelPostgres.select({ replaceSingleQuotes: true }).fields(fields).from("reach_data");
 
   return query.toString();
 
-};
-
-const getReachBucketsSQL = (program) => {
-  let query = `WITH buckets as (
-    SELECT NTILE(${numBuckets}) OVER(ORDER BY ${reachVariables[program].join("+")}) AS position,
-           ${reachVariables[program].join("+")} AS total_participants
-    FROM reach_data
-    WHERE ${reachVariables[program].map((f) => `${f} IS NOT NULL`).join(" AND ")}
-  )
-  SELECT buckets.position, MIN(buckets.total_participants) AS min, MAX(buckets.total_participants) AS max
-  FROM buckets
-  GROUP BY position
-  ORDER BY position`;
-
-  return query;
 };
 
 const getReachStatisticsSQL = (country) => {
@@ -161,7 +153,6 @@ const getBoundsSQL = (table, country) => {
 export {
   numBuckets,
   getReachStatisticsSQL,
-  getReachBucketsSQL,
   getReachMapSQL,
   getImpactStatisticsSQL,
   getImpactRegionDataSQL,
