@@ -9,6 +9,8 @@ import ValueBar from "components/elements/ValueBar";
 
 import getLocation from "lib/location";
 import meta from "resources/meta.json";
+import imgHelp from "images/help.svg";
+
 
 import "./style.scss";
 
@@ -77,14 +79,14 @@ class ReachSidebarArea extends React.Component {
           <dd>
             <ul>
               <li>
-                <div>Direct (?)</div>
+                <div>Direct <img src={imgHelp} alt="Help" /></div>
                 <BarWrapper bar={PercentageBar}
                   colorClass="overall"
                   value={statistics["total_direct_participants_women"]}
                   maxValue={statistics["total_direct_participants"]} />
               </li>
               <li>
-                <div>Indirect (?)</div>
+                <div>Indirect <img src={imgHelp} alt="Help" /></div>
                 <BarWrapper bar={PercentageBar}
                   colorClass="overall"
                   value={statistics["total_indirect_participants_women"]}
@@ -115,7 +117,7 @@ class ReachSidebarArea extends React.Component {
           <dd>
             <ul>
               <li>
-                <div>Direct (?)</div>
+                <div>Direct <img src={imgHelp} alt="Help" /></div>
                 <BarWrapper bar={ValueBar}
                   colorClass={program}
                   value={statistics[`${program}_direct_participants`]}
@@ -125,7 +127,7 @@ class ReachSidebarArea extends React.Component {
                   maxValue={statistics["total_direct_participants"]} />
               </li>
               <li>
-                <div>Indirect (?)</div>
+                <div>Indirect <img src={imgHelp} alt="Help" /></div>
                 <BarWrapper bar={ValueBar}
                   colorClass={program}
                   value={statistics[`${program}_indirect_participants`]}

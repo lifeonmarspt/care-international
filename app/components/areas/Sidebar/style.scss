@@ -8,6 +8,10 @@
   overflow-y: auto;
   box-shadow: 0 0 6px 0 rgba(209, 203, 203, 0.44);
 
+  img[alt=Help] {
+    width: 14px;
+  }
+
   .menu {
     ul {
       width: 100%;
