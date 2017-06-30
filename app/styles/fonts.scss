@@ -10,21 +10,55 @@
 }
 
 @font-face {
+    font-family: ITC Officina Sans Std;
+		font-style: italic;
+    src: url("~fonts/ITC Officina Sans Std/OfficinaSansStd-BookItalic.otf") format("opentype");
+}
+
+@font-face {
+    font-family: ITC Officina Sans Std;
+		font-weight: bold;
+		font-style: italic;
+    src: url("~fonts/ITC Officina Sans Std/OfficinaSansStd-BoldItalic.otf") format("opentype");
+}
+
+@font-face {
+    font-family: ITC Officina Serif Std;
+    src: url("~fonts/ITC Officina Serif Std/OfficinaSerifStd-Book.otf") format("opentype");
+}
+
+@font-face {
+    font-family: ITC Officina Serif Std;
+		font-weight: bold;
+    src: url("~fonts/ITC Officina Serif Std/OfficinaSerifStd-Bold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: ITC Officina Serif Std;
+		font-style: italic;
+    src: url("~fonts/ITC Officina Serif Std/OfficinaSerifStd-BookItalic.otf") format("opentype");
+}
+
+@font-face {
+    font-family: ITC Officina Serif Std;
+		font-weight: bold;
+		font-style: italic;
+    src: url("~fonts/ITC Officina Serif Std/OfficinaSerifStd-BoldItalic.otf") format("opentype");
+}
+
+@font-face {
     font-family: Libre Baskerville;
     src: url("~fonts/Libre_Baskerville/LibreBaskerville-Regular.ttf") format("truetype");
 }
 
-/*
-import "fonts/ITC Officina Serif Std/OfficinaSerifStd-BookItalic.otf";
-import "fonts/ITC Officina Serif Std/OfficinaSerifStd-Book.otf";
-import "fonts/ITC Officina Serif Std/OfficinaSerifStd-BoldItalic.otf";
-import "fonts/ITC Officina Serif Std/OfficinaSerifStd-Bold.otf";
-import "fonts/ITC Officina Sans Std/OfficinaSansStd-BookItalic.otf";
-import "fonts/ITC Officina Sans Std/OfficinaSansStd-Book.otf";
-import "fonts/ITC Officina Sans Std/OfficinaSansStd-BoldItalic.otf";
-import "fonts/ITC Officina Sans Std/OfficinaSansStd-Bold.otf";
-import "fonts/Libre_Baskerville/LibreBaskerville-Regular.ttf";
-import "fonts/Libre_Baskerville/LibreBaskerville-Italic.ttf";
-import "fonts/Libre_Baskerville/LibreBaskerville-Bold.ttf";
-*/
+@font-face {
+    font-family: Libre Baskerville;
+		font-style: italic;
+    src: url("~fonts/Libre_Baskerville/LibreBaskerville-Italic.ttf") format("truetype");
+}
 
+@font-face {
+    font-family: Libre Baskerville;
+		font-weight: bold;
+    src: url("~fonts/Libre_Baskerville/LibreBaskerville-Bold.ttf") format("truetype");
+}
