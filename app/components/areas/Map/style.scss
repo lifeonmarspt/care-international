@@ -9,7 +9,7 @@
   bottom: 20px;
   right: 20px;
   background-color: white;
-  padding: 12px;
+  padding: 12px 20px 12px 12px;
   font-size: 14px;
 
   a {
@@ -45,9 +45,8 @@
       span {
         position: relative;
         top: 2px;
-        left: 25px;
+        left: 50%;
         display: block;
-        width: 50px;
         text-align: center;
       }
 
@@ -63,10 +62,10 @@
     &::before {
       content: "0";
       position: absolute;
-      top: 19px;
-      left: -24px;
+      top: 15px;
+      left: -34px;
       display: block;
-      width: 50px;
+      width: 68px;
       text-align: center;
     }
 

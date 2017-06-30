@@ -35,7 +35,7 @@ const getReachMapSQL = (program)  => {
 const getReachBucketsSQL = (program) => {
   let query = `WITH buckets as (
     SELECT NTILE(${numBuckets}) OVER(ORDER BY ${reachVariables[program].join("+")}) AS position,
-           ${reachVariables[program]} AS total_participants
+           ${reachVariables[program].join("+")} AS total_participants
     FROM reach_data
     WHERE ${reachVariables[program].map((f) => `${f} IS NOT NULL`).join(" AND ")}
   )
