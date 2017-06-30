@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-
 import humanize from "lib/humanize";
 
 import { getReachMapSQL } from "lib/queries";
 
+import imgHelp from "images/help.svg";
 import buckets from "resources/buckets.json";
 import config from "config.json";
 
@@ -106,33 +106,41 @@ class ReachMapArea extends React.Component {
 
   render() {
     return (<div id="legend">
-      <ul>
-        <li>
-          <Link to="#">Show Regions</Link>
-        </li>
-        <li>
-          <p>
-            Direct participants reached in 2016 by country
-          </p>
-        </li>
-        <li>
-          <ul className="scale">
-            {buckets.map((bucket, n) => {
-              return (<li key={n} className={`program-${this.props.program} bucket-${n + 1}`}>
-                <span>{humanize(bucket[1]) + (n + 1 === buckets.length ? "+" : "")}</span>
-              </li>);
-            })}
-          </ul>
-          <ul className="exceptions">
-            <li className="no-data">
-              <span>No data</span>
-            </li>
-            <li className="care-member">
-              <span>Care international members</span>
-            </li>
-          </ul>
-        </li>
-      </ul>
+      <div id="choropleth">
+        <ul>
+          <li>
+            <Link to="#">Show Regions</Link>
+          </li>
+          <li>
+            <p>
+              Direct participants reached in 2016 by country
+            </p>
+          </li>
+          <li>
+            <ul className="scale">
+              {buckets.map((bucket, n) => {
+                return (<li key={n} className={`program-${this.props.program} bucket-${n + 1}`}>
+                  <span>{humanize(bucket[1]) + (n+1 === buckets.length ? "+" : "")}</span>
+                </li>);
+              })}
+            </ul>
+            <ul className="exceptions">
+              <li className="no-data">
+                <span>No data</span>
+              </li>
+              <li className="care-member">
+                <span>Care international members</span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div id="about">
+        <Link to="#">
+          About reach data
+          <img src={imgHelp} alt="Help" />
+        </Link>
+      </div>
     </div>);
   }
 
