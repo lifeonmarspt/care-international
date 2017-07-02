@@ -6,7 +6,7 @@ class BarWrapper extends React.Component {
 
   static propTypes = {
     bar: PropTypes.func.isRequired,
-    value: PropTypes.number.isRequired,
+    value: PropTypes.number,
     maxValue: PropTypes.number.isRequired,
     colorClass: PropTypes.string,
     formatter: PropTypes.func,

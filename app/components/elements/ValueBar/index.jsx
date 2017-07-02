@@ -4,7 +4,8 @@ import classNames from "classnames";
 
 import "./style.scss";
 
-const maxWidth = 100;
+const maxWidth = 97;
+const minWidth = 3;
 class ValueBar extends React.Component {
 
   static propTypes = {
@@ -16,7 +17,7 @@ class ValueBar extends React.Component {
   render() {
     let styles = {
       current: {
-        width: (maxWidth * this.props.value / (this.props.maxValue || 1))  + "px",
+        width: (maxWidth * this.props.value / (this.props.maxValue || 1) + minWidth)  + "px",
       },
     };
 
