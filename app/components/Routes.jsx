@@ -5,12 +5,12 @@ import queryString from "query-string";
 
 import App from "components/App";
 
-const AppWrapper = ({ reach, impact, match }, { router }) => {
+const AppWrapper = ({ mainView, subView, match }, { router }) => {
   let qs = queryString.parse(router.route.location.search);
 
   return (<App
-    reach={reach}
-    impact={impact}
+    mainView={mainView}
+    subView={subView}
     country={match.params.country}
     region={match.params.region}
     program={qs.program}
@@ -29,11 +29,12 @@ class Routes extends React.Component {
     return (<Router>
       <Switch>
         <Redirect exact from="/" to="/reach" />
-        <Route exact path="/reach" component={(props) => <AppWrapper reach {...props} />} />
-        <Route exact path="/reach/:country" component={(props) => <AppWrapper reach {...props} />} />
-        <Route exact path="/impact" component={(props) => <AppWrapper impact {...props} />} />
-        <Route exact path="/impact/:region" component={(props) => <AppWrapper impact {...props} />} />
-        <Route exact path="/impact/:region/:country" component={(props) => <AppWrapper impact {...props} />} />
+        <Route exact path="/reach" component={(props) => <AppWrapper mainView="reach" {...props} />} />
+        <Route exact path="/reach/regions" component={(props) => <AppWrapper mainView="reach" subView="regions" {...props} />} />
+        <Route exact path="/reach/:country" component={(props) => <AppWrapper mainView="reach" {...props} />} />
+        <Route exact path="/impact" component={(props) => <AppWrapper mainView="impact" {...props} />} />
+        <Route exact path="/impact/:region" component={(props) => <AppWrapper mainView="impact" {...props} />} />
+        <Route exact path="/impact/:region/:country" component={(props) => <AppWrapper mainView="impact" {...props} />} />
       </Switch>
     </Router>);
   }

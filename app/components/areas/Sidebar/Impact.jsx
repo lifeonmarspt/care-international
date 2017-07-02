@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
+import AppLink from "components/elements/AppLink";
 import RadioButton from "components/elements/Radio";
 import BarWrapper from "components/elements/BarWrapper";
 import ValueBar from "components/elements/ValueBar";
 
-import getLocation from "lib/location";
 import programs from "resources/programs.json";
 
 import "./style.scss";
@@ -20,7 +19,6 @@ class ImpactSidebarArea extends React.Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     statistics: PropTypes.object.isRequired,
-    buckets: PropTypes.array.isRequired,
     reach: PropTypes.bool,
     impact: PropTypes.bool,
     region: PropTypes.string,
@@ -43,8 +41,6 @@ class ImpactSidebarArea extends React.Component {
       handleProgramChange,
     } = this.props;
 
-    let linkWorld = getLocation(false, true, undefined, undefined, program);
-    let linkOverall = getLocation(false, true, undefined, country, undefined);
     if (loading) {
       return (<div id="sidebar" />);
     }
@@ -53,7 +49,11 @@ class ImpactSidebarArea extends React.Component {
 
       {(region || country) && (<div className="breadcrumbs">
         <ul>
-          <li><Link to={linkWorld}>World</Link></li>
+          <li>
+            <AppLink mainView="impact" program={program}>
+              World
+            </AppLink>
+          </li>
           {region && (<li>{region}</li>)}
           {country && (<li>{country}</li>)}
         </ul>
@@ -112,9 +112,9 @@ class ImpactSidebarArea extends React.Component {
               })}
 
               {program !== "overall" && (<li className="see-overall">
-                <Link to={linkOverall}>
+                <AppLink mainView="impact" country={country}>
                   See overall
-                </Link>
+                </AppLink>
               </li>)}
             </ul>
           </dd>

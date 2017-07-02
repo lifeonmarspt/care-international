@@ -1,13 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
+import AppLink from "components/elements/AppLink";
 import RadioButton from "components/elements/Radio";
 import BarWrapper from "components/elements/BarWrapper";
 import PercentageBar from "components/elements/PercentageBar";
 import ValueBar from "components/elements/ValueBar";
 
-import getLocation from "lib/location";
 import programs from "resources/programs.json";
 import imgHelp from "images/help.svg";
 
@@ -22,6 +21,10 @@ class ReachSidebarArea extends React.Component {
 
   static propTypes = {
     loading: PropTypes.bool.isRequired,
+    subView: PropTypes.oneOf([
+      "regions",
+      "countries",
+    ]),
     statistics: PropTypes.object.isRequired,
     region: PropTypes.string,
     country: PropTypes.string,
@@ -36,6 +39,7 @@ class ReachSidebarArea extends React.Component {
   render() {
     let {
       loading,
+      subView,
       region,
       country,
       program,
@@ -43,8 +47,6 @@ class ReachSidebarArea extends React.Component {
       handleProgramChange,
     } = this.props;
 
-    let linkWorld = getLocation(true, false, undefined, undefined, program);
-    let linkOverall = getLocation(true, false, undefined, country, undefined);
     if (loading) {
       return (<div id="sidebar" />);
     }
@@ -53,7 +55,11 @@ class ReachSidebarArea extends React.Component {
 
       {(region || country) && (<div className="breadcrumbs">
         <ul>
-          <li><Link to={linkWorld}>World</Link></li>
+          <li>
+            <AppLink mainView="reach" program={program}>
+              World
+            </AppLink>
+          </li>
           {region && (<li>{region}</li>)}
           {country && (<li>{country}</li>)}
         </ul>
@@ -181,9 +187,9 @@ class ReachSidebarArea extends React.Component {
                 </li>);
               })}
               {program !== "overall" && (<li className="see-overall">
-                <Link to={linkOverall}>
+                <AppLink mainView="reach" country={country}>
                   See overall
-                </Link>
+                </AppLink>
               </li>)}
             </ul>
           </dd>

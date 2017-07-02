@@ -1,31 +1,28 @@
 import queryString from "query-string";
 
-const getLocation = (reach, impact, region, country, program) => {
+const getLocation = (options) => {
 
   let qs = queryString.stringify({
-    program: program,
+    program: options.program,
   });
 
   let parts = [];
 
-  if (reach) {
-    parts.push("reach");
+  if (options.mainView) {
+    parts.push(options.mainView);
   }
 
-  if (impact) {
-    parts.push("impact");
+  if (options.region) {
+    parts.push(encodeURIComponent(options.region));
   }
 
-  if (region) {
-    parts.push(encodeURIComponent(region));
+  if (options.country) {
+    parts.push(encodeURIComponent(options.country));
   }
 
-  if (country) {
-    parts.push(encodeURIComponent(country));
-  }
+  let location = "/" + parts.join("/") + (qs ? `?${qs}` : "");
 
-  return "/" + parts.join("/") + (qs ? `?${qs}` : "");
-
+  return location;
 };
 
 export default getLocation;
