@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import AppLink from "components/elements/AppLink";
 import RadioButton from "components/elements/Radio";
-import BarWrapper from "components/elements/BarWrapper";
+import BarWrapper from "components/wrappers/Bar";
 import PercentageBar from "components/elements/PercentageBar";
 import ValueBar from "components/elements/ValueBar";
 

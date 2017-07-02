@@ -6,6 +6,7 @@ import "./style.scss";
 
 const maxWidth = 97;
 const minWidth = 3;
+
 class ValueBar extends React.Component {
 
   static propTypes = {

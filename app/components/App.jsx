@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import LeafletProvider from "components/providers/Leaflet";
 import Header from "components/areas/Header";
+import LeafletWrapper from "components/wrappers/Leaflet";
 import ReachMap from "components/areas/Map/Reach";
 import ReachSidebar from "components/areas/Sidebar/Reach";
 import ImpactMap from "components/areas/Map/Impact";
@@ -149,7 +149,7 @@ class App extends React.PureComponent {
             program={this.state.program}
             handleProgramChange={this.handleProgramChange.bind(this)}
           />
-          <LeafletProvider bounds={this.state.bounds}>
+          <LeafletWrapper bounds={this.state.bounds}>
             <ReachMap
               subView={this.state.subView}
               country={this.state.country}
@@ -158,7 +158,7 @@ class App extends React.PureComponent {
               handleCountryChange={this.handleCountryChange.bind(this)}
               handleRegionChange={this.handleRegionChange.bind(this)}
             />
-          </LeafletProvider>
+          </LeafletWrapper>
         </div>);
 
       case "impact":
@@ -173,7 +173,7 @@ class App extends React.PureComponent {
             program={this.state.program}
             handleProgramChange={this.handleProgramChange.bind(this)}
           />
-          <LeafletProvider bounds={this.state.bounds}>
+          <LeafletWrapper bounds={this.state.bounds}>
             <ImpactMap
               subView={this.state.subView}
               country={this.state.country}
@@ -182,7 +182,7 @@ class App extends React.PureComponent {
               handleCountryChange={this.handleCountryChange.bind(this)}
               handleRegionChange={this.handleRegionChange.bind(this)}
             />
-          </LeafletProvider>
+          </LeafletWrapper>
         </div>);
 
       default:
