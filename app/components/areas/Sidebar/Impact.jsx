@@ -74,7 +74,7 @@ class ImpactSidebarArea extends React.Component {
         <dl>
           <dt>
             Total Population impacted in 2016
-            <h2>({programs.find((p) => p.id === program).label})</h2>
+            <h2>{programs.find((p) => p.id === program).label}</h2>
           </dt>
           <dd>
             <span>{statistics[`${program}_impact`].toLocaleString()}</span>

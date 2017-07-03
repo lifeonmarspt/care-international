@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import ReactDOMServer from "react-dom/server";
 
 import CircleSVG from "components/svg/Circle";
+import imgHelp from "images/help.svg";
 
 import "./style.scss";
 
@@ -86,7 +87,10 @@ class ImpactMapArea extends React.Component {
   render() {
     return (
       <div id="legend">
-        herp
+        <div id="about" onClick={this.props.handleAboutClick}>
+          About impact data
+          <img src={imgHelp} alt="Help" />
+        </div>
       </div>
     );
   }

@@ -10,6 +10,7 @@ import ImpactSidebar from "components/areas/Sidebar/Impact";
 import AboutModal from "components/modals/About";
 import ShareModal from "components/modals/Share";
 import ReachModal from "components/modals/Reach";
+import ImpactModal from "components/modals/Impact";
 
 import getLocation from "lib/location";
 import { setKey, getKey } from "lib/storage";
@@ -51,6 +52,7 @@ class App extends React.PureComponent {
       showAboutModal: !getKey("about-dismissed"),
       showShareModal: false,
       showReachModal: false,
+      showImpactModal: false,
     };
   }
 
@@ -209,6 +211,7 @@ class App extends React.PureComponent {
       <AboutModal hidden={!this.state.showAboutModal} handleClose={this.handleCloseAbout.bind(this)} />
       <ShareModal hidden={!this.state.showShareModal} handleClose={this.handleToggleModal.bind(this, "showShareModal")} />
       <ReachModal hidden={!this.state.showReachModal} handleClose={this.handleToggleModal.bind(this, "showReachModal")} />
+      <ImpactModal hidden={!this.state.showImpactModal} handleClose={this.handleToggleModal.bind(this, "showImpactModal")} />
 
     </div>);
   }
