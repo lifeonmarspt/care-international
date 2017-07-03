@@ -5,6 +5,7 @@ import copy from "copy-to-clipboard";
 import ModalBox from "components/elements/ModalBox";
 
 import "./style.scss";
+import "../style.scss";
 
 class ShareModal extends React.Component {
 
@@ -24,7 +25,7 @@ class ShareModal extends React.Component {
 
   render() {
     return (<ModalBox hidden={this.props.hidden} handleClose={this.props.handleClose}>
-      <div id="share">
+      <div id="share" className="modal-content">
         <h1>
           Share Content
         </h1>

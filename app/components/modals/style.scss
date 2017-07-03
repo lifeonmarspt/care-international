@@ -1,0 +1,46 @@
+@import "../../styles/colors.scss";
+
+.modal-content {
+  padding: 40px 60px;
+  height: calc(100% - 80px);
+
+  .scrollable {
+    overflow-y: scroll;
+    height: 100%;
+  }
+
+  h1 {
+    font-family: Libre Baskerville, serif;
+    font-size: 36px;
+  }
+
+  hr {
+    width: 17px;
+    margin: 20px 0 40px 0;
+    border: 1px solid $accent-color-6;
+    height: 0;
+  }
+
+  dl.main {
+    > dt {
+      font-size: 24px;
+      width: 200px;
+      float: left;
+    }
+    > dd {
+      margin-left: 200px;
+      margin-bottom: 1em;
+      font-size: 16px;
+    }
+  }
+
+  dl.sub {
+    > dt {
+      font-weight: bold;
+    }
+    > dd {
+      margin-bottom: 1em;
+    }
+  }
+
+}

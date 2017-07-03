@@ -114,20 +114,22 @@
 
   #about {
 
-    background-color: $bg-color-1;
+    border: 1px solid $accent-color-5;
     box-shadow: 0 0 7px 0 rgba(209,203,203,0.44);
+    background-color: $bg-color-1;
     text-transform: uppercase;
     font-size: 14px;
     margin-top: 20px;
     text-align: right;
     font-weight: bold;
+    padding: 12px 12px 8px 12px;
+    color: $font-color-3;
 
-    a {
-      color: $font-color-3;
-      img {
-        margin-left: .5em;
-        height: 14px;
-      }
+    cursor: pointer;
+
+    img {
+      margin-left: .5em;
+      height: 14px;
     }
   }
 

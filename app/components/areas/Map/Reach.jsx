@@ -13,14 +13,14 @@ import "./style.scss";
 
 import cartocss from "!raw-loader!cartocss-loader!sass-loader?outputStyle=compressed!./style.carto.scss";
 
-
 class ReachMapArea extends React.Component {
 
   static propTypes = {
     country: PropTypes.string,
     bounds: PropTypes.array,
     program: PropTypes.string,
-    handleCountryChange: PropTypes.func,
+    handleCountryChange: PropTypes.func.isRequired,
+    handleAboutClick: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -135,11 +135,9 @@ class ReachMapArea extends React.Component {
           </li>
         </ul>
       </div>
-      <div id="about">
-        <Link to="#">
-          About reach data
-          <img src={imgHelp} alt="Help" />
-        </Link>
+      <div id="about" onClick={this.props.handleAboutClick}>
+        About reach data
+        <img src={imgHelp} alt="Help" />
       </div>
     </div>);
   }
