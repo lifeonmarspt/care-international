@@ -41,30 +41,37 @@ const getReachMapSQL = (program)  => {
 
 const getReachStatisticsSQL = (country) => {
   let fields = [
-    "SUM(num_fnscc_direct_participants) AS fnscc_direct_participants",
-    "SUM(num_fnscc_indirect_participants) AS fnscc_indirect_participants",
-    "SUM(num_hum_direct_participants) AS hum_direct_participants",
-    "SUM(num_hum_indirect_participants) AS hum_indirect_participants",
-    "SUM(num_lffv_direct_participants) AS lffv_direct_participants",
-    "SUM(num_lffv_indirect_participants) AS lffv_indirect_participants",
-    "SUM(num_wee_direct_participants) AS wee_direct_participants",
-    "SUM(num_wee_indirect_participants) AS wee_indirect_participants",
-    "SUM(num_srmh_direct_participants) AS srmh_direct_participants",
-    "SUM(num_srmh_indirect_participants) AS srmh_indirect_participants",
-    "SUM(num_projects_and_initiatives) AS projects_and_initiatives",
-    "SUM(num_direct_participants) AS total_direct_participants",
-    "SUM(num_indirect_participants) AS total_indirect_participants",
-    "SUM(COALESCE(percent_women_of_direct_participants, 0) * num_direct_participants) AS total_direct_participants_women",
-    "SUM(COALESCE(percent_women_of_indirect_participants, 0) * num_indirect_participants) AS total_indirect_participants_women",
+    "num_fnscc_direct_participants AS fnscc_direct_participants",
+    "num_fnscc_indirect_participants AS fnscc_indirect_participants",
+    "num_hum_direct_participants AS hum_direct_participants",
+    "num_hum_indirect_participants AS hum_indirect_participants",
+    "num_lffv_direct_participants AS lffv_direct_participants",
+    "num_lffv_indirect_participants AS lffv_indirect_participants",
+    "num_wee_direct_participants AS wee_direct_participants",
+    "num_wee_indirect_participants AS wee_indirect_participants",
+    "num_srmh_direct_participants AS srmh_direct_participants",
+    "num_srmh_indirect_participants AS srmh_indirect_participants",
+    "num_projects_and_initiatives AS projects_and_initiatives",
+    "num_direct_participants AS overall_direct_participants",
+    "num_indirect_participants AS overall_indirect_participants",
+    "COALESCE(percent_women_of_direct_participants, 0) * num_direct_participants AS overall_direct_participants_women",
+    "COALESCE(percent_women_of_indirect_participants, 0) * num_indirect_participants AS overall_indirect_participants_women",
+    "COALESCE(percent_fnscc_women_direct_participants, 0) * num_fnscc_direct_participants AS fnscc_direct_participants_women",
+    "COALESCE(percent_fnscc_women_indirect_participants, 0) * num_fnscc_indirect_participants AS fnscc_indirect_participants_women",
+    "COALESCE(percent_hum_women_direct_participants, 0) * num_hum_direct_participants AS hum_direct_participants_women",
+    "COALESCE(percent_hum_women_indirect_participants, 0) * num_hum_indirect_participants AS hum_indirect_participants_women",
+    "COALESCE(percent_lffv_women_direct_participants, 0) * num_lffv_direct_participants AS lffv_direct_participants_women",
+    "COALESCE(percent_lffv_women_indirect_participants, 0) * num_lffv_indirect_participants AS lffv_indirect_participants_women",
+    "COALESCE(percent_wee_women_direct_participants, 0) * num_wee_direct_participants AS wee_direct_participants_women",
+    "COALESCE(percent_wee_women_indirect_participants, 0) * num_wee_indirect_participants AS wee_indirect_participants_women",
+    "COALESCE(percent_srmh_women_direct_participants, 0) * num_srmh_direct_participants AS srmh_direct_participants_women",
+    "COALESCE(percent_srmh_women_indirect_participants, 0) * num_srmh_indirect_participants AS srmh_indirect_participants_women",
   ];
 
   let query = SquelPostgres.select({ replaceSingleQuotes: true })
     .fields(fields)
-    .from("reach_data");
-
-  if (country) {
-    query = query.where("country = ?", country);
-  }
+    .from("reach_data")
+    .where("country = ?", country || "Total");
 
   return query.toString();
 };

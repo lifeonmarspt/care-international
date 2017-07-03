@@ -39,7 +39,6 @@ class ReachSidebarArea extends React.Component {
   render() {
     let {
       loading,
-      subView,
       region,
       country,
       program,
@@ -76,32 +75,6 @@ class ReachSidebarArea extends React.Component {
         </dl>
       </div>)}
 
-      {program === "overall" && (<div className="content">
-        <dl>
-          <dt>
-            Participants reached in 2016
-          </dt>
-          <dd>
-            <ul>
-              <li>
-                <div>Direct <img src={imgHelp} alt="Help" /></div>
-                <BarWrapper bar={PercentageBar}
-                  colorClass="overall"
-                  value={statistics["total_direct_participants_women"]}
-                  maxValue={statistics["total_direct_participants"]} />
-              </li>
-              <li>
-                <div>Indirect <img src={imgHelp} alt="Help" /></div>
-                <BarWrapper bar={PercentageBar}
-                  colorClass="overall"
-                  value={statistics["total_indirect_participants_women"]}
-                  maxValue={statistics["total_indirect_participants"]} />
-              </li>
-            </ul>
-          </dd>
-        </dl>
-      </div>)}
-
       {program !== "overall" && (<div className="content">
         <dl>
           <dt>
@@ -114,7 +87,33 @@ class ReachSidebarArea extends React.Component {
         </dl>
       </div>)}
 
-      {program !== "overall" && (<div className="content">
+      {!country && (<div className="content">
+        <dl>
+          <dt>
+            Participants reached in 2016
+          </dt>
+          <dd>
+            <ul>
+              <li>
+                <div>Direct <img src={imgHelp} alt="Help" /></div>
+                <BarWrapper bar={PercentageBar}
+                  colorClass={program}
+                  value={statistics[`${program}_direct_participants_women`]}
+                  maxValue={statistics[`${program}_direct_participants`]} />
+              </li>
+              <li>
+                <div>Indirect <img src={imgHelp} alt="Help" /></div>
+                <BarWrapper bar={PercentageBar}
+                  colorClass={program}
+                  value={statistics[`${program}_indirect_participants_women`]}
+                  maxValue={statistics[`${program}_indirect_participants`]} />
+              </li>
+            </ul>
+          </dd>
+        </dl>
+      </div>)}
+
+      {country && (<div className="content">
         <dl>
           <dt>
             Participants reached in 2016
@@ -126,25 +125,26 @@ class ReachSidebarArea extends React.Component {
                 <BarWrapper bar={ValueBar}
                   colorClass={program}
                   value={statistics[`${program}_direct_participants`]}
-                  maxValue={statistics["total_direct_participants"]} />
+                  maxValue={statistics["overall_direct_participants"]} />
                 <BarWrapper bar={ValueBar}
-                  value={statistics["total_direct_participants"] - statistics[`${program}_direct_participants`]}
-                  maxValue={statistics["total_direct_participants"]} />
+                  value={statistics["overall_direct_participants"] - statistics[`${program}_direct_participants`]}
+                  maxValue={statistics["overall_direct_participants"]} />
               </li>
               <li>
                 <div>Indirect <img src={imgHelp} alt="Help" /></div>
                 <BarWrapper bar={ValueBar}
                   colorClass={program}
                   value={statistics[`${program}_indirect_participants`]}
-                  maxValue={statistics["total_indirect_participants"]} />
+                  maxValue={statistics["overall_indirect_participants"]} />
                 <BarWrapper bar={ValueBar}
-                  value={statistics["total_indirect_participants"] - statistics[`${program}_indirect_participants`]}
-                  maxValue={statistics["total_indirect_participants"]} />
+                  value={statistics["overall_indirect_participants"] - statistics[`${program}_indirect_participants`]}
+                  maxValue={statistics["overall_indirect_participants"]} />
               </li>
             </ul>
           </dd>
         </dl>
       </div>)}
+
 
       <div className="filters">
         <dl>

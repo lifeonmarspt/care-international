@@ -1,0 +1,188 @@
+{
+    "fields": {
+        "cdb_columnnames": {
+            "type": "string"
+        }
+    },
+    "rows": [
+        {
+            "cdb_columnnames": "cartodb_id"
+        },
+        {
+            "cdb_columnnames": "the_geom"
+        },
+        {
+            "cdb_columnnames": "the_geom_webmercator"
+        },
+        {
+            "cdb_columnnames": "country"
+        },
+        {
+            "cdb_columnnames": "category"
+        },
+        {
+            "cdb_columnnames": "region"
+        },
+        {
+            "cdb_columnnames": "data"
+        },
+        {
+            "cdb_columnnames": "comment"
+        },
+        {
+            "cdb_columnnames": "hum_data"
+        },
+        {
+            "cdb_columnnames": "srmh_data"
+        },
+        {
+            "cdb_columnnames": "lffv_data"
+        },
+        {
+            "cdb_columnnames": "fnscc_data"
+        },
+        {
+            "cdb_columnnames": "wee_data"
+        },
+        {
+            "cdb_columnnames": "num_projects_and_initiatives"
+        },
+        {
+            "cdb_columnnames": "num_direct_participants"
+        },
+        {
+            "cdb_columnnames": "percent_women_of_direct_participants"
+        },
+        {
+            "cdb_columnnames": "num_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "percent_women_of_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "num_hum_projects_and_initiatives"
+        },
+        {
+            "cdb_columnnames": "num_hum_direct_participants"
+        },
+        {
+            "cdb_columnnames": "num_hum_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "num_srmh_projects_and_initiatives"
+        },
+        {
+            "cdb_columnnames": "num_srmh_direct_participants"
+        },
+        {
+            "cdb_columnnames": "num_srmh_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "num_lffv_projects_and_initiatives"
+        },
+        {
+            "cdb_columnnames": "num_lffv_direct_participants"
+        },
+        {
+            "cdb_columnnames": "num_lffv_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "num_fnscc_projects_and_initiatives"
+        },
+        {
+            "cdb_columnnames": "num_fnscc_direct_participants"
+        },
+        {
+            "cdb_columnnames": "num_fnscc_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "num_wee_projects_and_initiatives"
+        },
+        {
+            "cdb_columnnames": "num_wee_direct_participants"
+        },
+        {
+            "cdb_columnnames": "num_wee_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "iso"
+        },
+        {
+            "cdb_columnnames": "percent_hum_women_direct_participants"
+        },
+        {
+            "cdb_columnnames": "percent_hum_of_all_fy16_direct_participants"
+        },
+        {
+            "cdb_columnnames": "percent_hum_women_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "percent_hum_of_all_fy16_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "hum_proportion_direct_indirect_parcipants"
+        },
+        {
+            "cdb_columnnames": "percent_srmh_women_direct_participants"
+        },
+        {
+            "cdb_columnnames": "percent_srmh_of_all_fy16_direct_participants"
+        },
+        {
+            "cdb_columnnames": "percent_srmh_women_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "percent_srmh_of_all_fy16_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "srmh_proportion_direct_indirect_parcipants"
+        },
+        {
+            "cdb_columnnames": "percent_lffv_women_direct_participants"
+        },
+        {
+            "cdb_columnnames": "percent_lffv_of_all_fy16_direct_participants"
+        },
+        {
+            "cdb_columnnames": "percent_lffv_women_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "percent_lffv_of_all_fy16_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "lffv_proportion_direct_indirect_parcipants"
+        },
+        {
+            "cdb_columnnames": "percent_fnscc_women_direct_participants"
+        },
+        {
+            "cdb_columnnames": "percent_fnscc_of_all_fy16_direct_participants"
+        },
+        {
+            "cdb_columnnames": "percent_fnscc_women_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "percent_fnscc_of_all_fy16_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "fnscc_proportion_direct_indirect_parcipants"
+        },
+        {
+            "cdb_columnnames": "percent_wee_women_direct_participants"
+        },
+        {
+            "cdb_columnnames": "percent_wee_of_all_fy16_direct_participants"
+        },
+        {
+            "cdb_columnnames": "percent_wee_women_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "percent_wee_of_all_fy16_indirect_participants"
+        },
+        {
+            "cdb_columnnames": "wee_proportion_direct_indirect_parcipants"
+        }
+    ],
+    "time": 0.009,
+    "total_rows": 59
+}
