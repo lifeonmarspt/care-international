@@ -79,7 +79,7 @@ class ReachSidebarArea extends React.Component {
         <dl>
           <dt>
             Projects and Initiatives in 2016
-            <span className="subtitle">({programs.find((p) => p.id === program).label})</span>
+            <span className="subtitle">{programs.find((p) => p.id === program).label}</span>
           </dt>
           <dd>
             {(statistics.projects_and_initiatives || 0).toLocaleString()}
@@ -188,7 +188,7 @@ class ReachSidebarArea extends React.Component {
               })}
               {program !== "overall" && (<li className="see-overall">
                 <AppLink mainView="reach" country={country}>
-                  See overall
+                  See to all program areas
                 </AppLink>
               </li>)}
             </ul>
