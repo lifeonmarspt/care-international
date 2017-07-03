@@ -7,8 +7,10 @@ import ReachMap from "components/areas/Map/Reach";
 import ReachSidebar from "components/areas/Sidebar/Reach";
 import ImpactMap from "components/areas/Map/Impact";
 import ImpactSidebar from "components/areas/Sidebar/Impact";
+import AboutModal from "components/modals/About";
 
 import getLocation from "lib/location";
+import { setKey, getKey } from "lib/storage";
 import { fetchReachData, fetchImpactData } from "lib/remote";
 
 class App extends React.PureComponent {
@@ -44,6 +46,7 @@ class App extends React.PureComponent {
       bounds: null,
       mainView: null,
       subView: null,
+      showAbout: !getKey("about-dismissed"),
     };
   }
 
@@ -79,6 +82,14 @@ class App extends React.PureComponent {
       region,
       country: this.state.country,
       program: this.state.program,
+    });
+  }
+
+  handleCloseAbout() {
+    this.setState({
+      showAbout: false,
+    }, () => {
+      setKey("about-dismissed", true);
     });
   }
 
@@ -135,61 +146,55 @@ class App extends React.PureComponent {
   }
 
   render() {
-    switch (this.props.mainView) {
+    return (<div id="app">
+      <Header />
 
-      case "reach":
-        return (<div id="app">
-          <Header />
-          <ReachSidebar
-            loading={this.state.loading}
+      {this.props.mainView === "reach" && (<div>
+        <ReachSidebar
+          loading={this.state.loading}
+          subView={this.state.subView}
+          statistics={this.state.statistics}
+          region={this.state.region}
+          country={this.state.country}
+          program={this.state.program}
+          handleProgramChange={this.handleProgramChange.bind(this)}
+        />
+        <LeafletWrapper bounds={this.state.bounds}>
+          <ReachMap
             subView={this.state.subView}
-            statistics={this.state.statistics}
-            region={this.state.region}
             country={this.state.country}
             program={this.state.program}
-            handleProgramChange={this.handleProgramChange.bind(this)}
+            regions={this.state.regions}
+            handleCountryChange={this.handleCountryChange.bind(this)}
+            handleRegionChange={this.handleRegionChange.bind(this)}
           />
-          <LeafletWrapper bounds={this.state.bounds}>
-            <ReachMap
-              subView={this.state.subView}
-              country={this.state.country}
-              program={this.state.program}
-              regions={this.state.regions}
-              handleCountryChange={this.handleCountryChange.bind(this)}
-              handleRegionChange={this.handleRegionChange.bind(this)}
-            />
-          </LeafletWrapper>
-        </div>);
+        </LeafletWrapper>
+      </div>)}
 
-      case "impact":
-        return (<div id="app">
-          <Header />
-          <ImpactSidebar
+      {this.props.mainView === "impact" && (<div>
+        <ImpactSidebar
+          subView={this.state.subView}
+          loading={this.state.loading}
+          statistics={this.state.statistics}
+          region={this.state.region}
+          country={this.state.country}
+          program={this.state.program}
+          handleProgramChange={this.handleProgramChange.bind(this)}
+        />
+        <LeafletWrapper bounds={this.state.bounds}>
+          <ImpactMap
             subView={this.state.subView}
-            loading={this.state.loading}
-            statistics={this.state.statistics}
-            region={this.state.region}
             country={this.state.country}
             program={this.state.program}
-            handleProgramChange={this.handleProgramChange.bind(this)}
+            regions={this.state.regions}
+            handleCountryChange={this.handleCountryChange.bind(this)}
+            handleRegionChange={this.handleRegionChange.bind(this)}
           />
-          <LeafletWrapper bounds={this.state.bounds}>
-            <ImpactMap
-              subView={this.state.subView}
-              country={this.state.country}
-              program={this.state.program}
-              regions={this.state.regions}
-              handleCountryChange={this.handleCountryChange.bind(this)}
-              handleRegionChange={this.handleRegionChange.bind(this)}
-            />
-          </LeafletWrapper>
-        </div>);
+        </LeafletWrapper>
+      </div>)}
 
-      default:
-        // eslint-disable-next-line
-        console.error("wat");
-        break;
-    }
+      <AboutModal hidden={!this.state.showAbout} onClose={this.handleCloseAbout.bind(this)}/>
+    </div>);
   }
 }
 

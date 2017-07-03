@@ -9,3 +9,8 @@ body {
 p {
   margin-bottom: 1em;
 }
+
+// hide CARTO attribution image
+img[title=CARTO] {
+  display: none !important;
+}

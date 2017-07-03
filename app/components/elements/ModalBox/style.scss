@@ -1,0 +1,25 @@
+@import "../../../styles/colors.scss";
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: $overlay-color;
+  z-index: 1000;
+
+  &.hidden {
+    display: none;
+  }
+
+  .modal {
+    position: fixed;
+    background-color: $bg-color-1;
+    color: $font-color-1;
+    font-family: ITC Officina Sans Std, Helvetica;
+  }
+
+
+}
+
