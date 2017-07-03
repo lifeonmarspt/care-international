@@ -8,6 +8,7 @@ import ReachSidebar from "components/areas/Sidebar/Reach";
 import ImpactMap from "components/areas/Map/Impact";
 import ImpactSidebar from "components/areas/Sidebar/Impact";
 import AboutModal from "components/modals/About";
+import ShareModal from "components/modals/Share";
 
 import getLocation from "lib/location";
 import { setKey, getKey } from "lib/storage";
@@ -47,6 +48,7 @@ class App extends React.PureComponent {
       mainView: null,
       subView: null,
       showAbout: !getKey("about-dismissed"),
+      showShare: false,
     };
   }
 
@@ -92,6 +94,13 @@ class App extends React.PureComponent {
       setKey("about-dismissed", true);
     });
   }
+
+  handleToggleShare() {
+    this.setState({
+      showShare: !this.state.showShare,
+    });
+  }
+
 
   fetchRemoteData() {
     switch (this.props.mainView) {
@@ -157,17 +166,17 @@ class App extends React.PureComponent {
           region={this.state.region}
           country={this.state.country}
           program={this.state.program}
-          handleProgramChange={this.handleProgramChange.bind(this)}
-        />
-        <LeafletWrapper bounds={this.state.bounds}>
+          handleProgramChange={this.handleProgramChange.bind(this)} />
+        <LeafletWrapper
+          bounds={this.state.bounds}
+          handleShare={this.handleToggleShare.bind(this)}>
           <ReachMap
             subView={this.state.subView}
             country={this.state.country}
             program={this.state.program}
             regions={this.state.regions}
             handleCountryChange={this.handleCountryChange.bind(this)}
-            handleRegionChange={this.handleRegionChange.bind(this)}
-          />
+            handleRegionChange={this.handleRegionChange.bind(this)} />
         </LeafletWrapper>
       </div>)}
 
@@ -179,21 +188,23 @@ class App extends React.PureComponent {
           region={this.state.region}
           country={this.state.country}
           program={this.state.program}
-          handleProgramChange={this.handleProgramChange.bind(this)}
-        />
-        <LeafletWrapper bounds={this.state.bounds}>
+          handleProgramChange={this.handleProgramChange.bind(this)} />
+        <LeafletWrapper
+          bounds={this.state.bounds}
+          handleShare={this.handleToggleShare.bind(this)}>
           <ImpactMap
             subView={this.state.subView}
             country={this.state.country}
             program={this.state.program}
             regions={this.state.regions}
             handleCountryChange={this.handleCountryChange.bind(this)}
-            handleRegionChange={this.handleRegionChange.bind(this)}
-          />
+            handleRegionChange={this.handleRegionChange.bind(this)}/>
         </LeafletWrapper>
       </div>)}
 
-      <AboutModal hidden={!this.state.showAbout} onClose={this.handleCloseAbout.bind(this)}/>
+      <AboutModal hidden={!this.state.showAbout} handleClose={this.handleCloseAbout.bind(this)} />
+      <ShareModal hidden={!this.state.showShare} handleClose={this.handleToggleShare.bind(this)} />
+
     </div>);
   }
 }

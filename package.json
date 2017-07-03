@@ -12,6 +12,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "colors": "^1.1.2",
+    "copy-to-clipboard": "^3.0.6",
     "history": "^4.6.1",
     "query-string": "^4.3.4",
     "raw-loader": "^0.5.1",

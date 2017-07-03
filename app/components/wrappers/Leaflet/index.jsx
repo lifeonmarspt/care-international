@@ -15,6 +15,7 @@ class LeafletProvider extends React.Component {
 
   static propTypes = {
     bounds: PropTypes.array,
+    handleShare: PropTypes.func.isRequired,
   }
 
   getChildContext() {
@@ -54,7 +55,7 @@ class LeafletProvider extends React.Component {
   }
 
   share() {
-    // @TODO share here
+    this.props.handleShare();
   }
 
   componentDidMount() {

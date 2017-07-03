@@ -14,12 +14,27 @@
   }
 
   .modal {
-    position: fixed;
+    position: relative;
     background-color: $bg-color-1;
     color: $font-color-1;
     font-family: ITC Officina Sans Std, Helvetica;
   }
 
+  .close-button {
+    position: absolute;
+    top: 40px;
+    right: -16px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.1);
+    background-color: $bg-color-1;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(~images/plus.png);
+    transform: rotate(45deg);
+  }
 
 }
 

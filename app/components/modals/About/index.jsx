@@ -11,7 +11,7 @@ class AboutModal extends React.Component {
 
   static propTypes= {
     hidden: PropTypes.bool,
-    onClose: PropTypes.func.isRequired,
+    handleClose: PropTypes.func.isRequired,
   };
 
   render() {
@@ -28,7 +28,7 @@ class AboutModal extends React.Component {
           <p>
             In 2016, CARE gathered evidence of impact in 56 countries, contributing to significant improvements for 21 million people.
           </p>
-          <button onClick={this.props.onClose}>
+          <button className="primary" onClick={this.props.handleClose}>
             Discover more data
           </button>
         </div>

@@ -10,6 +10,7 @@ class ModalBox extends React.Component {
     hidden: PropTypes.bool,
     width: PropTypes.number,
     height: PropTypes.number,
+    handleClose: PropTypes.func,
   }
 
   static defaultProps = {
@@ -33,8 +34,8 @@ class ModalBox extends React.Component {
     return (<div className={overlayClasses}>
       <div className="modal" style={modalStyles}>
         {this.props.children}
+        {this.props.handleClose && (<div className="close-button" onClick={this.props.handleClose} />)}
       </div>
-      <div className="close-button" />
     </div>);
   }
 
