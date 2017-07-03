@@ -84,7 +84,7 @@
         > ul {
           font-size: 14px;
           > li:not(:last-child) {
-            margin-bottom: 2em;
+            margin-bottom: 1.5em;
             li {
               margin-top: .5em;
             }
@@ -97,6 +97,31 @@
 
   .content {
     border-bottom: 1px solid $accent-color-3;
+
+    ul.legend {
+      display: flex;
+      align-items: flex-start;
+
+      li {
+        text-transform: uppercase;
+        margin-right: 20px;
+      }
+
+      li::before {
+        display: inline-block;
+        margin-right: 5px;
+        content: "";
+        width: 10px;
+        height: 10px;
+      }
+
+      @each $program, $color in $programColors {
+        li.#{$program}::before {
+          background-color: $color;
+        }
+      }
+    }
+
   }
 
   .filters {

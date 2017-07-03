@@ -87,7 +87,7 @@ class ReachSidebarArea extends React.Component {
         </dl>
       </div>)}
 
-      {!country && (<div className="content">
+      {!(country && program !== "overall") && (<div className="content">
         <dl>
           <dt>
             Participants reached in 2016
@@ -113,7 +113,7 @@ class ReachSidebarArea extends React.Component {
         </dl>
       </div>)}
 
-      {country && (<div className="content">
+      {(country && program !== "overall") && (<div className="content">
         <dl>
           <dt>
             Participants reached in 2016
@@ -121,24 +121,36 @@ class ReachSidebarArea extends React.Component {
           <dd>
             <ul>
               <li>
+                <ul className="legend">
+                  <li className={program}>{program}</li>
+                  <li className="overall">Overall</li>
+                </ul>
+              </li>
+              <li>
                 <div>Direct <img src={imgHelp} alt="Help" /></div>
                 <BarWrapper bar={ValueBar}
                   colorClass={program}
                   value={statistics[`${program}_direct_participants`]}
-                  maxValue={statistics["overall_direct_participants"]} />
+                  maxValue={statistics["overall_direct_participants"]}
+                  formatter={(v) => v.toLocaleString()} />
                 <BarWrapper bar={ValueBar}
+                  colorClass="overall"
                   value={statistics["overall_direct_participants"] - statistics[`${program}_direct_participants`]}
-                  maxValue={statistics["overall_direct_participants"]} />
+                  maxValue={statistics["overall_direct_participants"]}
+                  formatter={(v) => v.toLocaleString()} />
               </li>
               <li>
                 <div>Indirect <img src={imgHelp} alt="Help" /></div>
                 <BarWrapper bar={ValueBar}
                   colorClass={program}
                   value={statistics[`${program}_indirect_participants`]}
-                  maxValue={statistics["overall_indirect_participants"]} />
+                  maxValue={statistics["overall_indirect_participants"]}
+                  formatter={(v) => v.toLocaleString()} />
                 <BarWrapper bar={ValueBar}
+                  colorClass="overall"
                   value={statistics["overall_indirect_participants"] - statistics[`${program}_indirect_participants`]}
-                  maxValue={statistics["overall_indirect_participants"]} />
+                  maxValue={statistics["overall_indirect_participants"]}
+                  formatter={(v) => v.toLocaleString()} />
               </li>
             </ul>
           </dd>
