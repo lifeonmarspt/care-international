@@ -65,7 +65,7 @@ class ImpactSidebarArea extends React.Component {
             Total Population impacted in 2016
           </dt>
           <dd>
-            <span>{statistics.total_impact.toLocaleString()}</span>
+            <span>{(statistics.total_impact || 0).toLocaleString()}</span>
           </dd>
         </dl>
       </div>)}
@@ -77,7 +77,7 @@ class ImpactSidebarArea extends React.Component {
             <h2>{programs.find((p) => p.id === program).label}</h2>
           </dt>
           <dd>
-            <span>{statistics[`${program}_impact`].toLocaleString()}</span>
+            <span>{(statistics[`${program}_impact`] || 0).toLocaleString()}</span>
           </dd>
         </dl>
       </div>)}

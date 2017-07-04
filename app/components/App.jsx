@@ -199,6 +199,7 @@ class App extends React.PureComponent {
           handleShare={this.handleToggleModal.bind(this, "showShareModal")}>
           <ImpactMap
             subView={this.state.subView}
+            region={this.state.region}
             country={this.state.country}
             program={this.state.program}
             regions={this.state.regions}

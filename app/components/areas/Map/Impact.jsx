@@ -8,9 +8,16 @@ import imgHelp from "images/help.svg";
 import "./style.scss";
 
 const bucketSize = {
-  1: 150,
-  2: 120,
-  3: 70,
+  regions: {
+    1: 150,
+    2: 120,
+    3: 70,
+  },
+  countries: {
+    1: 70,
+    2: 50,
+    3: 30,
+  },
 };
 
 const getSVGIcon = (value, program, size) => {
@@ -54,8 +61,12 @@ class ImpactMapArea extends React.Component {
         return null;
       }
 
+      let iconSize = bucketSize
+        [this.props.region ? "countries" : "regions"]
+        [region[`${this.props.program}_position`]];
+
       return window.L.marker([region.region_center_y, region.region_center_x], {
-        icon: getSVGIcon(value, this.props.program, bucketSize[region[`${this.props.program}_position`]]),
+        icon: getSVGIcon(value, this.props.program, iconSize),
       }).addTo(this.context.map).on("click", () => {
         this.props.handleRegionChange(region.region);
       });

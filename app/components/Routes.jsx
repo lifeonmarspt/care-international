@@ -11,8 +11,8 @@ const AppWrapper = ({ mainView, subView, match }, { router }) => {
   return (<App
     mainView={mainView}
     subView={subView}
-    country={match.params.country}
-    region={match.params.region}
+    country={match.params.country && decodeURIComponent(match.params.country)}
+    region={match.params.region && decodeURIComponent(match.params.region)}
     program={qs.program}
   />);
 };
