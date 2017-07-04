@@ -126,10 +126,10 @@ class ReachMapArea extends React.Component {
             </ul>
             <ul className="exceptions">
               <li className="no-data">
-                <span>No data</span>
+                <span>No participants recorded or other type of activities</span>
               </li>
               <li className="care-member">
-                <span>Care international members</span>
+                <span>CARE International Members or Affiliate Members</span>
               </li>
             </ul>
           </li>

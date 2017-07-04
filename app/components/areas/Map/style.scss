@@ -34,12 +34,12 @@
 
     ul.scale, ul.exceptions {
       position: relative;
-      display: flex;
-      align-items: flex-start;
       font-size: 0.8em;
     }
 
     ul.scale {
+      display: flex;
+      align-items: flex-start;
       margin-bottom: 1.5em;
 
       li {
@@ -82,6 +82,7 @@
     }
 
     ul.exceptions {
+      color: $font-color-1;
       li {
         display: flex;
         align-items: flex-start;
