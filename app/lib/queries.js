@@ -78,12 +78,12 @@ const getReachStatisticsSQL = (country) => {
 
 const getImpactStatisticsSQL = (region, country) => {
   let fields = [
-    "SUM(total_impact) AS total_impact",
-    "SUM(humanitarian_response) AS hum_impact",
-    "SUM(sexual_reproductive_and_maternal_health) AS srmh_impact",
-    "SUM(right_to_a_life_free_from_violence) AS lffv_impact",
-    "SUM(food_and_nutrition_security_and_resilience_to_climate_change) AS fnscc_impact",
-    "SUM(women_s_economic_empowerment) AS wee_impact",
+    "ROUND(SUM(total_impact)) AS total_impact",
+    "ROUND(SUM(humanitarian_response)) AS hum_impact",
+    "ROUND(SUM(sexual_reproductive_and_maternal_health)) AS srmh_impact",
+    "ROUND(SUM(right_to_a_life_free_from_violence)) AS lffv_impact",
+    "ROUND(SUM(food_and_nutrition_security_and_resilience_to_climate_change)) AS fnscc_impact",
+    "ROUND(SUM(women_s_economic_empowerment)) AS wee_impact",
   ];
 
   let query = SquelPostgres.select({ replaceSingleQuotes: true })
@@ -105,17 +105,17 @@ const getImpactRegionDataSQL = (region) => {
 
   let subfields = [
     "ST_Centroid(ST_Collect(the_geom)) AS region_center",
-    "SUM(total_impact) AS overall_impact",
+    "ROUND(SUM(total_impact)) AS overall_impact",
     `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(total_impact) DESC) AS overall_position`,
-    "SUM(humanitarian_response) AS hum_impact",
+    "ROUND(SUM(humanitarian_response)) AS hum_impact",
     `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(humanitarian_response) DESC) AS hum_position`,
-    "SUM(sexual_reproductive_and_maternal_health) AS srmh_impact",
+    "ROUND(SUM(sexual_reproductive_and_maternal_health)) AS srmh_impact",
     `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(sexual_reproductive_and_maternal_health) DESC) AS srmh_position`,
-    "SUM(right_to_a_life_free_from_violence) AS lffv_impact",
+    "ROUND(SUM(right_to_a_life_free_from_violence)) AS lffv_impact",
     `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(right_to_a_life_free_from_violence) DESC) AS lffv_position`,
-    "SUM(food_and_nutrition_security_and_resilience_to_climate_change) AS fnscc_impact",
+    "ROUND(SUM(food_and_nutrition_security_and_resilience_to_climate_change)) AS fnscc_impact",
     `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(food_and_nutrition_security_and_resilience_to_climate_change) DESC) AS fnscc_position`,
-    "SUM(women_s_economic_empowerment) AS wee_impact",
+    "ROUND(SUM(women_s_economic_empowerment)) AS wee_impact",
     `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(women_s_economic_empowerment) DESC) AS wee_position`,
   ];
 
