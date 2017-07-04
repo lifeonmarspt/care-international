@@ -62,13 +62,13 @@ class LeafletProvider extends React.Component {
     this.initLeaflet();
 
     if (this.props.bounds) {
-      this.map.fitBounds(this.props.bounds);
+      this.map.fitBounds(this.props.bounds, { animate: false });
     }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.bounds && this.props.bounds !== prevProps.bounds) {
-      this.map.fitBounds(this.props.bounds);
+      this.map.fitBounds(this.props.bounds, { animate: false });
     }
   }
 

@@ -12,9 +12,9 @@ const cartoSQL = window.cartodb.SQL({
   sql_api_template: "https://{user}.carto.com",
 });
 
-const getBounds = (table, country) => {
+const getBounds = (table, country, region) => {
   return new window.Promise((resolve, reject) => {
-    cartoSQL.getBounds(getBoundsSQL(table, country))
+    cartoSQL.getBounds(getBoundsSQL(table, country, region))
       .done((result) => resolve(result))
       .error((error) => reject(error));
   });
@@ -49,6 +49,7 @@ const fetchImpactData = (region, country) => {
   return window.Promise.all([
     getStatistics,
     getRegionData,
+    (country || region) && getBounds("impact_data", country, region),
   ]);
 };
 

@@ -127,11 +127,12 @@ class App extends React.PureComponent {
 
       case "impact":
         fetchImpactData(this.props.region, this.props.country)
-          .then(([statistics, regions]) => {
+          .then(([statistics, regions, bounds]) => {
             this.setState({
               loading: false,
               statistics: statistics.rows[0],
               regions: regions.rows,
+              bounds: bounds,
               mainView: this.props.mainView,
               subView: this.props.subView,
               region: this.props.region,

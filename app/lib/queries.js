@@ -147,11 +147,15 @@ const getImpactRegionDataSQL = (region) => {
   return query.toString();
 };
 
-const getBoundsSQL = (table, country) => {
+const getBoundsSQL = (table, country, region) => {
   let query = SquelPostgres.select({ replaceSingleQuotes: true }).field("the_geom").from(table);
 
   if (country) {
     query = query.where("country = ?", country);
+  }
+
+  if (region) {
+    query = query.where("region = ?", region);
   }
 
   return query.toString();

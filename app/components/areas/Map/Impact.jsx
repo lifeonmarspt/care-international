@@ -38,7 +38,6 @@ class ImpactMapArea extends React.Component {
     country: PropTypes.string,
     region: PropTypes.string,
     regions: PropTypes.array,
-    bounds: PropTypes.array,
     program: PropTypes.string,
     handleRegionChange: PropTypes.func,
   }
