@@ -1,5 +1,5 @@
-@import "../../../styles/colors.scss";
-@import "../../../styles/values.scss";
+@import "../../styles/colors.scss";
+@import "../../styles/values.scss";
 
 .leaflet-div-icon {
   background-color: transparent !important;
@@ -18,7 +18,12 @@ svg.circle {
 @each $program, $color in $programColors {
   svg.circle.#{$program} {
     circle {
-      fill: $color 
+      fill: $color
+    }
+  }
+  svg.rhombus.#{$program} {
+    rect {
+      fill: $color
     }
   }
 }

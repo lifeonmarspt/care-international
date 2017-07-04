@@ -147,6 +147,14 @@ const getImpactRegionDataSQL = (region) => {
   return query.toString();
 };
 
+const getImpactStoriesSQL = () => {
+  let query = SquelPostgres.select({ replaceSingleQuotes: true })
+    .field("*")
+    .from("story");
+
+  return query.toString();
+};
+
 const getBoundsSQL = (table, country, region) => {
   let query = SquelPostgres.select({ replaceSingleQuotes: true }).field("the_geom").from(table);
 
@@ -167,5 +175,6 @@ export {
   getReachMapSQL,
   getImpactStatisticsSQL,
   getImpactRegionDataSQL,
+  getImpactStoriesSQL,
   getBoundsSQL,
 };

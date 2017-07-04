@@ -91,6 +91,18 @@ class App extends React.PureComponent {
     });
   }
 
+  handleStoryChange(region) {
+    console.log(region);
+    return;
+    this.navigate({
+      mainView: this.state.mainView,
+      subView: this.state.subView,
+      region: this.state.region,
+      country: this.state.country,
+      program: this.state.program,
+    });
+  }
+
   handleCloseAbout() {
     this.setState({
       showAboutModal: false,
@@ -127,11 +139,12 @@ class App extends React.PureComponent {
 
       case "impact":
         fetchImpactData(this.props.region, this.props.country)
-          .then(([statistics, regions, bounds]) => {
+          .then(([statistics, regions, stories, bounds]) => {
             this.setState({
               loading: false,
               statistics: statistics.rows[0],
               regions: regions.rows,
+              stories: stories.rows,
               bounds: bounds,
               mainView: this.props.mainView,
               subView: this.props.subView,
@@ -204,8 +217,10 @@ class App extends React.PureComponent {
             country={this.state.country}
             program={this.state.program}
             regions={this.state.regions}
+            stories={this.state.stories}
             handleCountryChange={this.handleCountryChange.bind(this)}
             handleRegionChange={this.handleRegionChange.bind(this)}
+            handleStoryChange={this.handleStoryChange.bind(this)}
             handleAboutClick={this.handleToggleModal.bind(this, "showImpactModal")} />
         </LeafletWrapper>
       </div>)}

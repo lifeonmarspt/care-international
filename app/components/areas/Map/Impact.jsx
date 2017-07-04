@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import ReactDOMServer from "react-dom/server";
 
 import CircleSVG from "components/svg/Circle";
+import RhombusSVG from "components/svg/Rhombus";
 import imgHelp from "images/help.svg";
 
 import "./style.scss";
@@ -20,9 +21,9 @@ const bucketSize = {
   },
 };
 
-const getSVGIcon = (value, program, size) => {
-  let label = value.toLocaleString();
-  let component = (<CircleSVG program={program} label={label} size={size} />);
+const getSVGIcon = (SVGComponent, value, program, size) => {
+  let label = value && value.toLocaleString();
+  let component = (<SVGComponent program={program} label={label} size={size} />);
   let html = ReactDOMServer.renderToString(component);
 
   return window.L.divIcon({
@@ -38,13 +39,16 @@ class ImpactMapArea extends React.Component {
     country: PropTypes.string,
     region: PropTypes.string,
     regions: PropTypes.array,
+    stories: PropTypes.array,
     program: PropTypes.string,
     handleRegionChange: PropTypes.func,
+    handleStoryChange: PropTypes.func,
   }
 
   static defaultProps = {
     program: "overall",
     regions: [],
+    stories: [],
   }
 
   static contextTypes = {
@@ -52,7 +56,7 @@ class ImpactMapArea extends React.Component {
   }
 
   initMarkers() {
-    this.markers = this.props.regions.map((region) => {
+    this.quantitativeMarkers = this.props.regions.map((region) => {
 
       let value = region[`${this.props.program}_impact`];
 
@@ -65,17 +69,30 @@ class ImpactMapArea extends React.Component {
         [region[`${this.props.program}_position`]];
 
       return window.L.marker([region.region_center_y, region.region_center_x], {
-        icon: getSVGIcon(value, this.props.program, iconSize),
+        icon: getSVGIcon(CircleSVG, value, this.props.program, iconSize),
       }).addTo(this.context.map).on("click", () => {
         this.props.handleRegionChange(region.region);
+      });
+
+    }).filter((s) => s);
+
+    this.qualitativeMarkers = this.props.stories.map((story) => {
+
+      return window.L.marker([story.lat, story.lon], {
+        icon: getSVGIcon(RhombusSVG, null, this.props.program, 20),
+      }).addTo(this.context.map).on("click", () => {
+        this.props.handleStoryChange(story);
       });
 
     }).filter((s) => s);
   }
 
   destroyMarkers() {
-    this.markers.forEach((marker) => this.context.map.removeLayer(marker));
-    this.markers = [];
+    this.quantitativeMarkers.forEach((marker) => this.context.map.removeLayer(marker));
+    this.quantitativeMarkers = [];
+
+    this.qualitativeMarkers.forEach((marker) => this.context.map.removeLayer(marker));
+    this.quantitativeMarkers = [];
   }
 
   componentDidMount() {
