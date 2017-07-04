@@ -1,0 +1,31 @@
+@import "../../../styles/colors.scss";
+@import "../../../styles/values.scss";
+@import "../../../styles/mixins.scss";
+
+#story {
+  background-color: white;
+  box-shadow: 0 0 6px 0 rgba(209, 203, 203, 0.44);
+
+  .close-button {
+    @include close-button;
+    top: 40px;
+    right: -16px;
+  }
+
+  .img-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 180px;
+    width: 100%;
+    img {
+      position: absolute;
+      top: -180px;
+      left: -40px;
+    }
+  }
+
+  .content {
+    padding: 32px 40px 20px;
+  }
+}
+

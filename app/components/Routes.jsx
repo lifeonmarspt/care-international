@@ -13,6 +13,7 @@ const AppWrapper = ({ mainView, subView, match }, { router }) => {
     subView={subView}
     country={match.params.country && decodeURIComponent(match.params.country)}
     region={match.params.region && decodeURIComponent(match.params.region)}
+    story={match.params.story && decodeURIComponent(match.params.story)}
     program={qs.program}
   />);
 };
@@ -34,6 +35,7 @@ class Routes extends React.Component {
         <Route exact path="/reach/:country" component={(props) => <AppWrapper mainView="reach" {...props} />} />
         <Route exact path="/impact" component={(props) => <AppWrapper mainView="impact" {...props} />} />
         <Route exact path="/impact/:region" component={(props) => <AppWrapper mainView="impact" {...props} />} />
+        <Route exact path="/impact/:country/story/:story" component={(props) => <AppWrapper mainView="impact" {...props} />} />
         <Route exact path="/impact/:region/:country" component={(props) => <AppWrapper mainView="impact" {...props} />} />
       </Switch>
     </Router>);

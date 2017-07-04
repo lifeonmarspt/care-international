@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactDOMServer from "react-dom/server";
 
+import StorySummary from "components/elements/StorySummary";
 import CircleSVG from "components/svg/Circle";
 import RhombusSVG from "components/svg/Rhombus";
 import imgHelp from "images/help.svg";
@@ -42,7 +43,6 @@ class ImpactMapArea extends React.Component {
     stories: PropTypes.array,
     program: PropTypes.string,
     handleRegionChange: PropTypes.func,
-    handleStoryChange: PropTypes.func,
   }
 
   static defaultProps = {
@@ -53,7 +53,21 @@ class ImpactMapArea extends React.Component {
 
   static contextTypes = {
     map: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
   }
+
+  getPopup(story) {
+    let component = (<StorySummary story={story} router={this.context.router} />);
+
+    let html = ReactDOMServer.renderToString(component);
+
+    return window.L.popup({
+      minWidth: 500,
+      minHeight: 100,
+      className: "custom-popup",
+    }).setContent(html);
+  }
+
 
   initMarkers() {
     this.quantitativeMarkers = this.props.regions.map((region) => {
@@ -80,9 +94,8 @@ class ImpactMapArea extends React.Component {
 
       return window.L.marker([story.lat, story.lon], {
         icon: getSVGIcon(RhombusSVG, null, this.props.program, 20),
-      }).addTo(this.context.map).on("click", () => {
-        this.props.handleStoryChange(story);
-      });
+      }).bindPopup(this.getPopup(story)).addTo(this.context.map);
+
 
     }).filter((s) => s);
   }

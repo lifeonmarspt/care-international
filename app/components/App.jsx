@@ -7,6 +7,7 @@ import ReachMap from "components/areas/Map/Reach";
 import ReachSidebar from "components/areas/Sidebar/Reach";
 import ImpactMap from "components/areas/Map/Impact";
 import ImpactSidebar from "components/areas/Sidebar/Impact";
+import Story from "components/areas/Story";
 import AboutModal from "components/modals/About";
 import ShareModal from "components/modals/Share";
 import ReachModal from "components/modals/Reach";
@@ -33,6 +34,7 @@ class App extends React.PureComponent {
     ]),
     region: PropTypes.string,
     country: PropTypes.string,
+    story: PropTypes.string,
     program: PropTypes.string,
   };
 
@@ -91,14 +93,9 @@ class App extends React.PureComponent {
     });
   }
 
-  handleStoryChange(region) {
-    console.log(region);
-    return;
+  handleCloseStory() {
     this.navigate({
-      mainView: this.state.mainView,
-      subView: this.state.subView,
-      region: this.state.region,
-      country: this.state.country,
+      mainView: "impact",
       program: this.state.program,
     });
   }
@@ -116,7 +113,6 @@ class App extends React.PureComponent {
       [stateVar]: !this.state[stateVar],
     });
   }
-
 
   fetchRemoteData() {
     switch (this.props.mainView) {
@@ -150,6 +146,7 @@ class App extends React.PureComponent {
               subView: this.props.subView,
               region: this.props.region,
               country: this.props.country,
+              story: this.props.story,
               program: this.props.program,
             });
           });
@@ -208,6 +205,9 @@ class App extends React.PureComponent {
           country={this.state.country}
           program={this.state.program}
           handleProgramChange={this.handleProgramChange.bind(this)} />
+        {this.state.story && (<Story
+          handleCloseStory={this.handleCloseStory.bind(this)}
+          story={this.state.stories.find((story) => story.cartodb_id === Number(this.state.story))} />)}
         <LeafletWrapper
           bounds={this.state.bounds}
           handleShare={this.handleToggleModal.bind(this, "showShareModal")}>
@@ -220,7 +220,6 @@ class App extends React.PureComponent {
             stories={this.state.stories}
             handleCountryChange={this.handleCountryChange.bind(this)}
             handleRegionChange={this.handleRegionChange.bind(this)}
-            handleStoryChange={this.handleStoryChange.bind(this)}
             handleAboutClick={this.handleToggleModal.bind(this, "showImpactModal")} />
         </LeafletWrapper>
       </div>)}

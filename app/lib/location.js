@@ -20,6 +20,10 @@ const getLocation = (options) => {
     parts.push(encodeURIComponent(options.country));
   }
 
+  if (options.story) {
+    parts.push("story", encodeURIComponent(options.story));
+  }
+
   let location = "/" + parts.join("/") + (qs ? `?${qs}` : "");
 
   return location;

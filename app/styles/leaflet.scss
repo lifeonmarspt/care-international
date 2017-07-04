@@ -1,0 +1,39 @@
+@import "colors.scss";
+@import "mixins.scss";
+
+.custom-popup {
+
+  font-family: Libre Baskerville, serif;
+  font-size: 18px;
+
+  .leaflet-popup-content-wrapper {
+    border-radius: 0;
+    border: 1px solid $accent-color-5;
+    background: $bg-color-1;
+    color: $font-color-1;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .leaflet-popup-tip-container {
+  }
+
+  .leaflet-popup-tip {
+  }
+
+  a {
+    color: $font-color-3;;
+  }
+
+  a.leaflet-popup-close-button {
+    @include close-button;
+    top: 10px;
+    right: -16px;
+    color: transparent;
+
+    &:hover {
+      color: transparent;
+    }
+  }
+
+}

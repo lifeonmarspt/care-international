@@ -36,4 +36,13 @@ body {
     bottom: 0;
     width: $sidebar-width;
   }
+
+  #story {
+    position: absolute;
+    top: $header-height;
+    left: $sidebar-width;
+    bottom: 0;
+    width: $sidebar-width;
+    z-index: 10;
+  }
 }
