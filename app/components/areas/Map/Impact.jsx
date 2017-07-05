@@ -24,7 +24,7 @@ const bucketSize = {
 
 const getSVGIcon = (SVGComponent, value, program, size) => {
   let label = value && value.toLocaleString();
-  let component = (<SVGComponent program={program} label={label} size={size} />);
+  let component = (<SVGComponent shadow program={program} label={label} size={size} />);
   let html = ReactDOMServer.renderToString(component);
 
   return window.L.divIcon({
@@ -128,14 +128,57 @@ class ImpactMapArea extends React.Component {
 
 
   render() {
-    return (
-      <div id="legend">
-        <div id="about" onClick={this.props.handleAboutClick}>
-          About impact data
+    return (<div id="map-area">
+      <div id="legend" className="impact">
+        <ul>
+          <li>Type of impacts</li>
+          <li>
+            <ul>
+              <li>
+                <RhombusSVG size={15} /> Qualitative
+              </li>
+              <li>
+                <CircleSVG size={15} /> Quantitative
+              </li>
+            </ul>
+          </li>
+          <li>Population impacted (quantitative)</li>
+          <li>
+            <ul>
+              <li>
+                1
+              </li>
+              <li>
+                <CircleSVG size={10} />
+              </li>
+              <li>
+                <CircleSVG size={15} />
+              </li>
+              <li>
+                <CircleSVG size={20} />
+              </li>
+              <li>
+                <CircleSVG size={25} />
+              </li>
+              <li>
+                <CircleSVG size={30} />
+              </li>
+              <li>
+                12M population impacted
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div id="about-data">
+        <div className="clickable" onClick={this.props.handleAboutClick}>
+          <span>
+            About impact data
+          </span>
           <img src={imgHelp} alt="Help" />
         </div>
       </div>
-    );
+    </div>);
   }
 
 }

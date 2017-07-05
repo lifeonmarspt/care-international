@@ -105,8 +105,8 @@ class ReachMapArea extends React.Component {
   }
 
   render() {
-    return (<div id="legend">
-      <div id="choropleth">
+    return (<div id="map-area">
+      <div id="legend" className="choropleth">
         <ul>
           <li>
             <Link to="#">Show Regions</Link>
@@ -135,9 +135,13 @@ class ReachMapArea extends React.Component {
           </li>
         </ul>
       </div>
-      <div id="about" onClick={this.props.handleAboutClick}>
-        About reach data
-        <img src={imgHelp} alt="Help" />
+      <div id="about-data">
+        <div className="clickable" onClick={this.props.handleAboutClick}>
+          <span>
+            About reach data
+          </span>
+          <img src={imgHelp} alt="Help" />
+        </div>
       </div>
     </div>);
   }

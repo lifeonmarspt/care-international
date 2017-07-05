@@ -7,17 +7,14 @@
 }
 
 svg.circle {
-  border-radius: 50%;
-  box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
-
   text {
     fill: #fff;
   }
 }
 
-svg.rhombus {
-  rect {
-  }
+svg.circle.shadow {
+  border-radius: 50%;
+  box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
 }
 
 @each $program, $color in $programColors {

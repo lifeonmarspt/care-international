@@ -7,9 +7,13 @@ import "../style.scss";
 class RhombusSVG extends React.Component {
 
   static propTypes = {
-    program: PropTypes.string.isRequired,
+    program: PropTypes.string,
     size: PropTypes.number.isRequired,
   };
+
+  static defaultProps = {
+    program: "default",
+  }
 
   render() {
     let rectSideLen = Math.floor(this.props.size / Math.SQRT2);

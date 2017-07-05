@@ -1,15 +1,13 @@
 @import "../../../styles/colors.scss";
 @import "../../../styles/values.scss";
 
+#map-area {
 
-#legend {
+  #legend {
 
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-
-
-  #choropleth {
+    position: absolute;
+    bottom: 40px;
+    right: 20px;
 
     border: 1px solid $accent-color-5;
     box-shadow: 0 0 7px 0 rgba(209,203,203,0.44);
@@ -17,122 +15,160 @@
     padding: 12px 20px 12px 12px;
     font-size: 14px;
 
-    a {
-      text-transform: uppercase;
-      color: $font-color-3;
-    }
-
-    p {
-      font-family: 'Libre Baskerville', serif;
-    }
-
-    > ul {
-      li:not(:last-child) {
-        margin-bottom: .5em;
-      }
-    }
-
-    ul.scale, ul.exceptions {
-      position: relative;
-      font-size: 0.8em;
-    }
-
-    ul.scale {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 1.5em;
-
-      li {
-        height: 10px;
-        width: 68px;
-        margin-bottom: 1em;
-
-        span {
-          position: relative;
-          top: 2px;
-          left: 50%;
-          display: block;
-          text-align: center;
+    &.impact {
+      > ul {
+        > li:nth-child(odd) {
+          font-size: 14px;
+          margin-bottom: 5px;
+          font-family: Libre Baskerville, serif;
         }
-
-        @each $program, $colors in $choroColors {
-          @for $i from 1 through 5 {
-            &.program-#{$program}.bucket-#{$i} {
-              background-color: nth($colors, $i);
+        > li:nth-child(2) {
+          margin-bottom: 10px;
+        }
+        > li {
+          > ul {
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            li {
+              margin-left: 5px;
             }
           }
         }
       }
-
-      &::before {
-        content: "0";
-        position: absolute;
-        top: 15px;
-        left: -34px;
-        display: block;
-        width: 68px;
-        text-align: center;
-      }
-
-      li::before, &::after {
-        display: block;
-        content: "";
-        height: 14px;
-        border-left: 1px solid $accent-color-5;
-      }
     }
 
-    ul.exceptions {
-      color: $font-color-1;
-      li {
+    &.choropleth {
+
+      a {
+        text-transform: uppercase;
+        color: $font-color-3;
+      }
+
+      p {
+        font-family: 'Libre Baskerville', serif;
+      }
+
+      > ul {
+        li:not(:last-child) {
+          margin-bottom: .5em;
+        }
+      }
+
+      ul.scale, ul.exceptions {
+        position: relative;
+        font-size: 0.8em;
+      }
+
+      ul.scale {
         display: flex;
         align-items: flex-start;
+        margin-bottom: 1.5em;
+
+        li {
+          height: 10px;
+          width: 68px;
+          margin-bottom: 1em;
+
+          span {
+            position: relative;
+            top: 2px;
+            left: 50%;
+            display: block;
+            text-align: center;
+          }
+
+          @each $program, $colors in $choroColors {
+            @for $i from 1 through 5 {
+              &.program-#{$program}.bucket-#{$i} {
+                background-color: nth($colors, $i);
+              }
+            }
+          }
+        }
+
+        &::before {
+          content: "0";
+          position: absolute;
+          top: 15px;
+          left: -34px;
+          display: block;
+          width: 68px;
+          text-align: center;
+        }
+
+        li::before, &::after {
+          display: block;
+          content: "";
+          height: 14px;
+          border-left: 1px solid $accent-color-5;
+        }
       }
 
-      li::before {
-        content: "";
-        display: inline-block;
-        width: 18px;
-        height: 15px;
-        border: 1px solid $accent-color-5;
-        margin-right: 0.4em;
-      }
+      ul.exceptions {
+        color: $font-color-1;
+        li {
+          display: flex;
+          align-items: flex-start;
+        }
 
-      li.no-data::before {
-        background-color: rgba(136, 136, 136, 0.6);
-      }
+        li::before {
+          content: "";
+          display: inline-block;
+          width: 18px;
+          height: 15px;
+          border: 1px solid $accent-color-5;
+          margin-right: 0.4em;
+        }
 
-      li.care-member::before {
-        background-image: url(~images/stripes-pattern.png);
-      }
+        li.no-data::before {
+          background-color: rgba(136, 136, 136, 0.6);
+        }
 
-      span {
-        height: 17px;
-        line-height: 17px;
-        margin-right: 1em;
+        li.care-member::before {
+          background-image: url(~images/stripes-pattern.png);
+        }
+
+        span {
+          height: 17px;
+          line-height: 17px;
+          margin-right: 1em;
+        }
       }
     }
+
   }
 
-  #about {
-
-    border: 1px solid $accent-color-5;
-    box-shadow: 0 0 7px 0 rgba(209,203,203,0.44);
+  #about-data {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
     background-color: $bg-color-1;
     text-transform: uppercase;
     font-size: 14px;
     margin-top: 20px;
-    text-align: right;
     font-weight: bold;
-    padding: 12px 12px 8px 12px;
     color: $font-color-3;
-    cursor: pointer;
-    width: 145px;
-    float: right;
+    height: 20px;
+    box-shadow: 0 -5px 10px $bg-color-1;
 
-    img {
-      margin-left: .5em;
-      height: 14px;
+    div {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      img {
+        margin-left: 5px;
+        margin-right: 20px;
+        height: 14px;
+      }
+
+      span {
+        position: relative;
+        top: 3px;
+      }
     }
   }
 
