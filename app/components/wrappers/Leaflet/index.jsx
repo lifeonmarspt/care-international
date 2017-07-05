@@ -15,8 +15,13 @@ class LeafletProvider extends React.Component {
 
   static propTypes = {
     bounds: PropTypes.array,
+    initialZoom: PropTypes.number,
     handleShare: PropTypes.func.isRequired,
   }
+
+  static defaultProps = {
+    initialZoom: 2,
+  };
 
   getChildContext() {
     return {
@@ -26,8 +31,12 @@ class LeafletProvider extends React.Component {
 
   initLeaflet() {
     this.map = window.L.map("leaflet", {
+      center: [0, 0],
+      zoom: this.props.initialZoom,
+      minZoom: 2,
+      maxZoom: 7,
       zoomControl: false,
-    }).setView([0, 0], 3);
+    });
 
     window.cartodb.createLayer(this.map, baseLayerURL, {
       https: true,

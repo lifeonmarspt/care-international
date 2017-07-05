@@ -123,7 +123,7 @@ class ReachSidebarArea extends React.Component {
               <li>
                 <ul className="legend">
                   <li className={program}>{program}</li>
-                  <li className="overall">Overall</li>
+                  <li className="overall">Total</li>
                 </ul>
               </li>
               <li>

@@ -75,9 +75,10 @@
       }
 
       li::before, &::after {
+        display: block;
         content: "";
-        height: 15px;
-        border-left: 1px solid black;
+        height: 14px;
+        border-left: 1px solid $accent-color-5;
       }
     }
 
@@ -91,9 +92,9 @@
       li::before {
         content: "";
         display: inline-block;
-        width: 15px;
+        width: 18px;
         height: 15px;
-        border: 1px solid #888;
+        border: 1px solid $accent-color-5;
         margin-right: 0.4em;
       }
 

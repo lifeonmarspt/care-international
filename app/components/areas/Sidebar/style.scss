@@ -96,15 +96,18 @@
   }
 
   .content {
-    border-bottom: 1px solid $accent-color-3;
+    border-bottom: 1px solid $accent-color-5;
 
     ul.legend {
       display: flex;
       align-items: flex-start;
 
       li {
-        text-transform: uppercase;
         margin-right: 20px;
+      }
+
+      li:not(.overall) {
+        text-transform: uppercase;
       }
 
       li::before {

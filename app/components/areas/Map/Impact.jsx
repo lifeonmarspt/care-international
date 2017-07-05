@@ -62,7 +62,7 @@ class ImpactMapArea extends React.Component {
     let html = ReactDOMServer.renderToString(component);
 
     return window.L.popup({
-      minWidth: 500,
+      minWidth: 290,
       minHeight: 100,
       className: "custom-popup",
     }).setContent(html);
