@@ -20,16 +20,16 @@ $bg-color-1: #FFFFFF;
 $bg-color-2: map-get($programColors, "overall");
 $bg-color-3: #F2F2F2;
 
+$font-color-1: #444444;
+$font-color-2: $bg-color-1;
+$font-color-3: $bg-color-2;
+$font-color-4: #FED6BA;
+$font-color-5: #888888;
 $accent-color-1: #FDD70F;
 $accent-color-2: #727272;
 $accent-color-3: #959595;
 $accent-color-4: #DADADA;
 $accent-color-5: #E3E3E3;
 $accent-color-6: $bg-color-2;
-
-$font-color-1: #444444;
-$font-color-2: $bg-color-1;
-$font-color-3: $bg-color-2;
-$font-color-4: #FED6BA;
-
+$accent-color-7: $font-color-1;
 $overlay-color: rgba(0, 0, 0, 0.6);

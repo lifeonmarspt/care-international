@@ -5,6 +5,7 @@ import AppLink from "components/elements/AppLink";
 import RadioButton from "components/elements/Radio";
 import BarWrapper from "components/wrappers/Bar";
 import ValueBar from "components/elements/ValueBar";
+import RhombusSVG from "components/svg/Rhombus";
 
 import programs from "resources/programs.json";
 
@@ -24,6 +25,7 @@ class ImpactSidebarArea extends React.Component {
     region: PropTypes.string,
     country: PropTypes.string,
     program: PropTypes.string,
+    stories: PropTypes.array,
     handleProgramChange: PropTypes.func,
   }
 
@@ -121,6 +123,32 @@ class ImpactSidebarArea extends React.Component {
         </dl>
       </div>
 
+      <div className="stories">
+        <dl>
+          <dt>
+            All impacts
+            <hr />
+          </dt>
+          <dd>
+            <ul>
+              {this.props.stories.map((story) => (<li key={story.cartodb_id}>
+                <ul className="story">
+                  <li className="title">
+                    {story.story}
+                  </li>
+                  <li className="outcome">
+                    <RhombusSVG size={15} program={story.outcome} />
+                    {story.outcome}
+                  </li>
+                  <li className="location">
+                    {story.country}
+                  </li>
+                </ul>
+              </li>))}
+            </ul>
+          </dd>
+        </dl>
+      </div>
     </div>);
 
   }

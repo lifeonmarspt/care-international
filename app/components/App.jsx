@@ -204,6 +204,7 @@ class App extends React.PureComponent {
           region={this.state.region}
           country={this.state.country}
           program={this.state.program}
+          stories={this.state.stories}
           handleProgramChange={this.handleProgramChange.bind(this)} />
         {this.state.story && (<Story
           handleCloseStory={this.handleCloseStory.bind(this)}
