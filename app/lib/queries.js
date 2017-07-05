@@ -18,6 +18,14 @@ const reachVariables = {
   fnscc: ["num_fnscc_direct_participants", "num_fnscc_indirect_participants"],
 };
 
+const getTextsSQL = () => {
+  let query = SquelPostgres.select({ replaceSingleQuotes: true})
+    .field("*")
+    .from("messages");
+
+  return query.toString();
+};
+
 const getReachMapSQL = (program)  => {
 
   let directParticipantsVariable = reachVariables[program][0];
@@ -177,6 +185,7 @@ const getBoundsSQL = (table, country, region) => {
 
 export {
   numBuckets,
+  getTextsSQL,
   getReachStatisticsSQL,
   getReachMapSQL,
   getImpactStatisticsSQL,

@@ -10,8 +10,7 @@ import ImpactSidebar from "components/areas/Sidebar/Impact";
 import Story from "components/areas/Story";
 import AboutModal from "components/modals/About";
 import ShareModal from "components/modals/Share";
-import ReachModal from "components/modals/Reach";
-import ImpactModal from "components/modals/Impact";
+import GenericModal from "components/modals/Generic";
 
 import getLocation from "lib/location";
 import { setKey, getKey } from "lib/storage";
@@ -21,7 +20,7 @@ class App extends React.PureComponent {
 
   static contextTypes = {
     router: PropTypes.object,
-  };
+  }
 
   static propTypes = {
     mainView: PropTypes.oneOf([
@@ -49,12 +48,15 @@ class App extends React.PureComponent {
       loading: true,
       statistics: {},
       bounds: null,
+      texts: [],
       mainView: null,
       subView: null,
       showAboutModal: !getKey("about-dismissed"),
       showShareModal: false,
       showReachModal: false,
       showImpactModal: false,
+      showDirectReachModal: false,
+      showIndirectReachModal: false,
     };
   }
 
@@ -119,9 +121,10 @@ class App extends React.PureComponent {
 
       case "reach":
         fetchReachData(this.props.country, this.props.program)
-          .then(([statistics, bounds]) => {
+          .then(([texts, statistics, bounds]) => {
             this.setState({
               loading: false,
+              texts: texts,
               statistics: statistics.rows[0],
               bounds: bounds,
               mainView: this.props.mainView,
@@ -135,9 +138,10 @@ class App extends React.PureComponent {
 
       case "impact":
         fetchImpactData(this.props.region, this.props.country)
-          .then(([statistics, regions, stories, bounds]) => {
+          .then(([texts, statistics, regions, stories, bounds]) => {
             this.setState({
               loading: false,
+              texts: texts,
               statistics: statistics.rows[0],
               regions: regions.rows,
               stories: stories.rows,
@@ -181,7 +185,10 @@ class App extends React.PureComponent {
           region={this.state.region}
           country={this.state.country}
           program={this.state.program}
-          handleProgramChange={this.handleProgramChange.bind(this)} />
+          handleProgramChange={this.handleProgramChange.bind(this)}
+          handleAboutDirectReachClick={this.handleToggleModal.bind(this, "showDirectReachModal")}
+          handleAboutIndirectReachClick={this.handleToggleModal.bind(this, "showIndirectReachModal")}
+          handleAboutClick={this.handleToggleModal.bind(this, "showReachModal")} />
         <LeafletWrapper
           bounds={this.state.bounds}
           handleShare={this.handleToggleModal.bind(this, "showShareModal")}>
@@ -225,10 +232,41 @@ class App extends React.PureComponent {
         </LeafletWrapper>
       </div>)}
 
-      <AboutModal hidden={!this.state.showAboutModal} handleClose={this.handleCloseAbout.bind(this)} />
-      <ShareModal hidden={!this.state.showShareModal} handleClose={this.handleToggleModal.bind(this, "showShareModal")} />
-      <ReachModal hidden={!this.state.showReachModal} handleClose={this.handleToggleModal.bind(this, "showReachModal")} />
-      <ImpactModal hidden={!this.state.showImpactModal} handleClose={this.handleToggleModal.bind(this, "showImpactModal")} />
+      <AboutModal
+        hidden={!this.state.showAboutModal}
+        handleClose={this.handleCloseAbout.bind(this)} />
+
+      <ShareModal
+        hidden={!this.state.showShareModal}
+        handleClose={this.handleToggleModal.bind(this, "showShareModal")} />
+
+      <GenericModal
+        id="about-reach-modal"
+        title="About Reach Data"
+        text={this.state.texts.reach_data && this.state.texts.reach_data.message}
+        hidden={!this.state.showReachModal}
+        handleClose={this.handleToggleModal.bind(this, "showReachModal")} />
+
+      <GenericModal
+        id="about-impact-modal"
+        title="About Impact Data"
+        text={this.state.texts.impact_data && this.state.texts.impact_data.message}
+        hidden={!this.state.showImpactModal}
+        handleClose={this.handleToggleModal.bind(this, "showImpactModal")} />
+
+      <GenericModal
+        id="about-direct-reach"
+        title="About Direct Reach"
+        text={this.state.texts.direct && this.state.texts.direct.message}
+        hidden={!this.state.showDirectReachModal}
+        handleClose={this.handleToggleModal.bind(this, "showDirectReachModal")} />
+
+      <GenericModal
+        id="about-indirect-reach"
+        title="About Indirect Reach"
+        text={this.state.texts.indirect && this.state.texts.indirect.message}
+        hidden={!this.state.showIndirectReachModal}
+        handleClose={this.handleToggleModal.bind(this, "showIndirectReachModal")} />
 
     </div>);
   }

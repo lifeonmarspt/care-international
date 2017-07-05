@@ -4,36 +4,9 @@
   padding: 40px 60px;
   height: calc(100% - 80px);
 
-  .scrollable {
-    overflow-y: scroll;
-    height: 100%;
-  }
-
   h1 {
     font-family: Libre Baskerville, serif;
     font-size: 36px;
-  }
-
-  dl.main {
-    > dt {
-      font-size: 24px;
-      width: 200px;
-      float: left;
-    }
-    > dd {
-      margin-left: 200px;
-      margin-bottom: 1em;
-      font-size: 16px;
-    }
-  }
-
-  dl.sub {
-    > dt {
-      font-weight: bold;
-    }
-    > dd {
-      margin-bottom: 1em;
-    }
   }
 
 }

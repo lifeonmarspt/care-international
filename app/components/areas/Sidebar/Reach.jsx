@@ -16,7 +16,7 @@ import "./style.scss";
 class ReachSidebarArea extends React.Component {
 
   static contextTypes = {
-    router: PropTypes.object,
+    router: PropTypes.object.isRequired,
   };
 
   static propTypes = {
@@ -29,7 +29,9 @@ class ReachSidebarArea extends React.Component {
     region: PropTypes.string,
     country: PropTypes.string,
     program: PropTypes.string,
-    handleProgramChange: PropTypes.func,
+    handleProgramChange: PropTypes.func.isRequired,
+    handleAboutDirectReachClick: PropTypes.func.isRequired,
+    handleAboutIndirectReachClick: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -95,14 +97,18 @@ class ReachSidebarArea extends React.Component {
           <dd>
             <ul>
               <li>
-                <div>Direct <img src={imgHelp} alt="Help" /></div>
+                <div className="clickable" onClick={this.props.handleAboutDirectReachClick}>
+                  Direct <img src={imgHelp} alt="Help" />
+                </div>
                 <BarWrapper bar={PercentageBar}
                   colorClass={program}
                   value={statistics[`${program}_direct_participants_women`]}
                   maxValue={statistics[`${program}_direct_participants`]} />
               </li>
               <li>
-                <div>Indirect <img src={imgHelp} alt="Help" /></div>
+                <div className="clickable" onClick={this.props.handleAboutIndirectReachClick}>
+                  Indirect <img src={imgHelp} alt="Help" />
+                </div>
                 <BarWrapper bar={PercentageBar}
                   colorClass={program}
                   value={statistics[`${program}_indirect_participants_women`]}

@@ -1,4 +1,5 @@
 import {
+  getTextsSQL,
   getReachStatisticsSQL,
   getImpactStatisticsSQL,
   getImpactRegionDataSQL,
@@ -21,6 +22,20 @@ const getBounds = (table, country, region) => {
   });
 };
 
+const getTexts = () => {
+  return new window.Promise((resolve, reject) => {
+    cartoSQL.execute(getTextsSQL())
+      .done((result) => {
+        let indexed = result.rows.reduce((accumulator, value) => {
+          accumulator[value.about] = value;
+          return accumulator;
+        }, {});
+        resolve(indexed);
+      })
+      .error((error) => reject(error));
+  });
+};
+
 const fetchReachData = (country) => {
   let getStatistics = new window.Promise((resolve, reject) => {
     cartoSQL.execute(getReachStatisticsSQL(country))
@@ -29,6 +44,7 @@ const fetchReachData = (country) => {
   });
 
   return window.Promise.all([
+    getTexts(),
     getStatistics,
     country && getBounds("reach_data", country),
   ]);
@@ -54,6 +70,7 @@ const fetchImpactData = (region, country) => {
   });
 
   return window.Promise.all([
+    getTexts(),
     getStatistics,
     getRegionData,
     getStories,
