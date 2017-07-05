@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import AppLink from "components/elements/AppLink";
 import RadioButton from "components/elements/Radio";
@@ -8,6 +9,7 @@ import ValueBar from "components/elements/ValueBar";
 import RhombusSVG from "components/svg/Rhombus";
 
 import uniq from "lib/uniq";
+import getLocation from "lib/location";
 import programs from "resources/programs.json";
 
 import "./style.scss";
@@ -132,20 +134,29 @@ class ImpactSidebarArea extends React.Component {
           </dt>
           <dd>
             <ul>
-              {uniq(this.props.stories, (s) => s.story_number).map((story) => (<li key={story.cartodb_id}>
-                <ul className="story">
-                  <li className="title">
-                    {story.story}
-                  </li>
-                  <li className="outcome">
-                    <RhombusSVG size={15} program={story.outcome} />
-                    {story.outcome}
-                  </li>
-                  <li className="location">
-                    {story.country}
-                  </li>
-                </ul>
-              </li>))}
+              {uniq(this.props.stories, (s) => s.story_number).map((story) => {
+
+                let location = getLocation({
+                  mainView: "impact",
+                  country: story.country,
+                  story: story.cartodb_id,
+                });
+
+                return (<li key={story.cartodb_id}>
+                  <ul className="story">
+                    <li className="title">
+                      <Link to={location}>{story.story}</Link>
+                    </li>
+                    <li className="outcome">
+                      <RhombusSVG size={15} program={story.outcome} />
+                      {story.outcome}
+                    </li>
+                    <li className="location">
+                      {story.country}
+                    </li>
+                  </ul>
+                </li>);
+              })}
             </ul>
           </dd>
         </dl>
