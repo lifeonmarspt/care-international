@@ -91,10 +91,14 @@ class ImpactMapArea extends React.Component {
     }).filter((s) => s);
 
     this.qualitativeMarkers = this.props.stories.map((story) => {
+
+      if (this.props.program !== "overall" && story.outcome !== this.props.program) {
+        return null;
+      }
+
       return window.L.marker([story.lat, story.lon], {
         icon: getSVGIcon(RhombusSVG, null, story.outcome, 20),
       }).bindPopup(this.getPopup(story)).addTo(this.context.map);
-
 
     }).filter((s) => s);
   }

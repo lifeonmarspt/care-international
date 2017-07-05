@@ -15,15 +15,23 @@ svg.circle {
   }
 }
 
+svg.rhombus {
+  rect {
+  }
+}
+
 @each $program, $color in $programColors {
+
   svg.circle.#{$program} {
     circle {
       fill: $color
     }
   }
+
   svg.rhombus.#{$program} {
     rect {
-      fill: $color
+      fill: $color;
     }
   }
+
 }
