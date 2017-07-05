@@ -70,7 +70,9 @@ class App extends React.PureComponent {
       mainView: this.state.mainView,
       subView: this.state.subView,
       region: this.state.region,
-      country: this.state.country,
+      country: this.state.mainView === "impact" ?
+        this.state.region && this.state.country :
+        this.state.country,
       program,
     });
   }
