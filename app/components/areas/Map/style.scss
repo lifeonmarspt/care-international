@@ -153,9 +153,9 @@
     color: $font-color-3;
     height: 20px;
     box-shadow: 0 -5px 10px $bg-color-1;
-
+    text-align: right;
     div {
-      display: flex;
+      display: inline-flex;
       justify-content: flex-end;
       align-items: center;
 
