@@ -7,6 +7,7 @@ import BarWrapper from "components/wrappers/Bar";
 import ValueBar from "components/elements/ValueBar";
 import RhombusSVG from "components/svg/Rhombus";
 
+import uniq from "lib/uniq";
 import programs from "resources/programs.json";
 
 import "./style.scss";
@@ -131,7 +132,7 @@ class ImpactSidebarArea extends React.Component {
           </dt>
           <dd>
             <ul>
-              {this.props.stories.map((story) => (<li key={story.cartodb_id}>
+              {uniq(this.props.stories, (s) => s.story_number).map((story) => (<li key={story.cartodb_id}>
                 <ul className="story">
                   <li className="title">
                     {story.story}
