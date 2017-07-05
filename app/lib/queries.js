@@ -148,8 +148,14 @@ const getImpactRegionDataSQL = (region) => {
 };
 
 const getImpactStoriesSQL = () => {
+  let fields = [
+    "*",
+    "ST_X(the_geom) AS lon",
+    "ST_Y(the_geom) as lat",
+  ];
+
   let query = SquelPostgres.select({ replaceSingleQuotes: true })
-    .field("*")
+    .fields(fields)
     .from("story");
 
   return query.toString();
