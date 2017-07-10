@@ -66,28 +66,19 @@ class ReachSidebarArea extends React.Component {
         </ul>
       </div>)}
 
-      {program === "overall" && (<div className="content">
+      <div className="content">
         <dl>
           <dt>
             Projects and Initiatives in 2016
+            {program !== "overall" && (<span className="subtitle">
+              {programs.find((p) => p.id === program).label}
+            </span>)}
           </dt>
           <dd>
-            {(statistics.projects_and_initiatives || 0).toLocaleString()}
+            {(statistics[`${program}_projects_and_initiatives`] || 0).toLocaleString()}
           </dd>
         </dl>
-      </div>)}
-
-      {program !== "overall" && (<div className="content">
-        <dl>
-          <dt>
-            Projects and Initiatives in 2016
-            <span className="subtitle">{programs.find((p) => p.id === program).label}</span>
-          </dt>
-          <dd>
-            {(statistics.projects_and_initiatives || 0).toLocaleString()}
-          </dd>
-        </dl>
-      </div>)}
+      </div>
 
       {!(country && program !== "overall") && (<div className="content">
         <dl>
