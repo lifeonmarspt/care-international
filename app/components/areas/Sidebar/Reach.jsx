@@ -80,7 +80,7 @@ class ReachSidebarArea extends React.Component {
         </dl>
       </div>
 
-      {!(country && program !== "overall") && (<div className="content">
+      {!(country && program !== "overall") && statistics[`has_${program}_data`] && (<div className="content">
         <dl>
           <dt>
             Participants reached in 2016
@@ -110,7 +110,7 @@ class ReachSidebarArea extends React.Component {
         </dl>
       </div>)}
 
-      {(country && program !== "overall") && (<div className="content">
+      {(country && program !== "overall") && statistics[`has_${program}_data`] && (<div className="content">
         <dl>
           <dt>
             Participants reached in 2016
@@ -152,6 +152,10 @@ class ReachSidebarArea extends React.Component {
             </ul>
           </dd>
         </dl>
+      </div>)}
+
+      {!statistics[`has_${program}_data`] && (<div className="content">
+        <p>{statistics.comment}</p>
       </div>)}
 
 

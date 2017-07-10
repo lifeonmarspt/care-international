@@ -49,6 +49,13 @@ const getReachMapSQL = (program)  => {
 
 const getReachStatisticsSQL = (country) => {
   let fields = [
+    "fnscc_data::BOOL AS has_fnscc_data",
+    "hum_data::BOOL AS has_hum_data",
+    "lffv_data::BOOL AS has_lffv_data",
+    "wee_data::BOOL AS has_wee_data",
+    "srmh_data::BOOL AS has_srmh_data",
+    "data::BOOL AS has_overall_data",
+    "comment AS comment",
     "num_fnscc_direct_participants AS fnscc_direct_participants",
     "num_fnscc_indirect_participants AS fnscc_indirect_participants",
     "num_fnscc_projects_and_initiatives AS fnscc_projects_and_initiatives",
