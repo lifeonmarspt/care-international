@@ -3,7 +3,7 @@ import queryString from "query-string";
 const getLocation = (options) => {
 
   let qs = queryString.stringify({
-    program: options.program,
+    program: options.program === "overall" ? undefined : options.program,
   });
 
   let parts = [];
