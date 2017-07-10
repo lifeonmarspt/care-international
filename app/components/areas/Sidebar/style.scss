@@ -29,7 +29,7 @@
 
   .breadcrumbs {
     box-sizing: border-box;
-    height: 40px;
+    min-height: 40px;
     padding: 10px 0px 10px 40px;
     font-size: 14px;
     font-weight: bold;
@@ -43,10 +43,9 @@
     }
 
     ul {
-      display: flex;
-      flex-direction: row;
 
       li {
+        display: inline-block;
         margin-top: 4px;
         line-height: 16px;
       }
