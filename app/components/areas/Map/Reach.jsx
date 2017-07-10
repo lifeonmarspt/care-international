@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import humanize from "lib/humanize";
 
 import { getReachMapSQL } from "lib/queries";
 
@@ -120,7 +119,7 @@ class ReachMapArea extends React.Component {
             <ul className="scale">
               {buckets.map((bucket, n) => {
                 return (<li key={n} className={`program-${this.props.program} bucket-${n + 1}`}>
-                  <span>{humanize(bucket[1]) + (n+1 === buckets.length ? "+" : "")}</span>
+                  <span>{bucket[2]}</span>
                 </li>);
               })}
             </ul>
