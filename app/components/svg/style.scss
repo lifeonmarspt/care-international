@@ -17,6 +17,13 @@ svg.circle.shadow {
   box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
 }
 
+svg.rhombus.shadow {
+  rect {
+    stroke: $accent-color-3;
+    strokeWidth: 1;
+  }
+}
+
 @each $program, $color in $programColors {
 
   svg.circle.#{$program} {
@@ -28,8 +35,6 @@ svg.circle.shadow {
   svg.rhombus.#{$program} {
     rect {
       fill: $color;
-      stroke: $accent-color-3;
-      strokeWidth: 1;
     }
   }
 
