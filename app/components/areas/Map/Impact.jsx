@@ -84,6 +84,7 @@ class ImpactMapArea extends React.Component {
 
       return window.L.marker([region.region_center_y, region.region_center_x], {
         icon: getSVGIcon(CircleSVG, value, this.props.program, iconSize),
+        zIndexOffset: 100,
       }).addTo(this.context.map).on("click", () => {
         this.props.handleMapChange(region.region, region.country);
       });
@@ -98,6 +99,7 @@ class ImpactMapArea extends React.Component {
 
       return window.L.marker([story.lat, story.lon], {
         icon: getSVGIcon(RhombusSVG, null, story.outcome, 20),
+        zIndexOffset: 200,
       }).bindPopup(this.getPopup(story)).addTo(this.context.map);
 
     }).filter((s) => s);
