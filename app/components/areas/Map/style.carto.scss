@@ -1,5 +1,11 @@
 @import "../../../styles/colors.scss";
 
+#layer {
+  polygon-fill: #888;
+  polygon-opacity: 0.6;
+  line-color: #888;
+}
+
 @each $program, $colors in $choroColors {
   @for $i from 1 through 5 {
     #layer[bucket="carto(=,#{$i})"][program="#{$program}"] {

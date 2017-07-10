@@ -11,8 +11,13 @@ class AppLink extends React.Component {
       "reach",
       "impact",
     ]),
+    subView: PropTypes.oneOf([
+      "countries",
+      "regions",
+    ]),
     program: PropTypes.string,
     country: PropTypes.string,
+    region: PropTypes.string,
   }
 
   render() {

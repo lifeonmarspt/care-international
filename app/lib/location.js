@@ -12,6 +12,10 @@ const getLocation = (options) => {
     parts.push(options.mainView);
   }
 
+  if (options.subView) {
+    parts.push(options.subView);
+  }
+
   if (options.region) {
     parts.push(encodeURIComponent(options.region));
   }

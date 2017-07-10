@@ -26,7 +26,7 @@ const getTextsSQL = () => {
   return query.toString();
 };
 
-const getReachMapSQL = (program)  => {
+const getReachMapCountriesSQL = (program) => {
 
   let directParticipantsVariable = reachVariables[program][0];
   let caseColumn = buckets
@@ -36,18 +36,48 @@ const getReachMapSQL = (program)  => {
     )
     .join(" ");
   let fields = [
-    "*",
+    "the_geom_webmercator",
+    "country",
+    "region",
     `'${program}' AS program`,
     `CASE ${caseColumn} END AS bucket`,
     "category ILIKE '%member%' AS care_member",
   ];
-  let query = SquelPostgres.select({ replaceSingleQuotes: true }).fields(fields).from("reach_data");
+  let query = SquelPostgres.select({ replaceSingleQuotes: true })
+    .fields(fields)
+    .from("reach_data");
 
   return query.toString();
 
 };
 
-const getReachStatisticsSQL = (country) => {
+const getReachMapRegionsSQL = (program) => {
+
+  let directParticipantsVariable = `SUM(${reachVariables[program][0]})`;
+  let caseColumn = buckets
+    .map((bucket, n) => n + 1 < buckets.length ?
+      `WHEN ${directParticipantsVariable} BETWEEN ${bucket[0]} AND ${bucket[1]} THEN ${n + 1}` :
+      `WHEN ${directParticipantsVariable} >= ${bucket[0]} THEN ${n + 1}`
+    )
+    .join(" ");
+  let fields = [
+    "regions_complete_geometries.the_geom_webmercator AS the_geom_webmercator",
+    "reach_data.region",
+    `'${program}' AS program`,
+    `CASE ${caseColumn} END AS bucket`,
+    "false as care_member",
+  ];
+  let query = SquelPostgres.select({ replaceSingleQuotes: true })
+    .fields(fields)
+    .from("reach_data")
+    .join("regions_complete_geometries", null, "reach_data.region = regions_complete_geometries.region")
+    .group("reach_data.region, regions_complete_geometries.the_geom_webmercator");
+
+  return query.toString();
+
+};
+
+const getReachStatisticsCountriesSQL = (country) => {
   let fields = [
     "fnscc_data::BOOL AS has_fnscc_data",
     "hum_data::BOOL AS has_hum_data",
@@ -95,6 +125,56 @@ const getReachStatisticsSQL = (country) => {
 
   return query.toString();
 };
+
+const getReachStatisticsRegionsSQL = (region) => {
+  let fields = [
+    "true AS has_fnscc_data",
+    "true AS has_hum_data",
+    "true AS has_lffv_data",
+    "true AS has_wee_data",
+    "true AS has_srmh_data",
+    "true AS has_overall_data",
+    "SUM(num_fnscc_direct_participants) AS fnscc_direct_participants",
+    "SUM(num_fnscc_indirect_participants) AS fnscc_indirect_participants",
+    "SUM(num_fnscc_projects_and_initiatives) AS fnscc_projects_and_initiatives",
+    "SUM(num_hum_direct_participants) AS hum_direct_participants",
+    "SUM(num_hum_indirect_participants) AS hum_indirect_participants",
+    "SUM(num_hum_projects_and_initiatives) AS hum_projects_and_initiatives",
+    "SUM(num_lffv_direct_participants) AS lffv_direct_participants",
+    "SUM(num_lffv_indirect_participants) AS lffv_indirect_participants",
+    "SUM(num_lffv_projects_and_initiatives) AS lffv_projects_and_initiatives",
+    "SUM(num_wee_direct_participants) AS wee_direct_participants",
+    "SUM(num_wee_indirect_participants) AS wee_indirect_participants",
+    "SUM(num_wee_projects_and_initiatives) AS wee_projects_and_initiatives",
+    "SUM(num_srmh_direct_participants) AS srmh_direct_participants",
+    "SUM(num_srmh_indirect_participants) AS srmh_indirect_participants",
+    "SUM(num_srmh_projects_and_initiatives) AS srmh_projects_and_initiatives",
+    "SUM(num_direct_participants) AS overall_direct_participants",
+    "SUM(num_indirect_participants) AS overall_indirect_participants",
+    "SUM(num_projects_and_initiatives) AS overall_projects_and_initiatives",
+    "SUM(COALESCE(percent_women_of_direct_participants, 0) * num_direct_participants) AS overall_direct_participants_women",
+    "SUM(COALESCE(percent_women_of_indirect_participants, 0) * num_indirect_participants) AS overall_indirect_participants_women",
+    "SUM(COALESCE(percent_fnscc_women_direct_participants, 0) * num_fnscc_direct_participants) AS fnscc_direct_participants_women",
+    "SUM(COALESCE(percent_fnscc_women_indirect_participants, 0) * num_fnscc_indirect_participants) AS fnscc_indirect_participants_women",
+    "SUM(COALESCE(percent_hum_women_direct_participants, 0) * num_hum_direct_participants) AS hum_direct_participants_women",
+    "SUM(COALESCE(percent_hum_women_indirect_participants, 0) * num_hum_indirect_participants) AS hum_indirect_participants_women",
+    "SUM(COALESCE(percent_lffv_women_direct_participants, 0) * num_lffv_direct_participants) AS lffv_direct_participants_women",
+    "SUM(COALESCE(percent_lffv_women_indirect_participants, 0) * num_lffv_indirect_participants) AS lffv_indirect_participants_women",
+    "SUM(COALESCE(percent_wee_women_direct_participants, 0) * num_wee_direct_participants) AS wee_direct_participants_women",
+    "SUM(COALESCE(percent_wee_women_indirect_participants, 0) * num_wee_indirect_participants) AS wee_indirect_participants_women",
+    "SUM(COALESCE(percent_srmh_women_direct_participants, 0) * num_srmh_direct_participants) AS srmh_direct_participants_women",
+    "SUM(COALESCE(percent_srmh_women_indirect_participants, 0) * num_srmh_indirect_participants) AS srmh_indirect_participants_women",
+  ];
+
+  let query = SquelPostgres.select({ replaceSingleQuotes: true })
+    .fields(fields)
+    .from("reach_data")
+    .where("region = ?", region)
+    .group("region");
+
+  return query.toString();
+};
+
 
 const getImpactStatisticsSQL = (region, country) => {
   let fields = [
@@ -183,16 +263,15 @@ const getImpactStoriesSQL = () => {
   return query.toString();
 };
 
-const getBoundsSQL = (table, country, region) => {
+const getBoundsSQL = (table, region, country) => {
   let query = SquelPostgres.select({ replaceSingleQuotes: true }).field("the_geom").from(table);
 
   if (country) {
     query = query.where("country = ?", country);
-  }
-
-  if (region) {
+  } else if (region) {
     query = query.where("region = ?", region);
   }
+
 
   return query.toString();
 };
@@ -200,8 +279,10 @@ const getBoundsSQL = (table, country, region) => {
 export {
   numBuckets,
   getTextsSQL,
-  getReachStatisticsSQL,
-  getReachMapSQL,
+  getReachStatisticsCountriesSQL,
+  getReachStatisticsRegionsSQL,
+  getReachMapCountriesSQL,
+  getReachMapRegionsSQL,
   getImpactStatisticsSQL,
   getImpactRegionDataSQL,
   getImpactStoriesSQL,

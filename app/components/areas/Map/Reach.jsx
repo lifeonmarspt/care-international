@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
-import { getReachMapSQL } from "lib/queries";
+import AppLink from "components/elements/AppLink";
+
+import { getReachMapCountriesSQL, getReachMapRegionsSQL } from "lib/queries";
 
 import imgHelp from "images/help.svg";
 import buckets from "resources/buckets.json";
@@ -15,6 +16,10 @@ import cartocss from "!raw-loader!cartocss-loader!sass-loader?outputStyle=compre
 class ReachMapArea extends React.Component {
 
   static propTypes = {
+    subView: PropTypes.oneOf([
+      "countries",
+      "regions",
+    ]),
     country: PropTypes.string,
     bounds: PropTypes.array,
     program: PropTypes.string,
@@ -35,6 +40,14 @@ class ReachMapArea extends React.Component {
   }
 
   initCartoDBLayer() {
+    let sql = this.props.subView === "countries" ?
+      getReachMapCountriesSQL(this.props.program) :
+      getReachMapRegionsSQL(this.props.program);
+
+    let interactivity = this.props.subView === "countries" ?
+      "bucket, country, region" :
+      "bucket, region";
+
     // add the cartodb layer
     let layerSource = {
       user_name: config.cartodb.account,
@@ -42,9 +55,9 @@ class ReachMapArea extends React.Component {
       type: "cartodb",
       sublayers: [
         {
-          sql: getReachMapSQL(this.props.program),
+          sql: sql,
           cartocss: this.getCartoCSS(),
-          interactivity: "bucket, country, region",
+          interactivity: interactivity,
         },
       ],
     };
@@ -61,8 +74,17 @@ class ReachMapArea extends React.Component {
       subLayer.setInteraction(true);
 
       subLayer.on("featureClick", (e, latlng, pos, data) => {
-        if (data.bucket === null) return;
-        this.props.handleMapChange(null, data.country);
+
+        if (data.bucket === null) {
+          return;
+        }
+
+        if (this.props.subView === "countries") {
+          this.props.handleMapChange(null, data.country);
+        } else if (this.props.subView === "regions") {
+          this.props.handleMapChange(data.region);
+        }
+
       });
 
       subLayer.on("featureOver", (e, latlng, pos, data) => {
@@ -107,9 +129,16 @@ class ReachMapArea extends React.Component {
     return (<div id="map-area">
       <div id="legend" className="choropleth">
         <ul>
-          <li>
-            <Link to="#">Show Regions</Link>
-          </li>
+          {this.props.subView === "countries" && (<li>
+            <AppLink mainView="reach" subView="regions" program={this.props.program}>
+              Show Regions
+            </AppLink>
+          </li>)}
+          {this.props.subView === "regions" && (<li>
+            <AppLink mainView="reach" subView="countries" program={this.props.program}>
+              Show Countries
+            </AppLink>
+          </li>)}
           <li>
             <p>
               Direct participants reached in 2016 by country
