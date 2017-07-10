@@ -71,20 +71,11 @@ class App extends React.PureComponent {
     });
   }
 
-  handleCountryChange(country) {
+  handleMapChange(region, country) {
     this.navigate({
       mainView: this.state.mainView,
-      region: this.state.region,
-      country,
-      program: this.state.program,
-    });
-  }
-
-  handleRegionChange(region) {
-    this.navigate({
-      mainView: this.state.mainView,
-      region,
-      country: this.state.country,
+      region: region || this.state.region,
+      country: country || this.state.country,
       program: this.state.program,
     });
   }
@@ -187,8 +178,7 @@ class App extends React.PureComponent {
             country={this.state.country}
             program={this.state.program}
             regions={this.state.regions}
-            handleCountryChange={this.handleCountryChange.bind(this)}
-            handleRegionChange={this.handleRegionChange.bind(this)}
+            handleMapChange={this.handleMapChange.bind(this)}
             handleAboutClick={this.handleToggleModal.bind(this, "showReachModal")} />
         </LeafletWrapper>
       </div>)}
@@ -214,8 +204,7 @@ class App extends React.PureComponent {
             program={this.state.program}
             regions={this.state.regions}
             stories={this.state.stories}
-            handleCountryChange={this.handleCountryChange.bind(this)}
-            handleRegionChange={this.handleRegionChange.bind(this)}
+            handleMapChange={this.handleMapChange.bind(this)}
             handleAboutClick={this.handleToggleModal.bind(this, "showImpactModal")} />
         </LeafletWrapper>
       </div>)}

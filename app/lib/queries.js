@@ -141,6 +141,8 @@ const getImpactRegionDataSQL = (region) => {
 
   if (!region) {
     subfields.push("region");
+  } else {
+    subfields.push("country");
   }
 
   let subquery = SquelPostgres.select({ replaceSingleQuotes: true })

@@ -18,7 +18,7 @@ class ReachMapArea extends React.Component {
     country: PropTypes.string,
     bounds: PropTypes.array,
     program: PropTypes.string,
-    handleCountryChange: PropTypes.func.isRequired,
+    handleMapChange: PropTypes.func.isRequired,
     handleAboutClick: PropTypes.func.isRequired,
   }
 
@@ -62,7 +62,7 @@ class ReachMapArea extends React.Component {
 
       subLayer.on("featureClick", (e, latlng, pos, data) => {
         if (data.bucket === null) return;
-        this.props.handleCountryChange(data.country);
+        this.props.handleMapChange(null, data.country);
       });
 
       subLayer.on("featureOver", (e, latlng, pos, data) => {

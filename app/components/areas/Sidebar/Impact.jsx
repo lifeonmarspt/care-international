@@ -59,7 +59,12 @@ class ImpactSidebarArea extends React.Component {
               World
             </AppLink>
           </li>
-          {region && (<li>{region}</li>)}
+          {region && country && (<li>
+            <AppLink mainView="impact" program={program} region={region}>
+              {region}
+            </AppLink>
+          </li>)}
+          {region && !country && (<li>{region}</li>)}
           {country && (<li>{country}</li>)}
         </ul>
       </div>)}
