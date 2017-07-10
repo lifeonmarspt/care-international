@@ -122,7 +122,7 @@ class ImpactSidebarArea extends React.Component {
               })}
 
               {program !== "overall" && (<li className="see-overall">
-                <AppLink mainView="impact" country={country}>
+                <AppLink mainView="impact" region={region} country={country}>
                   See all program areas
                 </AppLink>
               </li>)}
