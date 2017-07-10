@@ -28,6 +28,8 @@ svg.circle.shadow {
   svg.rhombus.#{$program} {
     rect {
       fill: $color;
+      stroke: $accent-color-3;
+      strokeWidth: 1;
     }
   }
 
