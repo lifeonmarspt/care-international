@@ -21,10 +21,6 @@ class ReachSidebarArea extends React.Component {
 
   static propTypes = {
     loading: PropTypes.bool.isRequired,
-    subView: PropTypes.oneOf([
-      "regions",
-      "countries",
-    ]),
     statistics: PropTypes.object.isRequired,
     region: PropTypes.string,
     country: PropTypes.string,

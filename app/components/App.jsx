@@ -27,10 +27,6 @@ class App extends React.PureComponent {
       "reach",
       "impact",
     ]),
-    subView: PropTypes.oneOf([
-      "regions",
-      "countries",
-    ]),
     region: PropTypes.string,
     country: PropTypes.string,
     story: PropTypes.string,
@@ -50,7 +46,6 @@ class App extends React.PureComponent {
       bounds: null,
       texts: [],
       mainView: null,
-      subView: null,
       showAboutModal: !getKey("about-dismissed"),
       showShareModal: false,
       showReachModal: false,
@@ -68,7 +63,6 @@ class App extends React.PureComponent {
   handleProgramChange(program) {
     this.navigate({
       mainView: this.state.mainView,
-      subView: this.state.subView,
       region: this.state.region,
       country: this.state.mainView === "impact" ?
         this.state.region && this.state.country :
@@ -80,7 +74,6 @@ class App extends React.PureComponent {
   handleCountryChange(country) {
     this.navigate({
       mainView: this.state.mainView,
-      subView: this.state.subView,
       region: this.state.region,
       country,
       program: this.state.program,
@@ -90,7 +83,6 @@ class App extends React.PureComponent {
   handleRegionChange(region) {
     this.navigate({
       mainView: this.state.mainView,
-      subView: this.state.subView,
       region,
       country: this.state.country,
       program: this.state.program,
@@ -130,7 +122,6 @@ class App extends React.PureComponent {
               statistics: statistics.rows[0],
               bounds: bounds,
               mainView: this.props.mainView,
-              subView: this.props.subView,
               region: this.props.region,
               country: this.props.country,
               program: this.props.program,
@@ -149,7 +140,6 @@ class App extends React.PureComponent {
               stories: stories.rows,
               bounds: bounds,
               mainView: this.props.mainView,
-              subView: this.props.subView,
               region: this.props.region,
               country: this.props.country,
               story: this.props.story,
@@ -182,7 +172,6 @@ class App extends React.PureComponent {
       {this.props.mainView === "reach" && (<div>
         <ReachSidebar
           loading={this.state.loading}
-          subView={this.state.subView}
           statistics={this.state.statistics}
           region={this.state.region}
           country={this.state.country}
@@ -195,7 +184,6 @@ class App extends React.PureComponent {
           bounds={this.state.bounds}
           handleShare={this.handleToggleModal.bind(this, "showShareModal")}>
           <ReachMap
-            subView={this.state.subView}
             country={this.state.country}
             program={this.state.program}
             regions={this.state.regions}
@@ -207,7 +195,6 @@ class App extends React.PureComponent {
 
       {this.props.mainView === "impact" && (<div>
         <ImpactSidebar
-          subView={this.state.subView}
           loading={this.state.loading}
           statistics={this.state.statistics}
           region={this.state.region}
@@ -222,7 +209,6 @@ class App extends React.PureComponent {
           bounds={this.state.bounds}
           handleShare={this.handleToggleModal.bind(this, "showShareModal")}>
           <ImpactMap
-            subView={this.state.subView}
             region={this.state.region}
             country={this.state.country}
             program={this.state.program}
