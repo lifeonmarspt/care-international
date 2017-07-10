@@ -4,9 +4,6 @@ import classNames from "classnames";
 
 import "./style.scss";
 
-const maxWidth = 97;
-const minWidth = 3;
-
 class PercentageBar extends React.Component {
 
   static propTypes = {
@@ -16,10 +13,10 @@ class PercentageBar extends React.Component {
   };
 
   render() {
-    let percentage = Math.round(maxWidth * this.props.value / (this.props.maxValue || 1) + minWidth) + "%";
+    let percentage = Math.round((this.props.value / this.props.maxValue) * 100);
     let styles = {
       current: {
-        width: percentage,
+        width: `${percentage}%`,
       },
     };
 
@@ -29,7 +26,7 @@ class PercentageBar extends React.Component {
       <span className={barClasses}>
         <span className="percentagebar__current" style={styles.current}>
           <span className="percentagebar__label">
-            {percentage} women
+            {percentage}% women
           </span>
         </span>
       </span>
