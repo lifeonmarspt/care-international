@@ -8,10 +8,7 @@ import ReachSidebar from "components/areas/Sidebar/Reach";
 import ImpactMap from "components/areas/Map/Impact";
 import ImpactSidebar from "components/areas/Sidebar/Impact";
 import Story from "components/areas/Story";
-import AboutModal from "components/modals/About";
-import ShareModal from "components/modals/Share";
-import GenericModal from "components/modals/Generic";
-
+import { ModalBox, AboutContent, ShareContent, GenericContent } from "components/elements/ModalBox";
 import getLocation from "lib/location";
 import { setKey, getKey } from "lib/storage";
 import { fetchReachData, fetchImpactData } from "lib/remote";
@@ -51,12 +48,7 @@ class App extends React.PureComponent {
       texts: [],
       mainView: null,
       subView: null,
-      showAboutModal: !getKey("about-dismissed"),
-      showShareModal: false,
-      showReachModal: false,
-      showImpactModal: false,
-      showDirectReachModal: false,
-      showIndirectReachModal: false,
+      modal: !getKey("about-dismissed") ? "about" : null,
     };
   }
 
@@ -94,17 +86,15 @@ class App extends React.PureComponent {
     });
   }
 
-  handleCloseAbout() {
+  handleToggleModal(modal) {
+    let previouslyActiveModal = this.state.modal;
     this.setState({
-      showAboutModal: false,
+      modal: modal,
     }, () => {
-      setKey("about-dismissed", true);
-    });
-  }
-
-  handleToggleModal(stateVar) {
-    this.setState({
-      [stateVar]: !this.state[stateVar],
+      // persist dismissal of about modal
+      if (!this.state.modal && previouslyActiveModal === "about") {
+        setKey("about-dismissed", true);
+      }
     });
   }
 
@@ -177,19 +167,18 @@ class App extends React.PureComponent {
           country={this.state.country}
           program={this.state.program}
           handleProgramChange={this.handleProgramChange.bind(this)}
-          handleAboutDirectReachClick={this.handleToggleModal.bind(this, "showDirectReachModal")}
-          handleAboutIndirectReachClick={this.handleToggleModal.bind(this, "showIndirectReachModal")}
-          handleAboutClick={this.handleToggleModal.bind(this, "showReachModal")} />
+          handleAboutDirectReachClick={this.handleToggleModal.bind(this, "aboutDirectReach")}
+          handleAboutIndirectReachClick={this.handleToggleModal.bind(this, "aboutIndirectReach")} />
         <LeafletWrapper
           bounds={this.state.bounds}
-          handleShare={this.handleToggleModal.bind(this, "showShareModal")}>
+          handleShare={this.handleToggleModal.bind(this, "share")}>
           <ReachMap
             subView={this.state.subView}
             country={this.state.country}
             program={this.state.program}
             regions={this.state.regions}
             handleMapChange={this.handleMapChange.bind(this)}
-            handleAboutClick={this.handleToggleModal.bind(this, "showReachModal")} />
+            handleAboutClick={this.handleToggleModal.bind(this, "aboutReach")} />
         </LeafletWrapper>
       </div>)}
 
@@ -207,7 +196,7 @@ class App extends React.PureComponent {
           story={this.state.stories.find((story) => story.cartodb_id === Number(this.state.story))} />)}
         <LeafletWrapper
           bounds={this.state.bounds}
-          handleShare={this.handleToggleModal.bind(this, "showShareModal")}>
+          handleShare={this.handleToggleModal.bind(this, "share")}>
           <ImpactMap
             region={this.state.region}
             country={this.state.country}
@@ -215,46 +204,34 @@ class App extends React.PureComponent {
             regions={this.state.regions}
             stories={this.state.stories}
             handleMapChange={this.handleMapChange.bind(this)}
-            handleAboutClick={this.handleToggleModal.bind(this, "showImpactModal")} />
+            handleAboutClick={this.handleToggleModal.bind(this, "aboutImpact")} />
         </LeafletWrapper>
       </div>)}
 
-      <AboutModal
-        hidden={!this.state.showAboutModal}
-        handleClose={this.handleCloseAbout.bind(this)} />
+      {this.state.modal && (<ModalBox handleClose={this.handleToggleModal.bind(this, null)}>
 
-      <ShareModal
-        hidden={!this.state.showShareModal}
-        handleClose={this.handleToggleModal.bind(this, "showShareModal")} />
+        {this.state.modal === "about" && (<AboutContent
+          handleClose={this.handleToggleModal.bind(this, null)} />)}
 
-      <GenericModal
-        id="about-reach-modal"
-        title="About Reach Data"
-        text={this.state.texts.reach_data && this.state.texts.reach_data.message}
-        hidden={!this.state.showReachModal}
-        handleClose={this.handleToggleModal.bind(this, "showReachModal")} />
+        {this.state.modal === "share" && (<ShareContent />)}
 
-      <GenericModal
-        id="about-impact-modal"
-        title="About Impact Data"
-        text={this.state.texts.impact_data && this.state.texts.impact_data.message}
-        hidden={!this.state.showImpactModal}
-        handleClose={this.handleToggleModal.bind(this, "showImpactModal")} />
+        {this.state.modal === "aboutReach" && (<GenericContent
+          title="About Reach Data"
+          text={this.state.texts.reach_data && this.state.texts.reach_data.message} />)}
 
-      <GenericModal
-        id="about-direct-reach"
-        title="About Direct Reach"
-        text={this.state.texts.direct && this.state.texts.direct.message}
-        hidden={!this.state.showDirectReachModal}
-        handleClose={this.handleToggleModal.bind(this, "showDirectReachModal")} />
+        {this.state.modal === "aboutImpact" && (<GenericContent
+          title="About Impact Data"
+          text={this.state.texts.impact_data && this.state.texts.impact_data.message} />)}
 
-      <GenericModal
-        id="about-indirect-reach"
-        title="About Indirect Reach"
-        text={this.state.texts.indirect && this.state.texts.indirect.message}
-        hidden={!this.state.showIndirectReachModal}
-        handleClose={this.handleToggleModal.bind(this, "showIndirectReachModal")} />
+        {this.state.modal === "aboutDirectReach" && (<GenericContent
+          title="About Direct Reach"
+          text={this.state.texts.direct && this.state.texts.direct.message} />)}
 
+        {this.state.modal === "aboutIndirectReach" && (<GenericContent
+          title="About Indirect Reach"
+          text={this.state.texts.indirect && this.state.texts.indirect.message} />)}
+
+      </ModalBox>)}
     </div>);
   }
 }

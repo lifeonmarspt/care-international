@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classnames from "classnames";
 
+import AboutContent from "components/elements/ModalBox/content/About";
+import ShareContent from "components/elements/ModalBox/content/Share";
+import GenericContent from "components/elements/ModalBox/content/Generic";
 import "./style.scss";
 
 class ModalBox extends React.Component {
 
   static propTypes = {
-    hidden: PropTypes.bool,
     width: PropTypes.number,
     height: PropTypes.number,
     handleClose: PropTypes.func,
@@ -20,10 +21,6 @@ class ModalBox extends React.Component {
   }
 
   render() {
-    let overlayClasses = classnames(["modal-overlay", {
-      hidden: this.props.hidden,
-    }]);
-
     let modalStyles = {
       width: `${this.props.width}px`,
       height: `${this.props.height}px`,
@@ -31,7 +28,7 @@ class ModalBox extends React.Component {
       top: `calc(50% - ${this.props.height/2}px`,
     };
 
-    return (<div className={overlayClasses}>
+    return (<div className="modal-overlay">
       <div className="modal" style={modalStyles}>
         {this.props.children}
         {this.props.handleClose && (<div className="close-button" onClick={this.props.handleClose} />)}
@@ -40,5 +37,12 @@ class ModalBox extends React.Component {
   }
 
 }
+
+export {
+  ModalBox,
+  AboutContent,
+  GenericContent,
+  ShareContent,
+};
 
 export default ModalBox;

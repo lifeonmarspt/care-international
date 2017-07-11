@@ -1,5 +1,5 @@
-@import "../../../styles/colors.scss";
-@import "../../../styles/mixins.scss";
+@import "styles/colors.scss";
+@import "styles/mixins.scss";
 
 .modal-overlay {
   position: fixed;
@@ -9,10 +9,6 @@
   left: 0;
   background-color: $overlay-color;
   z-index: 1000;
-
-  &.hidden {
-    display: none;
-  }
 
   .modal {
     position: relative;

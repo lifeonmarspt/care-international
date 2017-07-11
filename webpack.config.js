@@ -64,7 +64,12 @@ module.exports = {
   devtool: "source-map",
   module: {
     rules: [
-      { test: /\.s(c|a)ss$/, use: ["style-loader", "css-loader", "sass-loader"], exclude: /node_modules/ },
+      { test: /\.s(c|a)ss$/, use: ["style-loader", "css-loader", {
+        loader: "sass-loader",
+        options: {
+          includePaths: [path.resolve(__dirname, "app")],
+        },
+      }], exclude: /node_modules/ },
       { test: /\.css$/, use: ["style-loader", "css-loader"] },
       { test: /\.png$|.jpg$/, use: "file-loader?name=[name].[ext]" },
       { test: /\.js$/, use: "babel-loader", exclude: /node_modules/ },
