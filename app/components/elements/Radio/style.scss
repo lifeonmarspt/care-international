@@ -1,6 +1,11 @@
 @import "styles/colors.scss";
 
 .custom-radio {
+
+  font-family: ITC Officina Sans Std, Helvetica;
+  font-size: 16px;
+
+
   input[type="radio"] {
     display: none;
   }

@@ -43,6 +43,7 @@
       a {
         text-transform: uppercase;
         color: $font-color-3;
+        font-weight: bold;
       }
 
       p {
@@ -57,7 +58,6 @@
 
       ul.scale, ul.exceptions {
         position: relative;
-        font-size: 0.8em;
       }
 
       ul.scale {
