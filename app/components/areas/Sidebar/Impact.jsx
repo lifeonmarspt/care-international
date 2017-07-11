@@ -120,12 +120,6 @@ class ImpactSidebarArea extends React.Component {
                 </li>);
 
               })}
-
-              {program !== "overall" && (<li className="see-overall">
-                <AppLink mainView="impact" region={region} country={country}>
-                  See all program areas
-                </AppLink>
-              </li>)}
             </ul>
           </dd>
         </dl>
@@ -166,8 +160,18 @@ class ImpactSidebarArea extends React.Component {
           </dd>
         </dl>
       </div>
-    </div>);
 
+      {program !== "overall" && (<div className="clear-filters">
+        <ul>
+          <li className="see-overall">
+            <AppLink mainView="impact" region={region} country={country}>
+              See all program areas
+            </AppLink>
+          </li>
+        </ul>
+      </div>)}
+
+    </div>);
   }
 
 }

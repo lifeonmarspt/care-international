@@ -37,7 +37,6 @@ class ReachSidebarArea extends React.Component {
   render() {
     let {
       loading,
-      subView,
       region,
       country,
       program,
@@ -196,15 +195,21 @@ class ReachSidebarArea extends React.Component {
                   </ul>
                 </li>);
               })}
-              {program !== "overall" && (<li className="see-overall">
-                <AppLink mainView="reach" subView={subView} country={country} region={region}>
-                  See all program areas
-                </AppLink>
-              </li>)}
             </ul>
           </dd>
         </dl>
       </div>
+
+      {program !== "overall" && (<div className="clear-filters">
+        <ul>
+          <li className="see-overall">
+            <AppLink mainView="impact" region={region} country={country}>
+              See all program areas
+            </AppLink>
+          </li>
+        </ul>
+      </div>)}
+
     </div>);
 
   }
