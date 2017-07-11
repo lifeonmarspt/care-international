@@ -7,7 +7,7 @@ SquelPostgres.cls.DefaultQueryBuilderOptions.tableAliasQuoteCharacter = "\"";
 
 const numBuckets = 5;
 
-const numImpactBuckets = 3;
+const numImpactBuckets = 4;
 
 const reachVariables = {
   overall: ["num_direct_participants", "num_indirect_participants"],

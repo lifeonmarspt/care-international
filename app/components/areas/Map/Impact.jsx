@@ -9,22 +9,12 @@ import imgHelp from "images/help.svg";
 
 import "./style.scss";
 
-const bucketSize = {
-  regions: {
-    1: 150,
-    2: 120,
-    3: 70,
-  },
-  countries: {
-    1: 70,
-    2: 50,
-    3: 30,
-  },
-};
+const bucketSize = [10, 15, 20, 25];
 
-const getSVGIcon = (SVGComponent, value, program, size) => {
+const getSVGIcon = (SVGComponent, props) => {
+  let { value, program, size, hideLabel } = props;
   let label = value && value.toLocaleString();
-  let component = (<SVGComponent shadow program={program} label={label} size={size} />);
+  let component = (<SVGComponent shadow program={program} label={label} hideLabel={hideLabel} size={size} />);
   let html = ReactDOMServer.renderToString(component);
 
   return window.L.divIcon({
@@ -78,12 +68,14 @@ class ImpactMapArea extends React.Component {
         return null;
       }
 
-      let iconSize = bucketSize
-        [this.props.region ? "countries" : "regions"]
-        [region[`${this.props.program}_position`]];
+      let iconSize = bucketSize[region[`${this.props.program}_position`] - 1];
 
       return window.L.marker([region.region_center_y, region.region_center_x], {
-        icon: getSVGIcon(CircleSVG, value, this.props.program, iconSize),
+        icon: getSVGIcon(CircleSVG, {
+          value: value,
+          program: this.props.program,
+          size: iconSize,
+        }),
         zIndexOffset: 100,
       }).addTo(this.context.map).on("click", () => {
         this.props.handleMapChange(region.region, region.country);
@@ -98,7 +90,10 @@ class ImpactMapArea extends React.Component {
       }
 
       return window.L.marker([story.lat, story.lon], {
-        icon: getSVGIcon(RhombusSVG, null, story.outcome, 20),
+        icon: getSVGIcon(RhombusSVG, {
+          program: story.outcome,
+          size: 18,
+        }),
         zIndexOffset: 200,
       }).bindPopup(this.getPopup(story)).addTo(this.context.map);
 
@@ -150,21 +145,9 @@ class ImpactMapArea extends React.Component {
               <li>
                 1
               </li>
-              <li>
-                <CircleSVG size={10} />
-              </li>
-              <li>
-                <CircleSVG size={15} />
-              </li>
-              <li>
-                <CircleSVG size={20} />
-              </li>
-              <li>
-                <CircleSVG size={25} />
-              </li>
-              <li>
-                <CircleSVG size={30} />
-              </li>
+              {bucketSize.map((size, n) => (<li key={n}>
+                <CircleSVG size={size} />
+              </li>))}
               <li>
                 12M population impacted
               </li>
