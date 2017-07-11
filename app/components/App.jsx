@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import Header from "components/areas/Header";
+import NotFound from "components/areas/NotFound";
 import LeafletWrapper from "components/wrappers/Leaflet";
 import ReachMap from "components/areas/Map/Reach";
 import ReachSidebar from "components/areas/Sidebar/Reach";
@@ -21,6 +22,7 @@ class App extends React.PureComponent {
 
   static propTypes = {
     mainView: PropTypes.oneOf([
+      "notfound",
       "reach",
       "impact",
     ]),
@@ -137,10 +139,6 @@ class App extends React.PureComponent {
           });
         break;
 
-      default:
-        // eslint-disable-next-line
-        console.error("wat");
-        break;
     }
   }
 
@@ -157,6 +155,8 @@ class App extends React.PureComponent {
   render() {
     return (<div id="app">
       <Header />
+
+      {this.props.mainView === "notfound" && (<NotFound />)}
 
       {this.props.mainView === "reach" && (<div>
         <ReachSidebar
