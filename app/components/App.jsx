@@ -9,7 +9,8 @@ import ReachSidebar from "components/areas/Sidebar/Reach";
 import ImpactMap from "components/areas/Map/Impact";
 import ImpactSidebar from "components/areas/Sidebar/Impact";
 import Story from "components/areas/Story";
-import { ModalBox, AboutContent, ShareContent, GenericContent } from "components/elements/ModalBox";
+import Modal from "components/areas/Modal";
+
 import getLocation from "lib/location";
 import { setKey, getKey } from "lib/storage";
 import { fetchReachData, fetchImpactData } from "lib/remote";
@@ -47,7 +48,7 @@ class App extends React.PureComponent {
       loading: true,
       statistics: {},
       bounds: null,
-      texts: [],
+      texts: {},
       mainView: null,
       subView: null,
       modal: !getKey("about-dismissed") ? "about" : null,
@@ -208,30 +209,8 @@ class App extends React.PureComponent {
         </LeafletWrapper>
       </div>)}
 
-      {this.state.modal && (<ModalBox handleClose={this.handleToggleModal.bind(this, null)}>
+      <Modal modal={this.state.modal} texts={this.state.texts} handleClose={this.handleToggleModal.bind(this, null)} />
 
-        {this.state.modal === "about" && (<AboutContent
-          handleClose={this.handleToggleModal.bind(this, null)} />)}
-
-        {this.state.modal === "share" && (<ShareContent />)}
-
-        {this.state.modal === "aboutReach" && (<GenericContent
-          title="About Reach Data"
-          text={this.state.texts.reach_data && this.state.texts.reach_data.message} />)}
-
-        {this.state.modal === "aboutImpact" && (<GenericContent
-          title="About Impact Data"
-          text={this.state.texts.impact_data && this.state.texts.impact_data.message} />)}
-
-        {this.state.modal === "aboutDirectReach" && (<GenericContent
-          title="About Direct Reach"
-          text={this.state.texts.direct && this.state.texts.direct.message} />)}
-
-        {this.state.modal === "aboutIndirectReach" && (<GenericContent
-          title="About Indirect Reach"
-          text={this.state.texts.indirect && this.state.texts.indirect.message} />)}
-
-      </ModalBox>)}
     </div>);
   }
 }
