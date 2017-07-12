@@ -1,26 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import queryString from "query-string";
 
-import App from "components/App";
-
-const AppWrapper = ({ mainView, subView, match }, { router }) => {
-  let qs = queryString.parse(router.route.location.search);
-
-  return (<App
-    mainView={mainView}
-    subView={subView}
-    country={match.params.country && decodeURIComponent(match.params.country)}
-    region={match.params.region && decodeURIComponent(match.params.region)}
-    story={match.params.story && decodeURIComponent(match.params.story)}
-    program={qs.program}
-  />);
-};
-
-AppWrapper.contextTypes = {
-  router: PropTypes.object.isRequired,
-};
+import AppWrapper from "components/AppWrapper";
 
 class Routes extends React.Component {
 
