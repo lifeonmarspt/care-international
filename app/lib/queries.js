@@ -5,10 +5,6 @@ import buckets from "resources/buckets.json";
 const SquelPostgres = Squel.useFlavour("postgres");
 SquelPostgres.cls.DefaultQueryBuilderOptions.tableAliasQuoteCharacter = "\"";
 
-const numBuckets = 5;
-
-const numImpactBuckets = 4;
-
 const reachVariables = {
   overall: ["num_direct_participants", "num_indirect_participants"],
   hum: ["num_hum_direct_participants", "num_hum_indirect_participants"],
@@ -29,8 +25,8 @@ const getTextsSQL = () => {
 const getReachMapCountriesSQL = (program) => {
 
   let directParticipantsVariable = reachVariables[program][0];
-  let caseColumn = buckets
-    .map((bucket, n) => n + 1 < buckets.length ?
+  let caseColumn = buckets.reach
+    .map((bucket, n) => n + 1 < buckets.reach.length ?
       `WHEN ${directParticipantsVariable} BETWEEN ${bucket[0]} AND ${bucket[1]} THEN ${n + 1}` :
       `WHEN ${directParticipantsVariable} >= ${bucket[0]} THEN ${n + 1}`
     )
@@ -57,8 +53,8 @@ const getReachMapCountriesSQL = (program) => {
 const getReachMapRegionsSQL = (program) => {
 
   let directParticipantsVariable = `SUM(${reachVariables[program][0]})`;
-  let caseColumn = buckets
-    .map((bucket, n) => n + 1 < buckets.length ?
+  let caseColumn = buckets.reach
+    .map((bucket, n) => n + 1 < buckets.reach.length ?
       `WHEN ${directParticipantsVariable} BETWEEN ${bucket[0]} AND ${bucket[1]} THEN ${n + 1}` :
       `WHEN ${directParticipantsVariable} >= ${bucket[0]} THEN ${n + 1}`
     )
@@ -207,20 +203,27 @@ const getImpactStatisticsSQL = (region, country) => {
 
 const getImpactRegionDataSQL = (region) => {
 
+  let caseColumn = (caseVariable) => buckets.impact
+    .map((bucket, n) => n + 1 < buckets.reach.length ?
+      `WHEN ${caseVariable} BETWEEN ${bucket[0]} AND ${bucket[1]} THEN ${bucket[2]}` :
+      `WHEN ${caseVariable} >= ${bucket[0]} THEN ${bucket[2]}`
+    )
+    .join(" ");
+
   let subfields = [
     "ST_Centroid(ST_Collect(the_geom)) AS region_center",
     "ROUND(SUM(total_impact)) AS overall_impact",
-    `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(total_impact) DESC) AS overall_position`,
+    `CASE ${caseColumn("SUM(total_impact)")} END AS overall_size`,
     "ROUND(SUM(humanitarian_response)) AS hum_impact",
-    `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(humanitarian_response) DESC) AS hum_position`,
+    `CASE ${caseColumn("SUM(humanitarian_response)")} END AS hum_size`,
     "ROUND(SUM(sexual_reproductive_and_maternal_health)) AS srmh_impact",
-    `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(sexual_reproductive_and_maternal_health) DESC) AS srmh_position`,
+    `CASE ${caseColumn("SUM(sexual_reproductive_and_maternal_health)")} END AS srmh_size`,
     "ROUND(SUM(right_to_a_life_free_from_violence)) AS lffv_impact",
-    `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(right_to_a_life_free_from_violence) DESC) AS lffv_position`,
+    `CASE ${caseColumn("SUM(right_to_a_life_free_from_violence)")} END AS lffv_size`,
     "ROUND(SUM(food_and_nutrition_security_and_resilience_to_climate_change)) AS fnscc_impact",
-    `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(food_and_nutrition_security_and_resilience_to_climate_change) DESC) AS fnscc_position`,
+    `CASE ${caseColumn("SUM(food_and_nutrition_security_and_resilience_to_climate_change)")} END AS fnscc_size`,
     "ROUND(SUM(women_s_economic_empowerment)) AS wee_impact",
-    `NTILE(${numImpactBuckets}) OVER(ORDER BY SUM(women_s_economic_empowerment) DESC) AS wee_position`,
+    `CASE ${caseColumn("SUM(women_s_economic_empowerment)")} END AS wee_size`,
   ];
 
   if (!region) {
@@ -283,7 +286,6 @@ const getBoundsSQL = (table, region, country) => {
 };
 
 export {
-  numBuckets,
   getTextsSQL,
   getReachStatisticsCountriesSQL,
   getReachStatisticsRegionsSQL,

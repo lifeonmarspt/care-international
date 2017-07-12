@@ -145,7 +145,7 @@ class ReachMapArea extends React.Component {
           </li>
           <li>
             <ul className="scale">
-              {buckets.map((bucket, n) => {
+              {buckets.reach.map((bucket, n) => {
                 return (<li key={n} className={`program-${this.props.program} bucket-${n + 1}`}>
                   <span>{bucket[2]}</span>
                 </li>);

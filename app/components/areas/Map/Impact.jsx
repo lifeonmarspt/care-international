@@ -6,10 +6,10 @@ import StorySummary from "components/elements/StorySummary";
 import CircleSVG from "components/svg/Circle";
 import RhombusSVG from "components/svg/Rhombus";
 import imgHelp from "images/help.svg";
+import buckets from "resources/buckets.json";
 
 import "./style.scss";
 
-const bucketSize = [90, 70, 50, 30];
 
 const getSVGIcon = (SVGComponent, props) => {
   let { value, program, size, hideLabel } = props;
@@ -68,7 +68,7 @@ class ImpactMapArea extends React.Component {
         return null;
       }
 
-      let iconSize = bucketSize[region[`${this.props.program}_position`] - 1];
+      let iconSize = region[`${this.props.program}_size`];
 
       return window.L.marker([region.region_center_y, region.region_center_x], {
         icon: getSVGIcon(CircleSVG, {
@@ -145,8 +145,8 @@ class ImpactMapArea extends React.Component {
               <li>
                 1
               </li>
-              {bucketSize.map((size, n) => (<li key={n}>
-                <CircleSVG size={size} />
+              {buckets.impact.map((bucket, n) => (<li key={n}>
+                <CircleSVG size={bucket[2]/2} />
               </li>))}
               <li>
                 12M population impacted
