@@ -18,6 +18,13 @@
     background-color: $bg-color-1;
     color: $font-color-1;
     font-family: ITC Officina Sans Std, Helvetica;
+
+    width: 800px;
+
+    &.modal-id-about {
+      width: 1000px;
+      height: 600px;
+    }
   }
 
   .close-button {

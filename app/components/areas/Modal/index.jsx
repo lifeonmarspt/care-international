@@ -34,7 +34,7 @@ class ModalArea extends React.Component {
         },
       },
       {
-        id: "aboutReach",
+        id: "aboutImpact",
         component: GenericContent,
         props: {
           title: "About Impact Data",
@@ -59,8 +59,10 @@ class ModalArea extends React.Component {
       },
     ];
 
-    return this.props.modal && (<ModalBox handleClose={this.props.handleClose}>
-      {modals.map((modal, n) => (this.props.modal === modal.id && (<modal.component key={n} {...modal.props} />)))}
+    let modalContent = modals.find((modal) => modal.id === this.props.modal) || null;
+
+    return modalContent && (<ModalBox id={modalContent.id} {...modalContent.props} handleClose={this.props.handleClose}>
+      <modalContent.component {...modalContent.props} />
     </ModalBox>);
   }
 }

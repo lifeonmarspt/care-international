@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import classnames from "classnames";
 
 import AboutContent from "components/elements/ModalBox/content/About";
 import ShareContent from "components/elements/ModalBox/content/Share";
@@ -9,26 +10,14 @@ import "./style.scss";
 class ModalBox extends React.Component {
 
   static propTypes = {
-    width: PropTypes.number,
-    height: PropTypes.number,
-    handleClose: PropTypes.func,
-  }
-
-  static defaultProps = {
-    hidden: true,
-    width: 1000,
-    height: 600,
+    id: PropTypes.string.isRequired,
+    handleClose: PropTypes.func.isRequired,
   }
 
   render() {
-    let modalStyles = {
-      width: `${this.props.width}px`,
-      height: `${this.props.height}px`,
-    };
-
-    return (<div className="modal-overlay">
-      <div className="modal" style={modalStyles}>
-        {this.props.handleClose && (<div className="close-button" onClick={this.props.handleClose} />)}
+    return (<div className="modal-overlay" onClick={this.props.handleClose}>
+      <div className={classnames("modal", `modal-id-${this.props.id}`)}>
+        <div className="close-button" onClick={this.props.handleClose} />
         {this.props.children}
       </div>
     </div>);
