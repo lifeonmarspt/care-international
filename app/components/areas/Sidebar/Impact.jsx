@@ -112,11 +112,15 @@ class ImpactSidebarArea extends React.Component {
                     onChange={() => handleProgramChange(p.id)}>
                     {p.label}
                   </RadioButton>
-                  <BarWrapper bar={ValueBar}
-                    value={value}
-                    maxValue={maxValue}
-                    formatter={(v) => v.toLocaleString()}
-                    colorClass={p.id} />
+                  <ul>
+                    <li>
+                      <BarWrapper bar={ValueBar}
+                        value={value}
+                        maxValue={maxValue}
+                        formatter={(v) => v.toLocaleString()}
+                        colorClass={p.id} />
+                    </li>
+                  </ul>
                 </li>);
 
               })}

@@ -85,6 +85,9 @@
       dd {
         > ul {
           font-size: 14px;
+          > li > ul {
+            margin-left: 20px;
+          }
           > li:not(:last-child) {
             margin-bottom: 1.5em;
             li {
