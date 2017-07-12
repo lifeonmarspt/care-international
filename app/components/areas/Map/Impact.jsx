@@ -9,7 +9,7 @@ import imgHelp from "images/help.svg";
 
 import "./style.scss";
 
-const bucketSize = [25, 20, 15, 10];
+const bucketSize = [90, 70, 50, 30];
 
 const getSVGIcon = (SVGComponent, props) => {
   let { value, program, size, hideLabel } = props;
