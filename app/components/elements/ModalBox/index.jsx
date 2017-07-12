@@ -24,14 +24,12 @@ class ModalBox extends React.Component {
     let modalStyles = {
       width: `${this.props.width}px`,
       height: `${this.props.height}px`,
-      left: `calc(50% - ${this.props.width/2}px`,
-      top: `calc(50% - ${this.props.height/2}px`,
     };
 
     return (<div className="modal-overlay">
       <div className="modal" style={modalStyles}>
-        {this.props.children}
         {this.props.handleClose && (<div className="close-button" onClick={this.props.handleClose} />)}
+        {this.props.children}
       </div>
     </div>);
   }

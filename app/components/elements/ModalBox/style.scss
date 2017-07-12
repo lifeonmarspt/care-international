@@ -9,6 +9,9 @@
   left: 0;
   background-color: $overlay-color;
   z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .modal {
     position: relative;
