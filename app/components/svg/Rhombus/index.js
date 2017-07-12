@@ -19,7 +19,7 @@ class RhombusSVG extends React.Component {
   render() {
     let rectSideLen = Math.floor(this.props.size / Math.SQRT2);
     return (<svg className={classnames(["rhombus", this.props.program, { shadow: this.props.shadow }])} height={this.props.size} width={this.props.size}>
-      <rect width={rectSideLen} height={rectSideLen} strokeWidth="1" transform={`translate(${this.props.size / 2} 0) rotate(45)`} />
+      <rect width={rectSideLen} height={rectSideLen} transform={`translate(${this.props.size / 2} 0) rotate(45)`} />
     </svg>);
   }
 

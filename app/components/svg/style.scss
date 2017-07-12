@@ -19,8 +19,9 @@ svg.circle.shadow {
 
 svg.rhombus.shadow {
   rect {
-    stroke: $accent-color-3;
-    strokeWidth: 1;
+    stroke: $accent-color-8;
+    stroke-width: 1;
+    stroke-opacity: 0.2;
   }
 }
 
