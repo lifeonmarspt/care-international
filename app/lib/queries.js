@@ -273,7 +273,9 @@ const getBoundsSQL = (table, region, country) => {
   if (country) {
     query = query.where("country = ?", country);
   } else if (region) {
-    query = query.where("region = ?", region);
+    // Fiji's geometry has points lying on both sides of the 180º longitude line
+    // this causes issues with cartojs's get bounds function.
+    query = query.where("region = ? and country != 'Fiji'", region);
   }
 
 
