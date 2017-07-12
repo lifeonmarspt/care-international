@@ -35,17 +35,20 @@ const getReachMapCountriesSQL = (program) => {
       `WHEN ${directParticipantsVariable} >= ${bucket[0]} THEN ${n + 1}`
     )
     .join(" ");
+  let dataField = program === "overall" ? "data" : `${program}_data`;
   let fields = [
     "the_geom_webmercator",
     "country",
     "region",
     `'${program}' AS program`,
+    `${dataField} AS data`,
     `CASE ${caseColumn} END AS bucket`,
     "category ILIKE '%member%' AS care_member",
   ];
   let query = SquelPostgres.select({ replaceSingleQuotes: true })
     .fields(fields)
-    .from("reach_data");
+    .from("reach_data")
+    .where(`${dataField} IS NOT NULL`);
 
   return query.toString();
 
@@ -64,6 +67,7 @@ const getReachMapRegionsSQL = (program) => {
     "regions_complete_geometries.the_geom_webmercator AS the_geom_webmercator",
     "reach_data.region",
     `'${program}' AS program`,
+    "1 AS data",
     `CASE ${caseColumn} END AS bucket`,
     "false as care_member",
   ];

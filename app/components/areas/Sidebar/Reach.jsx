@@ -21,6 +21,10 @@ class ReachSidebarArea extends React.Component {
 
   static propTypes = {
     loading: PropTypes.bool.isRequired,
+    subView: PropTypes.oneOf([
+      "countries",
+      "regions",
+    ]),
     statistics: PropTypes.object.isRequired,
     region: PropTypes.string,
     country: PropTypes.string,
@@ -37,6 +41,7 @@ class ReachSidebarArea extends React.Component {
   render() {
     let {
       loading,
+      subView,
       region,
       country,
       program,
@@ -203,7 +208,7 @@ class ReachSidebarArea extends React.Component {
       {program !== "overall" && (<div className="clear-filters">
         <ul>
           <li className="see-overall">
-            <AppLink mainView="impact" region={region} country={country}>
+            <AppLink mainView="reach" subView={subView} region={region} country={country}>
               See all program areas
             </AppLink>
           </li>

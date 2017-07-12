@@ -45,8 +45,8 @@ class ReachMapArea extends React.Component {
       getReachMapRegionsSQL(this.props.program);
 
     let interactivity = this.props.subView === "countries" ?
-      "bucket, country, region" :
-      "bucket, region";
+      "bucket, country, region, data" :
+      "bucket, region, data";
 
     // add the cartodb layer
     let layerSource = {
@@ -74,8 +74,7 @@ class ReachMapArea extends React.Component {
       subLayer.setInteraction(true);
 
       subLayer.on("featureClick", (e, latlng, pos, data) => {
-
-        if (data.bucket === null) {
+        if (data.data === null) {
           return;
         }
 
@@ -88,10 +87,10 @@ class ReachMapArea extends React.Component {
       });
 
       subLayer.on("featureOver", (e, latlng, pos, data) => {
-        if (data.bucket === null) {
-          document.getElementById("leaflet").classList.remove("clickable");
-        } else {
+        if (data.data !== null) {
           document.getElementById("leaflet").classList.add("clickable");
+        } else {
+          document.getElementById("leaflet").classList.remove("clickable");
         }
       });
 
