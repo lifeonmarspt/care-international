@@ -30,7 +30,6 @@ class ReachSidebarArea extends React.Component {
     handleProgramChange: PropTypes.func.isRequired,
     handleAboutDirectReachClick: PropTypes.func.isRequired,
     handleAboutIndirectReachClick: PropTypes.func.isRequired,
-    handleToggleSidebar: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -48,18 +47,6 @@ class ReachSidebarArea extends React.Component {
     } = this.props;
 
     return (<div className="sidebar-content">
-
-      {(region || country) && (<div className="breadcrumbs">
-        <ul>
-          <li>
-            <AppLink mainView="reach" subView={subView} program={program}>
-              World
-            </AppLink>
-          </li>
-          {region && (<li>{region}</li>)}
-          {country && (<li>{country}</li>)}
-        </ul>
-      </div>)}
 
       <div className="content">
         <dl>

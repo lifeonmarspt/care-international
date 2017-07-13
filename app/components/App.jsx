@@ -89,10 +89,6 @@ class App extends React.PureComponent {
     });
   }
 
-  handleToggleSidebar() {
-    console.log("teh toggle lol");
-  }
-
   fetchRemoteData() {
     switch (this.props.mainView) {
 
@@ -145,7 +141,6 @@ class App extends React.PureComponent {
       handleMapChange={this.handleMapChange.bind(this)}
       handleCloseStory={this.handleCloseStory.bind(this)}
       handleToggleModal={this.handleToggleModal.bind(this)}
-      handleToggleSidebar={this.handleToggleSidebar.bind(this)}
       mainView={this.props.mainView}
       subView={this.props.subView}
       {...this.state}

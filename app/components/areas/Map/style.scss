@@ -1,5 +1,6 @@
 @import "styles/colors.scss";
 @import "styles/values.scss";
+@import "styles/mixins.scss";
 
 #map-area {
 
@@ -144,6 +145,7 @@
   }
 
   #about-data {
+    @include hide-on-mobile
     position: absolute;
     bottom: 0;
     left: 0;

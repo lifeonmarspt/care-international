@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import classnames from "classnames";
 
+import AppLink from "components/elements/AppLink";
 import ReachSidebar from "./Reach";
 import ImpactSidebar from "./Impact";
 
@@ -24,9 +26,21 @@ class SidebarArea extends React.Component {
     program: PropTypes.string,
     stories: PropTypes.array,
     handleProgramChange: PropTypes.func.isRequired,
-    handleToggleSidebar: PropTypes.func.isRequired,
     handleAboutDirectReachClick: PropTypes.func,
     handleAboutIndirectReachClick: PropTypes.func,
+  }
+
+  constructor(...args) {
+    super(...args);
+    this.state = {
+      mobileSidebarVisible: false,
+    };
+  }
+
+  handleToggleSidebar() {
+    this.setState({
+      mobileSidebarVisible: !this.state.mobileSidebarVisible,
+    });
   }
 
   render() {
@@ -35,9 +49,44 @@ class SidebarArea extends React.Component {
       return (<div id="sidebar" />);
     }
 
-    return (<div id="sidebar">
+    let sidebarClassNames = classnames({
+      "breadcrumbs": true,
+      "desktop-breadcrumbs-visible": this.props.country || this.props.region,
+      "mobile-sidebar-visible": this.state.mobileSidebarVisible,
+    });
 
-      <div id="mobile-sidebar" onClick={this.props.handleToggleSidebar} />
+    return (<div id="sidebar" className={sidebarClassNames}>
+
+      <div className="mobile-sidebar-show" onClick={() => this.handleToggleSidebar()}>
+        ➡
+      </div>
+
+      <div className="breadcrumbs">
+        <ul>
+          <li>
+            <AppLink
+              mainView={this.props.mainView}
+              program={this.props.program}
+            >
+              World
+            </AppLink>
+          </li>
+          {this.props.region && this.props.country && (<li>
+            <AppLink
+              mainView={this.props.mainView}
+              program={this.props.program}
+              region={this.props.region}
+            >
+              {this.props.region}
+            </AppLink>
+          </li>)}
+          {this.props.region && !this.props.country && (<li>{this.props.region}</li>)}
+          {this.props.country && (<li>{this.props.country}</li>)}
+        </ul>
+        <div className="mobile-sidebar-hide" onClick={() => this.handleToggleSidebar()}>
+          Map ⬅
+        </div>
+      </div>
 
       {this.props.mainView === "reach" && (<ReachSidebar
         loading={this.props.loading}

@@ -5,7 +5,6 @@ import ReactDOMServer from "react-dom/server";
 import StorySummary from "components/elements/StorySummary";
 import CircleSVG from "components/svg/Circle";
 import RhombusSVG from "components/svg/Rhombus";
-import imgHelp from "images/help.svg";
 import buckets from "resources/buckets.json";
 
 const getSVGIcon = (SVGComponent, props) => {
@@ -151,14 +150,6 @@ class ImpactMapArea extends React.Component {
             </ul>
           </li>
         </ul>
-      </div>
-      <div id="about-data">
-        <div className="clickable" onClick={this.props.handleAboutClick}>
-          <span>
-            About impact data
-          </span>
-          <img src={imgHelp} alt="Help" />
-        </div>
       </div>
     </div>);
   }

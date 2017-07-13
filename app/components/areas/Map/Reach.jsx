@@ -5,7 +5,6 @@ import AppLink from "components/elements/AppLink";
 
 import { getReachMapCountriesSQL, getReachMapRegionsSQL } from "lib/queries";
 
-import imgHelp from "images/help.svg";
 import buckets from "resources/buckets.json";
 import config from "config.json";
 
@@ -22,7 +21,6 @@ class ReachMapArea extends React.Component {
     bounds: PropTypes.array,
     program: PropTypes.string,
     handleMapChange: PropTypes.func.isRequired,
-    handleAboutClick: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -159,14 +157,6 @@ class ReachMapArea extends React.Component {
             </ul>
           </li>
         </ul>
-      </div>
-      <div id="about-data">
-        <div className="clickable" onClick={this.props.handleAboutClick}>
-          <span>
-            About reach data
-          </span>
-          <img src={imgHelp} alt="Help" />
-        </div>
       </div>
     </div>);
   }

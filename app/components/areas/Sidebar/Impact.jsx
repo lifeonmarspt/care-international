@@ -27,7 +27,6 @@ class ImpactSidebarArea extends React.Component {
     program: PropTypes.string,
     stories: PropTypes.array,
     handleProgramChange: PropTypes.func.isRequired,
-    handleToggleSidebar: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -44,23 +43,6 @@ class ImpactSidebarArea extends React.Component {
     } = this.props;
 
     return (<div className="sidebar-content">
-
-      {(region || country) && (<div className="breadcrumbs">
-        <ul>
-          <li>
-            <AppLink mainView="impact" program={program}>
-              World
-            </AppLink>
-          </li>
-          {region && country && (<li>
-            <AppLink mainView="impact" program={program} region={region}>
-              {region}
-            </AppLink>
-          </li>)}
-          {region && !country && (<li>{region}</li>)}
-          {country && (<li>{country}</li>)}
-        </ul>
-      </div>)}
 
       {program === "overall" && (<div className="content">
         <dl>

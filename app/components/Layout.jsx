@@ -37,7 +37,6 @@ class Layout extends React.Component {
     handleToggleModal: PropTypes.func.isRequired,
     handleMapChange: PropTypes.func.isRequired,
     handleCloseStory: PropTypes.func.isRequired,
-    handleToggleSidebar: PropTypes.func.isRequired,
   }
 
   static contextTypes = {
@@ -65,7 +64,6 @@ class Layout extends React.Component {
           handleProgramChange={this.props.handleProgramChange}
           handleAboutDirectReachClick={() => this.props.handleToggleModal("aboutDirectReach")}
           handleAboutIndirectReachClick={() => this.props.handleToggleModal("aboutIndirectReach")}
-          handleToggleSidebar={this.props.handleToggleSidebar}
         />
         <LeafletWrapper
           bounds={this.props.bounds}
@@ -92,7 +90,6 @@ class Layout extends React.Component {
           statistics={this.props.statistics}
           stories={this.context.data.stories}
           handleProgramChange={this.props.handleProgramChange}
-          handleToggleSidebar={this.props.handleToggleSidebar}
         />
         {this.props.story && (<Story
           handleCloseStory={this.props.handleCloseStory}

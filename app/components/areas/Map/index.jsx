@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import ReachMap from "components/areas/Map/Reach";
-import ImpactMap from "components/areas/Map/Impact";
+import ReachMap from "./Reach";
+import ImpactMap from "./Impact";
+
+import imgHelp from "images/help.svg";
 
 import "./style.scss";
 
@@ -37,7 +39,6 @@ class MapArea extends React.Component {
         program={this.props.program}
         regions={this.props.regions}
         handleMapChange={this.props.handleMapChange}
-        handleAboutClick={this.props.handleAboutClick}
       />)}
 
       {this.props.mainView === "impact" && (<ImpactMap
@@ -48,8 +49,16 @@ class MapArea extends React.Component {
         regions={this.props.regions}
         stories={this.props.stories}
         handleMapChange={this.props.handleMapChange}
-        handleAboutClick={this.props.handleAboutClick}
       />)}
+
+      <div id="about-data">
+        <div className="clickable" onClick={this.props.handleAboutClick}>
+          <span>
+            About {this.props.mainView} data
+          </span>
+          <img src={imgHelp} alt="Help" />
+        </div>
+      </div>
 
     </div>);
   }
