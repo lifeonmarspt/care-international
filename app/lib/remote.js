@@ -23,8 +23,8 @@ const getBounds = (table, region, country) => {
   });
 };
 
-const getTexts = () => {
-  return new window.Promise((resolve, reject) => {
+const fetchGlobalData = () => {
+  let getTexts = new window.Promise((resolve, reject) => {
     cartoSQL.execute(getTextsSQL())
       .done((result) => {
         let indexed = result.rows.reduce((accumulator, value) => {
@@ -35,6 +35,18 @@ const getTexts = () => {
       })
       .error((error) => reject(error));
   });
+
+  let getStories = new window.Promise((resolve, reject) => {
+    cartoSQL.execute(getImpactStoriesSQL())
+      .done((result) => resolve(result.rows))
+      .error((error) => reject(error));
+  });
+
+  return window.Promise.all([
+    getTexts,
+    getStories,
+  ]);
+
 };
 
 const fetchReachData = (region, country) => {
@@ -44,12 +56,11 @@ const fetchReachData = (region, country) => {
 
   let getStatistics = new window.Promise((resolve, reject) => {
     cartoSQL.execute(sql)
-      .done((result) => resolve(result))
+      .done((result) => resolve(result.rows[0]))
       .error((error) => reject(error));
   });
 
   return window.Promise.all([
-    getTexts(),
     getStatistics,
     (region || country) && getBounds("reach_data", region, country),
   ]);
@@ -58,32 +69,25 @@ const fetchReachData = (region, country) => {
 const fetchImpactData = (region, country) => {
   let getStatistics = new window.Promise((resolve, reject) => {
     cartoSQL.execute(getImpactStatisticsSQL(region, country))
-      .done((result) => resolve(result))
+      .done((result) => resolve(result.rows[0]))
       .error((error) => reject(error));
   });
 
   let getRegionData = new window.Promise((resolve, reject) => {
     cartoSQL.execute(getImpactRegionDataSQL(region))
-      .done((result) => resolve(result))
-      .error((error) => reject(error));
-  });
-
-  let getStories = new window.Promise((resolve, reject) => {
-    cartoSQL.execute(getImpactStoriesSQL())
-      .done((result) => resolve(result))
+      .done((result) => resolve(result.rows))
       .error((error) => reject(error));
   });
 
   return window.Promise.all([
-    getTexts(),
     getStatistics,
     getRegionData,
-    getStories,
     (region || country) && getBounds("impact_data", region, country),
   ]);
 };
 
 export {
+  fetchGlobalData,
   fetchReachData,
   fetchImpactData,
 };

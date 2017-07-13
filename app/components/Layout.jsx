@@ -17,7 +17,8 @@ class Layout extends React.Component {
     loading: PropTypes.bool,
 
     mainView: PropTypes.string.isRequired,
-    subView: PropTypes.string.isRequired,
+    subView: PropTypes.string,
+
     region: PropTypes.string,
     country: PropTypes.string,
     program: PropTypes.string,
@@ -27,14 +28,19 @@ class Layout extends React.Component {
 
     statistics: PropTypes.object,
     regions: PropTypes.array,
-    stories: PropTypes.array,
-    texts: PropTypes.object,
 
     handleProgramChange: PropTypes.func.isRequired,
     handleToggleModal: PropTypes.func.isRequired,
     handleMapChange: PropTypes.func.isRequired,
     handleCloseStory: PropTypes.func.isRequired,
   }
+
+  static contextTypes = {
+    data: PropTypes.shape({
+      texts: PropTypes.object.isRequired,
+      stories: PropTypes.array.isRequired,
+    }).isRequired,
+  };
 
   render() {
     return (<div id="app">
@@ -73,11 +79,11 @@ class Layout extends React.Component {
           region={this.props.region}
           country={this.props.country}
           program={this.props.program}
-          stories={this.props.stories}
+          stories={this.context.data.stories}
           handleProgramChange={this.props.handleProgramChange} />
         {this.props.story && (<Story
           handleCloseStory={this.props.handleCloseStory}
-          story={this.props.stories.find((story) => story.cartodb_id === Number(this.props.story))} />)}
+          story={this.context.data.stories.find((story) => story.cartodb_id === Number(this.props.story))} />)}
         <LeafletWrapper
           bounds={this.props.bounds}
           handleShare={() =>this.props.handleToggleModal("share")}>
@@ -86,13 +92,13 @@ class Layout extends React.Component {
             country={this.props.country}
             program={this.props.program}
             regions={this.props.regions}
-            stories={this.props.stories}
+            stories={this.context.data.stories}
             handleMapChange={this.props.handleMapChange}
             handleAboutClick={() => this.props.handleToggleModal("aboutImpact")} />
         </LeafletWrapper>
       </div>)}
 
-      <Modal modal={this.props.modal} texts={this.props.texts} handleClose={() => this.props.handleToggleModal(null)} />
+      <Modal modal={this.props.modal} texts={this.context.data.texts} handleClose={() => this.props.handleToggleModal(null)} />
 
     </div>);
   }

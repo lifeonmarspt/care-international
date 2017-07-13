@@ -39,9 +39,6 @@ class App extends React.PureComponent {
       loading: true,
       statistics: {},
       bounds: null,
-      texts: {},
-      mainView: null,
-      subView: null,
       modal: !getKey("about-dismissed") ? "about" : null,
     };
   }
@@ -53,10 +50,10 @@ class App extends React.PureComponent {
 
   handleProgramChange(program) {
     this.navigate({
-      mainView: this.state.mainView,
-      subView: this.state.subView,
+      mainView: this.props.mainView,
+      subView: this.props.subView,
       region: this.state.region,
-      country: this.state.mainView === "impact" ?
+      country: this.props.mainView === "impact" ?
         this.state.region && this.state.country :
         this.state.country,
       program,
@@ -65,8 +62,8 @@ class App extends React.PureComponent {
 
   handleMapChange(region, country) {
     this.navigate({
-      mainView: this.state.mainView,
-      subView: this.state.subView,
+      mainView: this.props.mainView,
+      subView: this.props.subView,
       region: region || this.state.region,
       country: country || this.state.country,
       program: this.state.program,
@@ -97,14 +94,11 @@ class App extends React.PureComponent {
 
       case "reach":
         fetchReachData(this.props.region, this.props.country)
-          .then(([texts, statistics, bounds]) => {
+          .then(([statistics, bounds]) => {
             this.setState({
               loading: false,
-              texts: texts,
-              statistics: statistics.rows[0],
+              statistics: statistics,
               bounds: bounds,
-              mainView: this.props.mainView,
-              subView: this.props.subView,
               region: this.props.region,
               country: this.props.country,
               program: this.props.program,
@@ -114,15 +108,12 @@ class App extends React.PureComponent {
 
       case "impact":
         fetchImpactData(this.props.region, this.props.country)
-          .then(([texts, statistics, regions, stories, bounds]) => {
+          .then(([statistics, regions, bounds]) => {
             this.setState({
               loading: false,
-              texts: texts,
-              statistics: statistics.rows[0],
-              regions: regions.rows,
-              stories: stories.rows,
+              statistics: statistics,
+              regions: regions,
               bounds: bounds,
-              mainView: this.props.mainView,
               region: this.props.region,
               country: this.props.country,
               story: this.props.story,
