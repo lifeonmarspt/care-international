@@ -1,3 +1,5 @@
+@import "values.scss";
+
 @mixin absolute-fills-container {
   position: absolute;
   top: 0;
@@ -18,4 +20,16 @@
   background-position: center;
   background-image: url(~images/plus.png);
   transform: rotate(45deg);
+}
+
+@mixin hide-on-mobile {
+  @media #{$mq-mobile} {
+    display: none;
+  }
+}
+
+@mixin hide-on-desktop {
+  @media #{$mq-desktop} {
+    display: none;
+  }
 }

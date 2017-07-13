@@ -9,8 +9,6 @@ import imgHelp from "images/help.svg";
 import buckets from "resources/buckets.json";
 import config from "config.json";
 
-import "./style.scss";
-
 import cartocss from "!raw-loader!cartocss-loader!sass-loader?outputStyle=compressed!./style.carto.scss";
 
 class ReachMapArea extends React.Component {
@@ -125,7 +123,7 @@ class ReachMapArea extends React.Component {
   }
 
   render() {
-    return (<div id="map-area">
+    return (<div className="map-area-content">
       <div id="legend" className="choropleth">
         <ul>
           {this.props.subView === "countries" && (<li>

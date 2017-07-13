@@ -4,10 +4,8 @@ import PropTypes from "prop-types";
 import Header from "components/areas/Header";
 import NotFound from "components/areas/NotFound";
 import LeafletWrapper from "components/wrappers/Leaflet";
-import ReachMap from "components/areas/Map/Reach";
-import ReachSidebar from "components/areas/Sidebar/Reach";
-import ImpactMap from "components/areas/Map/Impact";
-import ImpactSidebar from "components/areas/Sidebar/Impact";
+import Map from "components/areas/Map";
+import Sidebar from "components/areas/Sidebar";
 import Story from "components/areas/Story";
 import Modal from "components/areas/Modal";
 
@@ -16,9 +14,15 @@ class Layout extends React.Component {
   static propTypes = {
     loading: PropTypes.bool,
 
-    mainView: PropTypes.string.isRequired,
-    subView: PropTypes.string,
-
+    mainView: PropTypes.oneOf([
+      "notfound",
+      "reach",
+      "impact",
+    ]).isRequired,
+    subView: PropTypes.oneOf([
+      "countries",
+      "regions",
+    ]),
     region: PropTypes.string,
     country: PropTypes.string,
     program: PropTypes.string,
@@ -33,6 +37,7 @@ class Layout extends React.Component {
     handleToggleModal: PropTypes.func.isRequired,
     handleMapChange: PropTypes.func.isRequired,
     handleCloseStory: PropTypes.func.isRequired,
+    handleToggleSidebar: PropTypes.func.isRequired,
   }
 
   static contextTypes = {
@@ -49,52 +54,62 @@ class Layout extends React.Component {
       {this.props.mainView === "notfound" && (<NotFound />)}
 
       {this.props.mainView === "reach" && (<div>
-        <ReachSidebar
+        <Sidebar
           loading={this.props.loading}
+          mainView={this.props.mainView}
           subView={this.props.subView}
-          statistics={this.props.statistics}
           region={this.props.region}
           country={this.props.country}
           program={this.props.program}
+          statistics={this.props.statistics}
           handleProgramChange={this.props.handleProgramChange}
           handleAboutDirectReachClick={() => this.props.handleToggleModal("aboutDirectReach")}
-          handleAboutIndirectReachClick={() => this.props.handleToggleModal("aboutIndirectReach")} />
+          handleAboutIndirectReachClick={() => this.props.handleToggleModal("aboutIndirectReach")}
+          handleToggleSidebar={this.props.handleToggleSidebar}
+        />
         <LeafletWrapper
           bounds={this.props.bounds}
           handleShare={() => this.props.handleToggleModal("share")}>
-          <ReachMap
+          <Map
+            mainView={this.props.mainView}
             subView={this.props.subView}
             country={this.props.country}
             program={this.props.program}
             regions={this.props.regions}
             handleMapChange={this.props.handleMapChange}
-            handleAboutClick={() => this.props.handleToggleModal("aboutReach")} />
+            handleAboutClick={() => this.props.handleToggleModal("aboutReach")}
+          />
         </LeafletWrapper>
       </div>)}
 
       {this.props.mainView === "impact" && (<div>
-        <ImpactSidebar
+        <Sidebar
           loading={this.props.loading}
-          statistics={this.props.statistics}
+          mainView={this.props.mainView}
           region={this.props.region}
           country={this.props.country}
           program={this.props.program}
+          statistics={this.props.statistics}
           stories={this.context.data.stories}
-          handleProgramChange={this.props.handleProgramChange} />
+          handleProgramChange={this.props.handleProgramChange}
+          handleToggleSidebar={this.props.handleToggleSidebar}
+        />
         {this.props.story && (<Story
           handleCloseStory={this.props.handleCloseStory}
           story={this.context.data.stories.find((story) => story.cartodb_id === Number(this.props.story))} />)}
         <LeafletWrapper
           bounds={this.props.bounds}
-          handleShare={() =>this.props.handleToggleModal("share")}>
-          <ImpactMap
+          handleShare={() => this.props.handleToggleModal("share")}>
+          <Map
+            mainView={this.props.mainView}
             region={this.props.region}
             country={this.props.country}
             program={this.props.program}
             regions={this.props.regions}
             stories={this.context.data.stories}
             handleMapChange={this.props.handleMapChange}
-            handleAboutClick={() => this.props.handleToggleModal("aboutImpact")} />
+            handleAboutClick={() => this.props.handleToggleModal("aboutImpact")}
+          />
         </LeafletWrapper>
       </div>)}
 

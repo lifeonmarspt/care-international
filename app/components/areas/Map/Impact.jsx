@@ -8,9 +8,6 @@ import RhombusSVG from "components/svg/Rhombus";
 import imgHelp from "images/help.svg";
 import buckets from "resources/buckets.json";
 
-import "./style.scss";
-
-
 const getSVGIcon = (SVGComponent, props) => {
   let { value, program, size, hideLabel } = props;
   let label = value && value.toLocaleString();
@@ -125,7 +122,7 @@ class ImpactMapArea extends React.Component {
 
 
   render() {
-    return (<div id="map-area">
+    return (<div className="map-area-content">
       <div id="legend" className="impact">
         <ul>
           <li>Type of impacts</li>

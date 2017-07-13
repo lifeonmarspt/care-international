@@ -10,7 +10,6 @@ import ValueBar from "components/elements/ValueBar";
 import programs from "resources/programs.json";
 import imgHelp from "images/help.svg";
 
-
 import "./style.scss";
 
 class ReachSidebarArea extends React.Component {
@@ -20,7 +19,6 @@ class ReachSidebarArea extends React.Component {
   };
 
   static propTypes = {
-    loading: PropTypes.bool.isRequired,
     subView: PropTypes.oneOf([
       "countries",
       "regions",
@@ -32,6 +30,7 @@ class ReachSidebarArea extends React.Component {
     handleProgramChange: PropTypes.func.isRequired,
     handleAboutDirectReachClick: PropTypes.func.isRequired,
     handleAboutIndirectReachClick: PropTypes.func.isRequired,
+    handleToggleSidebar: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -40,7 +39,6 @@ class ReachSidebarArea extends React.Component {
 
   render() {
     let {
-      loading,
       subView,
       region,
       country,
@@ -49,11 +47,7 @@ class ReachSidebarArea extends React.Component {
       handleProgramChange,
     } = this.props;
 
-    if (loading) {
-      return (<div id="sidebar" />);
-    }
-
-    return (<div id="sidebar">
+    return (<div className="sidebar-content">
 
       {(region || country) && (<div className="breadcrumbs">
         <ul>

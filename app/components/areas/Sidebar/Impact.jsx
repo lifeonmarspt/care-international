@@ -12,8 +12,6 @@ import uniq from "lib/uniq";
 import getLocation from "lib/location";
 import programs from "resources/programs.json";
 
-import "./style.scss";
-
 class ImpactSidebarArea extends React.Component {
 
   static contextTypes = {
@@ -21,7 +19,6 @@ class ImpactSidebarArea extends React.Component {
   };
 
   static propTypes = {
-    loading: PropTypes.bool.isRequired,
     statistics: PropTypes.object.isRequired,
     reach: PropTypes.bool,
     impact: PropTypes.bool,
@@ -29,7 +26,8 @@ class ImpactSidebarArea extends React.Component {
     country: PropTypes.string,
     program: PropTypes.string,
     stories: PropTypes.array,
-    handleProgramChange: PropTypes.func,
+    handleProgramChange: PropTypes.func.isRequired,
+    handleToggleSidebar: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -38,7 +36,6 @@ class ImpactSidebarArea extends React.Component {
 
   render() {
     let {
-      loading,
       region,
       country,
       program,
@@ -46,11 +43,7 @@ class ImpactSidebarArea extends React.Component {
       handleProgramChange,
     } = this.props;
 
-    if (loading) {
-      return (<div id="sidebar" />);
-    }
-
-    return (<div id="sidebar">
+    return (<div className="sidebar-content">
 
       {(region || country) && (<div className="breadcrumbs">
         <ul>

@@ -98,12 +98,13 @@ class LeafletProvider extends React.Component {
 
   render() {
     return (<div id="map">
+      <div id="leaflet" />
       <div id="leaflet-custom-controls">
         <div id="leaflet-zoom-plus" onClick={this.zoomIn.bind(this)} />
         <div id="leaflet-zoom-minus" onClick={this.zoomOut.bind(this)} />
         <div id="leaflet-share" onClick={this.share.bind(this) } />
+        <div id="mobile-legend" onClick={this.share.bind(this) } />
       </div>
-      <div id="leaflet" />
       {this.state.loaded ? this.props.children : null}
     </div>);
   }

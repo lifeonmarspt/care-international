@@ -5,6 +5,10 @@
 
   #legend {
 
+    @media #{$mq-mobile} {
+      display: none;
+    }
+
     position: absolute;
     bottom: 40px;
     right: 20px;

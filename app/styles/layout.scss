@@ -20,7 +20,12 @@ body {
   #map {
     position: absolute;
     top: $header-height;
-    left: $sidebar-width;
+    @media #{$mq-desktop} {
+      left: $sidebar-width;
+    }
+    @media #{$mq-mobile} {
+      left: 0;
+    }
     right: 0;
     bottom: 0;
 
@@ -32,7 +37,12 @@ body {
   #sidebar {
     position: absolute;
     top: $header-height;
-    left: 0;
+    @media #{$mq-desktop} {
+      left: 0;
+    }
+    @media #{$mq-mobile} {
+      left: #{-$sidebar-width};
+    }
     bottom: 0;
     width: $sidebar-width;
   }
