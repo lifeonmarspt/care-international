@@ -58,7 +58,7 @@ class ReachSidebarArea extends React.Component {
       {(region || country) && (<div className="breadcrumbs">
         <ul>
           <li>
-            <AppLink mainView="reach" program={program}>
+            <AppLink mainView="reach" subView={subView} program={program}>
               World
             </AppLink>
           </li>

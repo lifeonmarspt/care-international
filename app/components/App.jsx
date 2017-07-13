@@ -1,15 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-import Header from "components/areas/Header";
-import NotFound from "components/areas/NotFound";
-import LeafletWrapper from "components/wrappers/Leaflet";
-import ReachMap from "components/areas/Map/Reach";
-import ReachSidebar from "components/areas/Sidebar/Reach";
-import ImpactMap from "components/areas/Map/Impact";
-import ImpactSidebar from "components/areas/Sidebar/Impact";
-import Story from "components/areas/Story";
-import Modal from "components/areas/Modal";
+import Layout from "components/Layout";
 
 import getLocation from "lib/location";
 import { setKey, getKey } from "lib/storage";
@@ -154,65 +145,17 @@ class App extends React.PureComponent {
   }
 
   render() {
-    return (<div id="app">
-      <Header />
-
-      {this.props.mainView === "notfound" && (<NotFound />)}
-
-      {this.props.mainView === "reach" && (<div>
-        <ReachSidebar
-          loading={this.state.loading}
-          subView={this.state.subView}
-          statistics={this.state.statistics}
-          region={this.state.region}
-          country={this.state.country}
-          program={this.state.program}
-          handleProgramChange={this.handleProgramChange.bind(this)}
-          handleAboutDirectReachClick={this.handleToggleModal.bind(this, "aboutDirectReach")}
-          handleAboutIndirectReachClick={this.handleToggleModal.bind(this, "aboutIndirectReach")} />
-        <LeafletWrapper
-          bounds={this.state.bounds}
-          handleShare={this.handleToggleModal.bind(this, "share")}>
-          <ReachMap
-            subView={this.state.subView}
-            country={this.state.country}
-            program={this.state.program}
-            regions={this.state.regions}
-            handleMapChange={this.handleMapChange.bind(this)}
-            handleAboutClick={this.handleToggleModal.bind(this, "aboutReach")} />
-        </LeafletWrapper>
-      </div>)}
-
-      {this.props.mainView === "impact" && (<div>
-        <ImpactSidebar
-          loading={this.state.loading}
-          statistics={this.state.statistics}
-          region={this.state.region}
-          country={this.state.country}
-          program={this.state.program}
-          stories={this.state.stories}
-          handleProgramChange={this.handleProgramChange.bind(this)} />
-        {this.state.story && (<Story
-          handleCloseStory={this.handleCloseStory.bind(this)}
-          story={this.state.stories.find((story) => story.cartodb_id === Number(this.state.story))} />)}
-        <LeafletWrapper
-          bounds={this.state.bounds}
-          handleShare={this.handleToggleModal.bind(this, "share")}>
-          <ImpactMap
-            region={this.state.region}
-            country={this.state.country}
-            program={this.state.program}
-            regions={this.state.regions}
-            stories={this.state.stories}
-            handleMapChange={this.handleMapChange.bind(this)}
-            handleAboutClick={this.handleToggleModal.bind(this, "aboutImpact")} />
-        </LeafletWrapper>
-      </div>)}
-
-      <Modal modal={this.state.modal} texts={this.state.texts} handleClose={this.handleToggleModal.bind(this, null)} />
-
-    </div>);
+    return (<Layout
+      handleProgramChange={this.handleProgramChange.bind(this)}
+      handleMapChange={this.handleMapChange.bind(this)}
+      handleCloseStory={this.handleCloseStory.bind(this)}
+      handleToggleModal={this.handleToggleModal.bind(this)}
+      mainView={this.props.mainView}
+      subView={this.props.subView}
+      {...this.state}
+    />);
   }
+
 }
 
 export default App;
