@@ -144,7 +144,7 @@ class ReachSidebarArea extends React.Component {
       <div className="filters">
         <dl>
           <dt>
-            Participants by program area
+            Participants reached by program area
           </dt>
           <dd>
             <ul>

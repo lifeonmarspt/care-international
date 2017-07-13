@@ -70,7 +70,7 @@ class ImpactSidebarArea extends React.Component {
       <div className="filters">
         <dl>
           <dt>
-            Participants by program area
+            Population impacted by program area
           </dt>
           <dd>
             <ul>
