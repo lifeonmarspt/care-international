@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import AppLink from "components/elements/AppLink";
 import RadioButton from "components/elements/Radio";
 import BarWrapper from "components/wrappers/Bar";
 import PercentageBar from "components/elements/PercentageBar";
@@ -38,15 +37,13 @@ class ReachSidebarArea extends React.Component {
 
   render() {
     let {
-      subView,
-      region,
       country,
       program,
       statistics,
       handleProgramChange,
     } = this.props;
 
-    return (<div className="sidebar-content">
+    return (<div className="sidebar-content-reach">
 
       <div className="content">
         <dl>
@@ -185,19 +182,7 @@ class ReachSidebarArea extends React.Component {
           </dd>
         </dl>
       </div>
-
-      {program !== "overall" && (<div className="clear-filters">
-        <ul>
-          <li className="see-overall">
-            <AppLink mainView="reach" subView={subView} region={region} country={country}>
-              See all program areas
-            </AppLink>
-          </li>
-        </ul>
-      </div>)}
-
     </div>);
-
   }
 
 }

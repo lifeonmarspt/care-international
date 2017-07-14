@@ -45,74 +45,99 @@ class SidebarArea extends React.Component {
 
   render() {
 
-    if (this.props.loading) {
+    let {
+      loading,
+      mainView,
+      subView,
+      program,
+      region,
+      country,
+      statistics,
+      stories,
+      handleProgramChange,
+      handleToggleSidebar,
+      handleAboutDirectReachClick,
+      handleAboutIndirectReachClick,
+    } = this.props;
+
+    if (loading) {
       return (<div id="sidebar" />);
     }
 
     let sidebarClassNames = classnames({
       "breadcrumbs": true,
-      "desktop-breadcrumbs-visible": this.props.country || this.props.region,
+      "desktop-breadcrumbs-visible": country || region,
       "mobile-sidebar-visible": this.state.mobileSidebarVisible,
     });
 
     return (<div id="sidebar" className={sidebarClassNames}>
 
-      <div className="mobile-sidebar-show" onClick={() => this.handleToggleSidebar()}>
-        ➡
-      </div>
+      <div className="mobile-sidebar-show" onClick={() => this.handleToggleSidebar()} />
 
       <div className="breadcrumbs">
         <ul>
           <li>
             <AppLink
-              mainView={this.props.mainView}
-              program={this.props.program}
+              mainView={mainView}
+              program={program}
             >
               World
             </AppLink>
           </li>
-          {this.props.region && this.props.country && (<li>
+          {region && country && (<li>
             <AppLink
-              mainView={this.props.mainView}
-              program={this.props.program}
-              region={this.props.region}
+              mainView={mainView}
+              program={program}
+              region={region}
             >
-              {this.props.region}
+              {region}
             </AppLink>
           </li>)}
-          {this.props.region && !this.props.country && (<li>{this.props.region}</li>)}
-          {this.props.country && (<li>{this.props.country}</li>)}
+          {region && !country && (<li>{region}</li>)}
+          {country && (<li>{country}</li>)}
         </ul>
-        <div className="mobile-sidebar-hide" onClick={() => this.handleToggleSidebar()}>
-          Map ⬅
-        </div>
+        <div className="mobile-sidebar-hide" onClick={() => this.handleToggleSidebar()} />
       </div>
 
-      {this.props.mainView === "reach" && (<ReachSidebar
-        loading={this.props.loading}
-        mainView={this.props.mainView}
-        subView={this.props.subView}
-        region={this.props.region}
-        country={this.props.country}
-        program={this.props.program}
-        statistics={this.props.statistics}
-        handleProgramChange={this.props.handleProgramChange}
-        handleAboutDirectReachClick={this.props.handleAboutDirectReachClick}
-        handleAboutIndirectReachClick={this.props.handleAboutIndirectReachClick}
-        handleToggleSidebar={this.props.handleToggleSidebar}
-      />)}
+      <div className="sidebar-content">
 
-      {this.props.mainView === "impact" && (<ImpactSidebar
-        loading={this.props.loading}
-        mainView={this.props.mainView}
-        region={this.props.region}
-        country={this.props.country}
-        program={this.props.program}
-        statistics={this.props.statistics}
-        stories={this.props.stories}
-        handleProgramChange={this.props.handleProgramChange}
-        handleToggleSidebar={this.props.handleToggleSidebar}
-      />)}
+        {mainView === "reach" && (<ReachSidebar
+          loading={loading}
+          mainView={mainView}
+          subView={subView}
+          region={region}
+          country={country}
+          program={program}
+          statistics={statistics}
+          handleProgramChange={handleProgramChange}
+          handleAboutDirectReachClick={handleAboutDirectReachClick}
+          handleAboutIndirectReachClick={handleAboutIndirectReachClick}
+          handleToggleSidebar={handleToggleSidebar}
+        />)}
+
+        {mainView === "impact" && (<ImpactSidebar
+          loading={loading}
+          mainView={mainView}
+          region={region}
+          country={country}
+          program={program}
+          statistics={statistics}
+          stories={stories}
+          handleProgramChange={handleProgramChange}
+          handleToggleSidebar={handleToggleSidebar}
+        />)}
+
+        {program !== "overall" && (<div className="clear-filters">
+          <ul>
+            <li className="see-overall">
+              <AppLink mainView={mainView} subView={subView} region={region} country={country}>
+                See all program areas
+              </AppLink>
+            </li>
+          </ul>
+        </div>)}
+
+      </div>
 
     </div>);
   }

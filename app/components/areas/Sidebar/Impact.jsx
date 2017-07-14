@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-import AppLink from "components/elements/AppLink";
 import RadioButton from "components/elements/Radio";
 import BarWrapper from "components/wrappers/Bar";
 import ValueBar from "components/elements/ValueBar";
@@ -35,14 +34,12 @@ class ImpactSidebarArea extends React.Component {
 
   render() {
     let {
-      region,
-      country,
       program,
       statistics,
       handleProgramChange,
     } = this.props;
 
-    return (<div className="sidebar-content">
+    return (<div className="sidebar-content-impact">
 
       {program === "overall" && (<div className="content">
         <dl>
@@ -139,16 +136,6 @@ class ImpactSidebarArea extends React.Component {
           </dd>
         </dl>
       </div>
-
-      {program !== "overall" && (<div className="clear-filters">
-        <ul>
-          <li className="see-overall">
-            <AppLink mainView="impact" region={region} country={country}>
-              See all program areas
-            </AppLink>
-          </li>
-        </ul>
-      </div>)}
 
     </div>);
   }
