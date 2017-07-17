@@ -1,22 +1,42 @@
 @import "styles/colors.scss";
+@import "styles/mixins.scss";
 
 #about {
-  display: flex;
-  align-items: flex-start;
+  @media #{$mq-desktop} {
+    display: flex;
+    align-items: flex-start;
 
-  .right {
+    .right {
+      padding: 80px 75px;
+      img {
+        margin-bottom: 3em;
+      }
 
-    padding: 80px 75px;
+      p:not(:last-child) {
+        margin-bottom: 2em;
+      }
 
-    img {
-      margin-bottom: 3em;
+      img.img-care-mom {
+        display: none;
+      }
     }
-
-    p:not(:last-child) {
-      margin-bottom: 2em;
-    }
-
   }
 
+  @media #{$mq-mobile} {
+    .left {
+      display: none;
+    }
+    .right {
+      img.img-care {
+        display: none;
+      }
+      p, button {
+        margin: 10px;
+      }
+      img {
+        margin: auto;
+      }
+    }
+  }
 
 }

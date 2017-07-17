@@ -16,7 +16,7 @@ class ModalBox extends React.Component {
 
   render() {
     return (<div className="modal-overlay" onClick={this.props.handleClose}>
-      <div className={classnames("modal", `modal-id-${this.props.id}`)}>
+      <div className={classnames("modal", `modal-id-${this.props.id}`)} onClick={(e) => e.stopPropagation()}>
         <div className="close-button" onClick={this.props.handleClose} />
         {this.props.children}
       </div>

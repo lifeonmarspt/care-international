@@ -1,10 +1,16 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { NavLink } from "react-router-dom";
 
 import imgCare from "images/care.png";
 import "./style.scss";
 
 class HeaderArea extends React.Component {
+
+  static propTypes = {
+    handleAboutClick: PropTypes.func.isRequired,
+  };
 
   render() {
     return (<div id="header">
@@ -21,7 +27,7 @@ class HeaderArea extends React.Component {
       </div>
 
       <div className="logo">
-        <img alt="care" src={imgCare} />
+        <img alt="care" src={imgCare} onClick={this.props.handleAboutClick} />
       </div>
 
     </div>);

@@ -48,7 +48,7 @@ class Layout extends React.Component {
 
   render() {
     return (<div id="app">
-      <Header />
+      <Header handleAboutClick={() => this.props.handleToggleModal("about")} />
 
       {this.props.mainView === "notfound" && (<NotFound />)}
 
