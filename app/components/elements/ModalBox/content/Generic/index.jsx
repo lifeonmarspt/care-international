@@ -16,9 +16,7 @@ class GenericContent extends React.Component {
         {this.props.title}
       </h1>
       <hr />
-      <p>
-        {this.props.text}
-      </p>
+      <div className="markup" dangerouslySetInnerHTML={{ __html: this.props.text }} />
     </div>);
   }
 }

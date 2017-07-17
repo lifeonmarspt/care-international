@@ -37,7 +37,7 @@
     @media #{$mq-mobile} {
       width: 90%;
       max-height: 90%;
-      overflow-y: scroll;
+      overflow-y: auto;
 
       &.modal-id-about {
         width: 100%;
