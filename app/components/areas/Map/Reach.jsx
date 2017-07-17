@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import AppLink from "components/elements/AppLink";
+import ReachLegend from "components/content/ReachLegend";
 
 import { getReachMapCountriesSQL, getReachMapRegionsSQL } from "lib/queries";
 
-import buckets from "resources/buckets.json";
 import config from "config.json";
 
 import cartocss from "!raw-loader!cartocss-loader!sass-loader?outputStyle=compressed!./style.carto.scss";
@@ -123,40 +122,7 @@ class ReachMapArea extends React.Component {
   render() {
     return (<div className="map-area-content">
       <div id="legend" className="choropleth">
-        <ul>
-          {this.props.subView === "countries" && (<li>
-            <AppLink mainView="reach" subView="regions" program={this.props.program}>
-              Show Regions
-            </AppLink>
-          </li>)}
-          {this.props.subView === "regions" && (<li>
-            <AppLink mainView="reach" subView="countries" program={this.props.program}>
-              Show Countries
-            </AppLink>
-          </li>)}
-          <li>
-            <p>
-              Direct participants reached in 2016 by country
-            </p>
-          </li>
-          <li>
-            <ul className="scale">
-              {buckets.reach.map((bucket, n) => {
-                return (<li key={n} className={`program-${this.props.program} bucket-${n + 1}`}>
-                  <span>{bucket[2]}</span>
-                </li>);
-              })}
-            </ul>
-            <ul className="exceptions">
-              <li className="no-data">
-                <span>No participants recorded or other type of activities</span>
-              </li>
-              <li className="care-member">
-                <span>CARE International Members or Affiliate Members</span>
-              </li>
-            </ul>
-          </li>
-        </ul>
+        <ReachLegend subView={this.props.subView} program={this.props.program} />
       </div>
     </div>);
   }

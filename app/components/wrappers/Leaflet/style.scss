@@ -17,8 +17,14 @@
 
   #leaflet-custom-controls {
     position: absolute;
-    top: 35px;
-    right: 35px;
+    @media #{$mq-desktop} {
+      top: 35px;
+      right: 35px;
+    }
+    @media #{$mq-mobile} {
+      top: 15px;
+      right: 15px;
+    }
     padding: 2px;
 
     > div {

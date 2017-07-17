@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactDOMServer from "react-dom/server";
 
+import ImpactLegend from "components/content/ImpactLegend";
 import StorySummary from "components/elements/StorySummary";
 import CircleSVG from "components/svg/Circle";
 import RhombusSVG from "components/svg/Rhombus";
-import buckets from "resources/buckets.json";
 
 const getSVGIcon = (SVGComponent, props) => {
   let { value, program, size, hideLabel } = props;
@@ -123,33 +123,7 @@ class ImpactMapArea extends React.Component {
   render() {
     return (<div className="map-area-content">
       <div id="legend" className="impact">
-        <ul>
-          <li>Type of impacts</li>
-          <li>
-            <ul>
-              <li>
-                <RhombusSVG size={15} /> Qualitative
-              </li>
-              <li>
-                <CircleSVG size={15} /> Quantitative
-              </li>
-            </ul>
-          </li>
-          <li>Population impacted (quantitative)</li>
-          <li>
-            <ul>
-              <li>
-                1
-              </li>
-              {buckets.impact.map((bucket, n) => (<li key={n}>
-                <CircleSVG size={bucket[2]/2} />
-              </li>))}
-              <li>
-                12M population impacted
-              </li>
-            </ul>
-          </li>
-        </ul>
+        <ImpactLegend />
       </div>
     </div>);
   }
