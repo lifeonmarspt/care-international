@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { ModalBox, AboutContent, ShareContent, GenericContent } from "components/elements/ModalBox";
+import ReachLegendContent from "components/content/ReachLegend";
+import ImpactLegendContent from "components/content/ImpactLegend";
 
 class ModalArea extends React.Component {
 
@@ -9,6 +11,12 @@ class ModalArea extends React.Component {
     modal: PropTypes.string,
     texts: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
+    contentProps: PropTypes.object,
+  };
+
+  static defaultProps = {
+    contentProps: {},
+    contentProps: {},
   };
 
   render() {
@@ -24,6 +32,18 @@ class ModalArea extends React.Component {
       {
         id: "share",
         component: ShareContent,
+      },
+      {
+        id: "reachLegend",
+        component: ReachLegendContent,
+        props: {
+          subView: this.props.contentProps.subView,
+          program: this.props.contentProps.program,
+        },
+      },
+      {
+        id: "impactLegend",
+        component: ImpactLegendContent,
       },
       {
         id: "aboutReach",

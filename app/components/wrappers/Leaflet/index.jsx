@@ -18,6 +18,7 @@ class LeafletProvider extends React.Component {
     bounds: PropTypes.array,
     initialZoom: PropTypes.number,
     handleShare: PropTypes.func.isRequired,
+    handleOpenLegend: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -100,10 +101,10 @@ class LeafletProvider extends React.Component {
     return (<div id="map">
       <div id="leaflet" />
       <div id="leaflet-custom-controls">
-        <div id="leaflet-zoom-plus" onClick={this.zoomIn.bind(this)} />
-        <div id="leaflet-zoom-minus" onClick={this.zoomOut.bind(this)} />
-        <div id="leaflet-share" onClick={this.share.bind(this) } />
-        <div id="mobile-legend" onClick={this.share.bind(this) } />
+        <div id="leaflet-zoom-plus" onClick={() => this.zoomIn()} />
+        <div id="leaflet-zoom-minus" onClick={() => this.zoomOut()} />
+        <div id="leaflet-share" onClick={() => this.props.handleShare()} />
+        <div id="mobile-legend" onClick={() => this.props.handleOpenLegend()} />
       </div>
       {this.state.loaded ? this.props.children : null}
     </div>);

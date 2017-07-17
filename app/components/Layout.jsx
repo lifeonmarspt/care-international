@@ -67,7 +67,8 @@ class Layout extends React.Component {
         />
         <LeafletWrapper
           bounds={this.props.bounds}
-          handleShare={() => this.props.handleToggleModal("share")}>
+          handleShare={() => this.props.handleToggleModal("share")}
+          handleOpenLegend={() => this.props.handleToggleModal("reachLegend")}>
           <Map
             mainView={this.props.mainView}
             subView={this.props.subView}
@@ -96,7 +97,8 @@ class Layout extends React.Component {
           story={this.context.data.stories.find((story) => story.cartodb_id === Number(this.props.story))} />)}
         <LeafletWrapper
           bounds={this.props.bounds}
-          handleShare={() => this.props.handleToggleModal("share")}>
+          handleShare={() => this.props.handleToggleModal("share")}
+          handleOpenLegend={() => this.props.handleToggleModal("impactLegend")}>
           <Map
             mainView={this.props.mainView}
             region={this.props.region}
@@ -110,7 +112,15 @@ class Layout extends React.Component {
         </LeafletWrapper>
       </div>)}
 
-      <Modal modal={this.props.modal} texts={this.context.data.texts} handleClose={() => this.props.handleToggleModal(null)} />
+      <Modal
+        modal={this.props.modal}
+        texts={this.context.data.texts}
+        handleClose={() => this.props.handleToggleModal(null)}
+        contentProps={{
+          subView: this.props.subView,
+          program: this.props.program,
+        }}
+      />
 
     </div>);
   }
