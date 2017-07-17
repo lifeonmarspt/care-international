@@ -1,12 +1,26 @@
 @import "styles/colors.scss";
+@import "styles/values.scss";
+@import "styles/mixins.scss";
 
 .modal-content {
-  padding: 40px 60px;
-  height: calc(100% - 80px);
+
+  @media #{$mq-desktop} {
+    padding: 40px 60px;
+    height: calc(100% - 80px);
+  }
+
+  @media #{$mq-mobile} {
+    padding: 30px 15px 20px;
+  }
 
   h1 {
     font-family: Libre Baskerville, serif;
-    font-size: 36px;
+    @media #{$mq-mobile} {
+      font-size: 20px;
+    }
+    @media #{$mq-desktop} {
+      font-size: 36px;
+    }
   }
 
 }

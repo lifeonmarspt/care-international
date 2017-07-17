@@ -36,6 +36,8 @@
 
     @media #{$mq-mobile} {
       width: 90%;
+      max-height: 90%;
+      overflow-y: scroll;
 
       &.modal-id-about {
         width: 100%;
@@ -50,6 +52,7 @@
     &.modal-id-impactLegend,
     &.modal-id-reachLegend {
       padding: 10px;
+      max-width: 400px;
     }
   }
 
