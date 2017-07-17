@@ -5,11 +5,13 @@ import AppLink from "components/elements/AppLink";
 import buckets from "resources/buckets.json";
 
 import "./style.scss";
+import "../style.scss";
 
 class ReachLegend extends React.Component {
   static propTypes = {
     subView: PropTypes.string,
     program: PropTypes.string,
+    handleAboutClick: PropTypes.func,
   }
 
   render() {
@@ -46,6 +48,11 @@ class ReachLegend extends React.Component {
               <span>CARE International Members or Affiliate Members</span>
             </li>
           </ul>
+        </li>
+        <li className="about-button">
+          <button className="secondary" onClick={this.props.handleAboutClick}>
+            About Data
+          </button>
         </li>
       </ul>
     </div>);

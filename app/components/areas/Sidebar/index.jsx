@@ -130,7 +130,7 @@ class SidebarArea extends React.Component {
         {program !== "overall" && (<div className="clear-filters">
           <ul>
             <li className="see-overall">
-              <AppLink mainView={mainView} subView={subView} region={region} country={country}>
+              <AppLink className="secondary" mainView={mainView} subView={subView} region={region} country={country}>
                 See all program areas
               </AppLink>
             </li>

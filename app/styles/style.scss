@@ -16,7 +16,8 @@ img[title=CARTO] {
   display: none !important;
 }
 
-button.primary {
+// button primary
+.primary {
   font-family: ITC Officina Sans Std, Helvetica;
   font-size: 16px;
   border: 1px solid $bg-color-2;
@@ -27,6 +28,25 @@ button.primary {
   cursor: pointer;
 }
 
+// button secondary
+.secondary {
+  display: block;
+  box-sizing: border-box;
+  height: 40px;
+  line-height: 18px;
+  padding: 11px 0;
+  text-align: center;
+  border: 1px solid $bg-color-2;
+  border-radius: 2px;
+  color: $font-color-3;
+  cursor: pointer;
+  background-color: $bg-color-1;
+
+  &:hover {
+    color: $hover-color-1;
+    border-color: $hover-color-1;
+  }
+}
 
 hr {
   width: 17px;

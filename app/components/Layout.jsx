@@ -116,10 +116,9 @@ class Layout extends React.Component {
         modal={this.props.modal}
         texts={this.context.data.texts}
         handleClose={() => this.props.handleToggleModal(null)}
-        contentProps={{
-          subView: this.props.subView,
-          program: this.props.program,
-        }}
+        handleToggleModal={this.props.handleToggleModal}
+        subView={this.props.subView}
+        program={this.props.program}
       />
 
     </div>);

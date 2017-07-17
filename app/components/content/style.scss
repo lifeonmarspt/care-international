@@ -1,0 +1,17 @@
+@import "styles/mixins.scss";
+
+li.about-button {
+  @media #{$mq-desktop} {
+    display: none;
+  }
+  @media #{$mq-mobile} {
+    text-align: center;
+    button {
+      display: inline;
+      text-transform: uppercase;
+      width: 100px;
+    }
+  }
+}
+
+

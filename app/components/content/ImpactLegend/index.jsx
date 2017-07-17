@@ -5,6 +5,7 @@ import RhombusSVG from "components/svg/Rhombus";
 import buckets from "resources/buckets.json";
 
 import "./style.scss";
+import "../style.scss";
 
 class ImpactLegend extends React.Component {
   render() {
@@ -34,6 +35,11 @@ class ImpactLegend extends React.Component {
               12M population impacted
             </li>
           </ul>
+        </li>
+        <li className="about-button">
+          <button className="secondary" onClick={this.props.handleAboutClick}>
+            About Data
+          </button>
         </li>
       </ul>
     </div>);

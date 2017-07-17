@@ -18,11 +18,12 @@ class AppLink extends React.Component {
     program: PropTypes.string,
     country: PropTypes.string,
     region: PropTypes.string,
+    className: PropTypes.string,
   }
 
   render() {
     let link = getLocation(this.props);
-    return (<Link to={link}>
+    return (<Link to={link} className={this.props.className}>
       {this.props.children}
     </Link>);
   }

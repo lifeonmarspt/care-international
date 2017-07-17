@@ -10,13 +10,9 @@ class ModalArea extends React.Component {
   static propTypes = {
     modal: PropTypes.string,
     texts: PropTypes.object.isRequired,
-    handleClose: PropTypes.func.isRequired,
-    contentProps: PropTypes.object,
-  };
-
-  static defaultProps = {
-    contentProps: {},
-    contentProps: {},
+    handleToggleModal: PropTypes.func.isRequired,
+    subView: PropTypes.string,
+    programs: PropTypes.string,
   };
 
   render() {
@@ -26,7 +22,7 @@ class ModalArea extends React.Component {
         id: "about",
         component: AboutContent,
         props: {
-          handleClose: this.props.handleClose,
+          handleClose: () => this.props.handleToggleModal(null),
         },
       },
       {
@@ -37,13 +33,17 @@ class ModalArea extends React.Component {
         id: "reachLegend",
         component: ReachLegendContent,
         props: {
-          subView: this.props.contentProps.subView,
-          program: this.props.contentProps.program,
+          subView: this.props.subView,
+          program: this.props.program,
+          handleAboutClick: () => this.props.handleToggleModal("aboutReach"),
         },
       },
       {
         id: "impactLegend",
         component: ImpactLegendContent,
+        props: {
+          handleAboutClick: () => this.props.handleToggleModal("aboutImpact"),
+        },
       },
       {
         id: "aboutReach",
@@ -81,7 +81,11 @@ class ModalArea extends React.Component {
 
     let modalContent = modals.find((modal) => modal.id === this.props.modal) || null;
 
-    return modalContent && (<ModalBox id={modalContent.id} {...modalContent.props} handleClose={this.props.handleClose}>
+    return modalContent && (<ModalBox
+      id={modalContent.id}
+      handleClose={() => this.props.handleToggleModal(null)}
+      {...modalContent.props}
+    >
       <modalContent.component {...modalContent.props} />
     </ModalBox>);
   }
