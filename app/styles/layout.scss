@@ -51,7 +51,16 @@ body {
   #story {
     position: absolute;
     top: $header-height;
-    left: $sidebar-width;
+    @media #{$mq-desktop} {
+      left: $sidebar-width;
+    }
+    @media #{$mq-mobile} {
+      width: 100%;
+      left: 0;
+      .close-button {
+        display: none;
+      }
+    }
     bottom: 0;
     width: $sidebar-width;
     z-index: 10;

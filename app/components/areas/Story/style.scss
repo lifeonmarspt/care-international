@@ -3,8 +3,38 @@
 @import "styles/mixins.scss";
 
 #story {
-  background-color: white;
+  background-color: #ffffff;
   box-shadow: 0 0 6px 0 rgba(209, 203, 203, 0.44);
+
+  .show-mobile {
+    @media #{$mq-desktop} {
+      display: none;
+    }
+  }
+
+  .show-desktop {
+    @media #{$mq-mobile} {
+      display: none;
+    }
+  }
+
+  ul.mobile-title {
+    font-family: Libre Baskerville, serif;
+    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    li {
+      min-height: 40px;
+      line-height: 40px;
+    }
+  }
+
+  div.story-hide {
+    @include centered-background-image("~images/arrow-left.png");
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
 
   .close-button {
     @include close-button;
@@ -25,7 +55,25 @@
   }
 
   .content {
-    padding: 32px 40px 20px;
+    @media #{$mq-desktop} {
+     padding: 32px 40px 20px;
+    }
+    @media #{$mq-mobile} {
+     padding: 32px 10px 20px;
+
+     h2 {
+      font-weight: bold;
+      font-size: 14p;
+      margin-bottom: 1em;
+     }
+
+     h3 {
+      font-size: 14px;
+      color: $font-color-5;
+     }
+    }
   }
+
+
 }
 
