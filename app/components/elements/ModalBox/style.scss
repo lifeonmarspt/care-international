@@ -38,6 +38,7 @@
       width: 90%;
       max-height: 90%;
       overflow-y: auto;
+      margin: 0 10px;
 
       &.modal-id-about {
         width: 100%;
@@ -52,8 +53,8 @@
 
     &.modal-id-impactLegend,
     &.modal-id-reachLegend {
-      padding: 10px;
-      max-width: 410px;
+      padding: 50px 15px 15px 15px;
+      max-width: 400px;
     }
   }
 
