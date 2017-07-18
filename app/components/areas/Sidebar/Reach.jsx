@@ -137,8 +137,7 @@ class ReachSidebarArea extends React.Component {
         <p>{statistics.comment}</p>
       </div>)}
 
-
-      {(statistics[`has_${program}_data`] !== false) && (<div className="filters">
+      <div className="filters">
         <dl>
           <dt>
             Participants reached by program area
@@ -158,7 +157,7 @@ class ReachSidebarArea extends React.Component {
                     onChange={() => handleProgramChange(p.id)}>
                     {p.label}
                   </RadioButton>
-                  <ul>
+                  {(statistics[`has_${p.id}_data`] !== false) && (<ul>
                     <li>
                       <BarWrapper bar={ValueBar}
                         value={directValue}
@@ -175,13 +174,13 @@ class ReachSidebarArea extends React.Component {
                         formatter={(v) => `${v.toLocaleString()} indirect`}
                       />
                     </li>
-                  </ul>
+                  </ul>)}
                 </li>);
               })}
             </ul>
           </dd>
         </dl>
-      </div>)}
+      </div>
 
     </div>);
   }
