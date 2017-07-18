@@ -178,7 +178,7 @@ const getReachStatisticsRegionsSQL = (region) => {
 
 const getImpactStatisticsSQL = (region, country) => {
   let fields = [
-    "ROUND(SUM(total_impact)) AS total_impact",
+    "ROUND(SUM(total_impact)) AS overall_impact",
     "ROUND(SUM(humanitarian_response)) AS hum_impact",
     "ROUND(SUM(sexual_reproductive_and_maternal_health)) AS srmh_impact",
     "ROUND(SUM(right_to_a_life_free_from_violence)) AS lffv_impact",

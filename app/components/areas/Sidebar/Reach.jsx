@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import AreaSummary from "components/elements/AreaSummary";
 import RadioButton from "components/elements/Radio";
 import BarWrapper from "components/wrappers/Bar";
 import PercentageBar from "components/elements/PercentageBar";
@@ -45,19 +46,11 @@ class ReachSidebarArea extends React.Component {
 
     return (<div className="sidebar-content-reach">
 
-      <div className="content">
-        <dl>
-          <dt>
-            Projects and Initiatives in 2016
-            {program !== "overall" && (<span className="subtitle">
-              {programs.find((p) => p.id === program).label}
-            </span>)}
-          </dt>
-          <dd>
-            {(statistics[`${program}_projects_and_initiatives`] || 0).toLocaleString()}
-          </dd>
-        </dl>
-      </div>
+      <AreaSummary
+        title="Projects and Initiatives in 2016"
+        value={statistics[`${program}_projects_and_initiatives`]}
+        program={program}
+      />
 
       {!(country && program !== "overall") && statistics[`has_${program}_data`] && (<div className="content">
         <dl>
@@ -157,7 +150,7 @@ class ReachSidebarArea extends React.Component {
                     onChange={() => handleProgramChange(p.id)}>
                     {p.label}
                   </RadioButton>
-                  {(statistics[`has_${p.id}_data`] !== false) && (<ul>
+                  {statistics[`has_${p.id}_data`] && (<ul>
                     <li>
                       <BarWrapper bar={ValueBar}
                         value={directValue}

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+import AreaSummary from "components/elements/AreaSummary";
 import RadioButton from "components/elements/Radio";
 import BarWrapper from "components/wrappers/Bar";
 import ValueBar from "components/elements/ValueBar";
@@ -41,28 +42,11 @@ class ImpactSidebarArea extends React.Component {
 
     return (<div className="sidebar-content-impact">
 
-      {program === "overall" && (<div className="content">
-        <dl>
-          <dt>
-            Total Population impacted in 2016
-          </dt>
-          <dd>
-            <span>{(statistics.total_impact || 0).toLocaleString()}</span>
-          </dd>
-        </dl>
-      </div>)}
-
-      {program !== "overall" && (<div className="content">
-        <dl>
-          <dt>
-            Total Population impacted in 2016
-            <span className="subtitle">{programs.find((p) => p.id === program).label}</span>
-          </dt>
-          <dd>
-            <span>{(statistics[`${program}_impact`] || 0).toLocaleString()}</span>
-          </dd>
-        </dl>
-      </div>)}
+      <AreaSummary
+        title="Total Population impacted in 2016"
+        value={statistics[`${program}_impact`]}
+        program={program}
+      />
 
       <div className="filters">
         <dl>
@@ -74,7 +58,7 @@ class ImpactSidebarArea extends React.Component {
               {programs.map((p, n) => {
 
                 let value = statistics[`${p.id}_impact`];
-                let maxValue = statistics["total_impact"];
+                let maxValue = statistics["overall_impact"];
 
                 return (<li key={n} className={p.id}>
                   <RadioButton
