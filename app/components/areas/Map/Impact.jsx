@@ -7,10 +7,23 @@ import StorySummary from "components/elements/StorySummary";
 import CircleSVG from "components/svg/Circle";
 import RhombusSVG from "components/svg/Rhombus";
 
-const getSVGIcon = (SVGComponent, props) => {
+const TooltipWrapper = ({ children, label }) => (<div className="custom-tooltip-wrapper">
+  <div className="custom-tooltip">
+    {label}
+    <div className="leaflet-popup-tip-container">
+      <div className="leaflet-popup-tip" />
+    </div>
+  </div>
+  {children}
+</div>);
+
+const getSVGIcon = (SVGComponent, WrapperComponent, props) => {
   let { value, program, size, hideLabel } = props;
   let label = value && value.toLocaleString();
   let component = (<SVGComponent shadow program={program} label={label} hideLabel={hideLabel} size={size} />);
+  if (WrapperComponent) {
+    component = <WrapperComponent label={props.label}>{component}</WrapperComponent>;
+  }
   let html = ReactDOMServer.renderToString(component);
 
   return window.L.divIcon({
@@ -50,7 +63,7 @@ class ImpactMapArea extends React.Component {
     return window.L.popup({
       minWidth: 290,
       minHeight: 100,
-      className: "custom-popup",
+      className: "custom-tooltip",
     }).setContent(html);
   }
 
@@ -66,16 +79,33 @@ class ImpactMapArea extends React.Component {
 
       let iconSize = region[`${this.props.program}_size`];
 
-      return window.L.marker([region.region_center_y, region.region_center_x], {
-        icon: getSVGIcon(CircleSVG, {
+      let marker =  window.L.marker([region.region_center_y, region.region_center_x], {
+        icon: getSVGIcon(CircleSVG, TooltipWrapper, {
           value: value,
           program: this.props.program,
           size: iconSize,
+          label: region.region || region.country,
         }),
         zIndexOffset: 100,
       }).addTo(this.context.map).on("click", () => {
         this.props.handleMapChange(region.region, region.country);
       });
+
+      marker.on("mouseover", (e) => {
+        let target = e.originalEvent.target;
+        if (target.tagName === "circle") {
+          marker._icon.classList.add("show-tooltip");
+        }
+      });
+
+      marker.on("mouseout", (e) => {
+        let target = e.originalEvent.target;
+        if (target.tagName === "circle") {
+          marker._icon.classList.remove("show-tooltip");
+        }
+      });
+
+      return marker;
 
     }).filter((s) => s);
 
@@ -86,7 +116,7 @@ class ImpactMapArea extends React.Component {
       }
 
       return window.L.marker([story.lat, story.lon], {
-        icon: getSVGIcon(RhombusSVG, {
+        icon: getSVGIcon(RhombusSVG, null, {
           program: story.outcome,
           size: 18,
         }),
@@ -94,6 +124,7 @@ class ImpactMapArea extends React.Component {
       }).bindPopup(this.getPopup(story)).addTo(this.context.map);
 
     }).filter((s) => s);
+
   }
 
   destroyMarkers() {

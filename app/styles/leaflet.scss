@@ -1,7 +1,7 @@
 @import "colors.scss";
 @import "mixins.scss";
 
-.custom-popup {
+.custom-tooltip {
 
   font-family: Libre Baskerville, serif;
   font-size: 18px;
@@ -16,6 +16,7 @@
   }
 
   .leaflet-popup-tip-container {
+    top: -1px;
   }
 
   .leaflet-popup-tip {
@@ -36,4 +37,40 @@
     }
   }
 
+}
+
+.custom-tooltip-wrapper {
+  .custom-tooltip {
+    pointer-events: none;
+    text-align: center;
+    display: none;
+    background-color: #fff;
+    border: 1px solid $accent-color-5;
+    padding: 0px 2px 1px 2px;
+    font-family: "ITC Officina Sans Std", Helvetica;
+    font-size: 14px;
+    height: 16px;
+    position: absolute;
+    top: -24px;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    left: 50%;
+
+    .leaflet-popup-tip-container {
+      top: -4px;
+      height: 10px;
+      .leaflet-popup-tip {
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
+}
+
+.show-tooltip {
+  .custom-tooltip-wrapper {
+    .custom-tooltip {
+       display: block;
+    }
+  }
 }
