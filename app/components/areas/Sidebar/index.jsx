@@ -6,28 +6,29 @@ import AppLink from "components/elements/AppLink";
 import ReachSidebar from "./Reach";
 import ImpactSidebar from "./Impact";
 
+import navigationProps from "props/navigation";
+
 import "./style.scss";
 
 class SidebarArea extends React.Component {
 
   static propTypes = {
     loading: PropTypes.bool.isRequired,
-    mainView: PropTypes.oneOf([
-      "reach",
-      "impact",
-    ]).isRequired,
-    subView: PropTypes.oneOf([
-      "countries",
-      "regions",
-    ]),
-    statistics: PropTypes.object.isRequired,
-    region: PropTypes.string,
-    country: PropTypes.string,
-    program: PropTypes.string,
-    stories: PropTypes.array,
-    handleProgramChange: PropTypes.func.isRequired,
-    handleAboutDirectReachClick: PropTypes.func,
-    handleAboutIndirectReachClick: PropTypes.func,
+
+    navigation: navigationProps.isRequired,
+
+    data: PropTypes.shape({
+      statistics: PropTypes.object,
+      regions: PropTypes.array,
+      bounds: PropTypes.array,
+      stories: PropTypes.array,
+    }).isRequired,
+
+    handlers: PropTypes.shape({
+      handleProgramChange: PropTypes.func.isRequired,
+      handleAboutDirectReachClick: PropTypes.func,
+      handleAboutIndirectReachClick: PropTypes.func,
+    }).isRequired,
   }
 
   constructor(...args) {
@@ -47,18 +48,26 @@ class SidebarArea extends React.Component {
 
     let {
       loading,
+    } = this.props;
+
+    let {
       mainView,
       subView,
-      program,
       region,
       country,
+      program,
+    } = this.props.navigation;
+
+    let {
       statistics,
       stories,
+    } = this.props.data;
+
+    let {
       handleProgramChange,
-      handleToggleSidebar,
       handleAboutDirectReachClick,
       handleAboutIndirectReachClick,
-    } = this.props;
+    } = this.props.handlers;
 
     if (loading) {
       return (<div id="sidebar" />);
@@ -102,35 +111,31 @@ class SidebarArea extends React.Component {
       <div className="sidebar-content">
 
         {mainView === "reach" && (<ReachSidebar
-          loading={loading}
-          mainView={mainView}
-          subView={subView}
-          region={region}
-          country={country}
           program={program}
+          country={country}
           statistics={statistics}
           handleProgramChange={handleProgramChange}
           handleAboutDirectReachClick={handleAboutDirectReachClick}
           handleAboutIndirectReachClick={handleAboutIndirectReachClick}
-          handleToggleSidebar={handleToggleSidebar}
         />)}
 
         {mainView === "impact" && (<ImpactSidebar
-          loading={loading}
-          mainView={mainView}
-          region={region}
-          country={country}
           program={program}
           statistics={statistics}
           stories={stories}
           handleProgramChange={handleProgramChange}
-          handleToggleSidebar={handleToggleSidebar}
         />)}
 
         {program !== "overall" && (<div className="clear-filters">
           <ul>
             <li className="see-overall">
-              <AppLink className="secondary" mainView={mainView} subView={subView} region={region} country={country}>
+              <AppLink
+                className="secondary"
+                mainView={mainView}
+                subView={subView}
+                region={region}
+                country={country}
+              >
                 See all program areas
               </AppLink>
             </li>

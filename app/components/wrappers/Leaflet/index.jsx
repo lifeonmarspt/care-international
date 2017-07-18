@@ -17,8 +17,10 @@ class LeafletProvider extends React.Component {
   static propTypes = {
     bounds: PropTypes.array,
     initialZoom: PropTypes.number,
-    handleShare: PropTypes.func.isRequired,
-    handleOpenLegend: PropTypes.func.isRequired,
+    handlers: PropTypes.shape({
+      handleShare: PropTypes.func.isRequired,
+      handleOpenLegend: PropTypes.func.isRequired,
+    }),
   }
 
   static defaultProps = {
@@ -74,7 +76,7 @@ class LeafletProvider extends React.Component {
   }
 
   share() {
-    this.props.handleShare();
+    this.props.handlers.handleShare();
   }
 
   componentDidMount() {
@@ -98,13 +100,18 @@ class LeafletProvider extends React.Component {
   }
 
   render() {
+    let {
+      handleShare,
+      handleOpenLegend,
+    } = this.props.handlers;
+
     return (<div id="map">
       <div id="leaflet" />
       <div id="leaflet-custom-controls">
         <div id="leaflet-zoom-plus" onClick={() => this.zoomIn()} />
         <div id="leaflet-zoom-minus" onClick={() => this.zoomOut()} />
-        <div id="leaflet-share" onClick={() => this.props.handleShare()} />
-        <div id="mobile-legend" onClick={() => this.props.handleOpenLegend()} />
+        <div id="leaflet-share" onClick={handleShare} />
+        <div id="mobile-legend" onClick={handleOpenLegend} />
       </div>
       {this.state.loaded ? this.props.children : null}
     </div>);

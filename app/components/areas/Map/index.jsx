@@ -4,57 +4,49 @@ import PropTypes from "prop-types";
 import ReachMap from "./Reach";
 import ImpactMap from "./Impact";
 
-import imgHelp from "images/help.svg";
+import navigationProps from "props/navigation";
 
+import imgHelp from "images/help.svg";
 import "./style.scss";
 
 class MapArea extends React.Component {
 
   static propTypes = {
-    mainView: PropTypes.oneOf([
-      "reach",
-      "impact",
-    ]).isRequired,
-    subView: PropTypes.oneOf([
-      "countries",
-      "regions",
-    ]),
-    country: PropTypes.string,
-    bounds: PropTypes.array,
-    program: PropTypes.string,
-    region: PropTypes.string,
-    regions: PropTypes.array,
-    stories: PropTypes.array,
-    handleMapChange: PropTypes.func,
-    handleAboutClick: PropTypes.func.isRequired,
+    navigation: navigationProps.isRequired,
+
+    data: PropTypes.shape({
+      regions: PropTypes.array,
+      stories: PropTypes.array,
+    }).isRequired,
+
+    handlers: PropTypes.shape({
+      handleMapChange: PropTypes.func,
+      handleAboutClick: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   render() {
+    let { navigation, data, handlers } = this.props;
+
     return (<div id="map-area">
 
-      {this.props.mainView === "reach" && (<ReachMap
-        mainView={this.props.mainView}
-        subView={this.props.subView}
-        country={this.props.country}
-        program={this.props.program}
-        regions={this.props.regions}
-        handleMapChange={this.props.handleMapChange}
+      {navigation.mainView === "reach" && (<ReachMap
+        subView={navigation.subView}
+        program={navigation.program}
+        handleMapChange={handlers.handleMapChange}
       />)}
 
-      {this.props.mainView === "impact" && (<ImpactMap
-        mainView={this.props.mainView}
-        region={this.props.region}
-        country={this.props.country}
-        program={this.props.program}
-        regions={this.props.regions}
-        stories={this.props.stories}
-        handleMapChange={this.props.handleMapChange}
+      {navigation.mainView === "impact" && (<ImpactMap
+        program={navigation.program}
+        regions={data.regions}
+        stories={data.stories}
+        handleMapChange={handlers.handleMapChange}
       />)}
 
       <div id="about-data">
-        <div className="clickable" onClick={this.props.handleAboutClick}>
+        <div className="clickable" onClick={handlers.handleAboutClick}>
           <span>
-            About {this.props.mainView} data
+            About {navigation.mainView} data
           </span>
           <img src={imgHelp} alt="Help" />
         </div>

@@ -19,12 +19,8 @@ class ImpactSidebarArea extends React.Component {
   };
 
   static propTypes = {
-    statistics: PropTypes.object.isRequired,
-    reach: PropTypes.bool,
-    impact: PropTypes.bool,
-    region: PropTypes.string,
-    country: PropTypes.string,
     program: PropTypes.string,
+    statistics: PropTypes.object.isRequired,
     stories: PropTypes.array,
     handleProgramChange: PropTypes.func.isRequired,
   }

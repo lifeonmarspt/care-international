@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import Layout from "components/Layout";
 
+import navigationProps from "props/navigation";
 import getLocation from "lib/location";
 import { setKey, getKey } from "lib/storage";
 import { fetchReachData, fetchImpactData } from "lib/remote";
@@ -13,19 +15,7 @@ class App extends React.PureComponent {
   }
 
   static propTypes = {
-    mainView: PropTypes.oneOf([
-      "notfound",
-      "reach",
-      "impact",
-    ]).isRequired,
-    subView: PropTypes.oneOf([
-      "countries",
-      "regions",
-    ]),
-    region: PropTypes.string,
-    country: PropTypes.string,
-    story: PropTypes.string,
-    program: PropTypes.string,
+    navigation: navigationProps,
   };
 
   static defaultProps = {
@@ -37,8 +27,10 @@ class App extends React.PureComponent {
 
     this.state = {
       loading: true,
-      statistics: {},
-      bounds: null,
+      data: {
+        statistics: {},
+        bounds: null,
+      },
       modal: !getKey("about-dismissed") ? "about" : null,
     };
   }
@@ -50,30 +42,30 @@ class App extends React.PureComponent {
 
   handleProgramChange(program) {
     this.navigate({
-      mainView: this.props.mainView,
-      subView: this.props.subView,
-      region: this.state.region,
-      country: this.props.mainView === "impact" ?
-        this.state.region && this.state.country :
-        this.state.country,
-      program,
+      mainView: this.props.navigation.mainView,
+      subView: this.props.navigation.subView,
+      region: this.props.navigation.region,
+      country: this.props.navigation.mainView === "impact" ?
+        this.props.navigation.region && this.props.navigation.country :
+        this.props.navigation.country,
+      program: program,
     });
   }
 
   handleMapChange(region, country) {
     this.navigate({
-      mainView: this.props.mainView,
-      subView: this.props.subView,
-      region: region || this.state.region,
-      country: country || this.state.country,
-      program: this.state.program,
+      mainView: this.props.navigation.mainView,
+      subView: this.props.navigation.subView,
+      region: region || this.props.navigation.region,
+      country: country || this.props.navigation.country,
+      program: this.props.navigation.program,
     });
   }
 
   handleCloseStory() {
     this.navigate({
       mainView: "impact",
-      program: this.state.program,
+      program: this.props.navigation.program,
     });
   }
 
@@ -90,34 +82,32 @@ class App extends React.PureComponent {
   }
 
   fetchRemoteData() {
-    switch (this.props.mainView) {
+    let { navigation } = this.props;
+    switch (navigation.mainView) {
 
       case "reach":
-        fetchReachData(this.props.region, this.props.country)
+        fetchReachData(navigation.region, navigation.country)
           .then(([statistics, bounds]) => {
             this.setState({
               loading: false,
-              statistics: statistics,
-              bounds: bounds,
-              region: this.props.region,
-              country: this.props.country,
-              program: this.props.program,
+              data: {
+                statistics: statistics,
+                bounds: bounds,
+              },
             });
           });
         break;
 
       case "impact":
-        fetchImpactData(this.props.region, this.props.country)
+        fetchImpactData(navigation.region, navigation.country)
           .then(([statistics, regions, bounds]) => {
             this.setState({
               loading: false,
-              statistics: statistics,
-              regions: regions,
-              bounds: bounds,
-              region: this.props.region,
-              country: this.props.country,
-              story: this.props.story,
-              program: this.props.program,
+              data: {
+                statistics: statistics,
+                regions: regions,
+                bounds: bounds,
+              },
             });
           });
         break;
@@ -136,14 +126,19 @@ class App extends React.PureComponent {
   }
 
   render() {
+    let handlers = {
+      handleProgramChange: (program) => this.handleProgramChange(program),
+      handleMapChange: (region, country) => this.handleMapChange(region, country),
+      handleCloseStory: () => this.handleCloseStory(),
+      handleToggleModal: (modal) => this.handleToggleModal(modal),
+    };
+
     return (<Layout
-      handleProgramChange={this.handleProgramChange.bind(this)}
-      handleMapChange={this.handleMapChange.bind(this)}
-      handleCloseStory={this.handleCloseStory.bind(this)}
-      handleToggleModal={this.handleToggleModal.bind(this)}
-      mainView={this.props.mainView}
-      subView={this.props.subView}
-      {...this.state}
+      loading={this.state.loading}
+      navigation={this.props.navigation}
+      modal={this.state.modal}
+      data={this.state.data}
+      handlers={handlers}
     />);
   }
 

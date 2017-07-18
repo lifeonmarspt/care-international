@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import ReachLegend from "components/content/ReachLegend";
 
 import { getReachMapCountriesSQL, getReachMapRegionsSQL } from "lib/queries";
-
 import config from "config.json";
 
 import cartocss from "!raw-loader!cartocss-loader!sass-loader?outputStyle=compressed!./style.carto.scss";
@@ -12,12 +11,7 @@ import cartocss from "!raw-loader!cartocss-loader!sass-loader?outputStyle=compre
 class ReachMapArea extends React.Component {
 
   static propTypes = {
-    subView: PropTypes.oneOf([
-      "countries",
-      "regions",
-    ]),
-    country: PropTypes.string,
-    bounds: PropTypes.array,
+    subView: PropTypes.string.isRequired,
     program: PropTypes.string,
     handleMapChange: PropTypes.func.isRequired,
   }
@@ -35,11 +29,17 @@ class ReachMapArea extends React.Component {
   }
 
   initCartoDBLayer() {
-    let sql = this.props.subView === "countries" ?
-      getReachMapCountriesSQL(this.props.program) :
-      getReachMapRegionsSQL(this.props.program);
+    let {
+      subView,
+      program,
+      handleMapChange,
+    } = this.props;
 
-    let interactivity = this.props.subView === "countries" ?
+    let sql = subView === "countries" ?
+      getReachMapCountriesSQL(program) :
+      getReachMapRegionsSQL(program);
+
+    let interactivity = subView === "countries" ?
       "bucket, country, region, data" :
       "bucket, region, data";
 
@@ -73,10 +73,10 @@ class ReachMapArea extends React.Component {
           return;
         }
 
-        if (this.props.subView === "countries") {
-          this.props.handleMapChange(null, data.country);
-        } else if (this.props.subView === "regions") {
-          this.props.handleMapChange(data.region);
+        if (subView === "countries") {
+          handleMapChange(null, data.country);
+        } else if (subView === "regions") {
+          handleMapChange(data.region);
         }
 
       });
@@ -120,9 +120,14 @@ class ReachMapArea extends React.Component {
   }
 
   render() {
+    let {
+      subView,
+      program,
+    } = this.props;
+
     return (<div className="map-area-content">
       <div id="legend" className="choropleth">
-        <ReachLegend subView={this.props.subView} program={this.props.program} />
+        <ReachLegend subView={subView} program={program} />
       </div>
     </div>);
   }

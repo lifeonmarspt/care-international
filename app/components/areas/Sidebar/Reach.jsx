@@ -7,6 +7,7 @@ import BarWrapper from "components/wrappers/Bar";
 import PercentageBar from "components/elements/PercentageBar";
 import ValueBar from "components/elements/ValueBar";
 
+import navigationProps from "props/navigation";
 import programs from "resources/programs.json";
 import imgHelp from "images/help.svg";
 
@@ -14,19 +15,10 @@ import "./style.scss";
 
 class ReachSidebarArea extends React.Component {
 
-  static contextTypes = {
-    router: PropTypes.object.isRequired,
-  };
-
   static propTypes = {
-    subView: PropTypes.oneOf([
-      "countries",
-      "regions",
-    ]),
-    statistics: PropTypes.object.isRequired,
-    region: PropTypes.string,
-    country: PropTypes.string,
     program: PropTypes.string,
+    country: PropTypes.string,
+    statistics: PropTypes.object.isRequired,
     handleProgramChange: PropTypes.func.isRequired,
     handleAboutDirectReachClick: PropTypes.func.isRequired,
     handleAboutIndirectReachClick: PropTypes.func.isRequired,
@@ -38,8 +30,8 @@ class ReachSidebarArea extends React.Component {
 
   render() {
     let {
-      country,
       program,
+      country,
       statistics,
       handleProgramChange,
     } = this.props;

@@ -36,12 +36,10 @@ const getSVGIcon = (SVGComponent, WrapperComponent, props) => {
 class ImpactMapArea extends React.Component {
 
   static propTypes = {
-    country: PropTypes.string,
-    region: PropTypes.string,
+    program: PropTypes.string,
     regions: PropTypes.array,
     stories: PropTypes.array,
-    program: PropTypes.string,
-    handleMapChange: PropTypes.func,
+    handleMapChange: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -69,26 +67,33 @@ class ImpactMapArea extends React.Component {
 
 
   initMarkers() {
-    this.quantitativeMarkers = this.props.regions.map((region) => {
+    let {
+      program,
+      regions,
+      stories,
+      handleMapChange,
+    } = this.props;
 
-      let value = region[`${this.props.program}_impact`];
+    this.quantitativeMarkers = regions.map((region) => {
+
+      let value = region[`${program}_impact`];
 
       if (!value) {
         return null;
       }
 
-      let iconSize = region[`${this.props.program}_size`];
+      let iconSize = region[`${program}_size`];
 
       let marker =  window.L.marker([region.region_center_y, region.region_center_x], {
         icon: getSVGIcon(CircleSVG, TooltipWrapper, {
           value: value,
-          program: this.props.program,
+          program: program,
           size: iconSize,
           label: region.region || region.country,
         }),
         zIndexOffset: 100,
       }).addTo(this.context.map).on("click", () => {
-        this.props.handleMapChange(region.region, region.country);
+        handleMapChange(region.region, region.country);
       });
 
       marker.on("mouseover", (e) => {
@@ -109,9 +114,9 @@ class ImpactMapArea extends React.Component {
 
     }).filter((s) => s);
 
-    this.qualitativeMarkers = this.props.stories.map((story) => {
+    this.qualitativeMarkers = stories.map((story) => {
 
-      if (this.props.program !== "overall" && story.outcome !== this.props.program) {
+      if (program !== "overall" && story.outcome !== program) {
         return null;
       }
 
