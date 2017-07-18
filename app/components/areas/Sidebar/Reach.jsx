@@ -133,12 +133,12 @@ class ReachSidebarArea extends React.Component {
         </dl>
       </div>)}
 
-      {!statistics[`has_${program}_data`] && (<div className="content">
+      {(statistics[`has_${program}_data`] === false) && (<div className="content">
         <p>{statistics.comment}</p>
       </div>)}
 
 
-      <div className="filters">
+      {(statistics[`has_${program}_data`] !== false) && (<div className="filters">
         <dl>
           <dt>
             Participants reached by program area
@@ -181,7 +181,8 @@ class ReachSidebarArea extends React.Component {
             </ul>
           </dd>
         </dl>
-      </div>
+      </div>)}
+
     </div>);
   }
 
