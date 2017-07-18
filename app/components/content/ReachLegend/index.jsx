@@ -17,16 +17,6 @@ class ReachLegend extends React.Component {
   render() {
     return (<div id="legend-reach">
       <ul>
-        {this.props.subView === "countries" && (<li>
-          <AppLink mainView="reach" subView="regions" program={this.props.program}>
-            Show Regions
-          </AppLink>
-        </li>)}
-        {this.props.subView === "regions" && (<li>
-          <AppLink mainView="reach" subView="countries" program={this.props.program}>
-            Show Countries
-          </AppLink>
-        </li>)}
         <li>
           <p>
             Direct participants reached in 2016 by country
