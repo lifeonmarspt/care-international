@@ -7,7 +7,6 @@ import BarWrapper from "components/wrappers/Bar";
 import PercentageBar from "components/elements/PercentageBar";
 import ValueBar from "components/elements/ValueBar";
 
-import navigationProps from "props/navigation";
 import programs from "resources/programs.json";
 import imgHelp from "images/help.svg";
 
@@ -88,7 +87,9 @@ class ReachSidebarArea extends React.Component {
                 </ul>
               </li>
               <li>
-                <div>Direct <img src={imgHelp} alt="Help" /></div>
+                <div className="clickable" onClick={this.props.handleAboutDirectReachClick}>
+                  Direct <img src={imgHelp} alt="Help" />
+                </div>
                 <BarWrapper bar={ValueBar}
                   colorClass={program}
                   value={statistics[`${program}_direct_participants`]}
@@ -101,7 +102,9 @@ class ReachSidebarArea extends React.Component {
                   formatter={(v) => v.toLocaleString()} />
               </li>
               <li>
-                <div>Indirect <img src={imgHelp} alt="Help" /></div>
+                <div className="clickable" onClick={this.props.handleAboutIndirectReachClick}>
+                  Indirect <img src={imgHelp} alt="Help" />
+                </div>
                 <BarWrapper bar={ValueBar}
                   colorClass={program}
                   value={statistics[`${program}_indirect_participants`]}
