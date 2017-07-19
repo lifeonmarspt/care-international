@@ -163,6 +163,12 @@ class ImpactMapArea extends React.Component {
     }
   }
 
+  componentWillReceiveProps() {
+    this.setState({
+      tooltip: null,
+    });
+  }
+
 
   render() {
     return (<div className="map-area-content">
