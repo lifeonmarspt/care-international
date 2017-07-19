@@ -6,7 +6,7 @@ import ReachLegend from "components/content/ReachLegend";
 import { getReachMapCountriesSQL, getReachMapRegionsSQL } from "lib/queries";
 import config from "config.json";
 
-import cartocss from "!raw-loader!cartocss-loader!sass-loader?outputStyle=compressed!./style.carto.scss";
+import cartocss from "./style.cartoscss";
 
 class ReachMapArea extends React.Component {
 

@@ -1,3 +1,5 @@
+// vim: ft=sass:
+
 @import "../../../styles/colors.scss";
 
 @each $program, $colors in $choroColors {

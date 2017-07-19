@@ -64,6 +64,12 @@ module.exports = {
   devtool: "source-map",
   module: {
     rules: [
+      { test: /\.cartoscss$/, use: ["raw-loader", "cartocss-loader", {
+        loader: "sass-loader",
+        options: {
+          outputStyle: "compressed",
+        },
+      }], exclude: /node_modules/ },
       { test: /\.s(c|a)ss$/, use: ["style-loader", "css-loader", {
         loader: "sass-loader",
         options: {
