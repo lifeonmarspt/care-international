@@ -12,7 +12,11 @@ class ModalArea extends React.Component {
     texts: PropTypes.object.isRequired,
     handleToggleModal: PropTypes.func.isRequired,
     subView: PropTypes.string,
-    programs: PropTypes.string,
+    program: PropTypes.string,
+  };
+
+  static defaultProps = {
+    program: "overall",
   };
 
   render() {
