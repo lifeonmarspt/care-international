@@ -40,25 +40,27 @@
 }
 
 .custom-tooltip-wrapper {
+  position: fixed;
+
   .custom-tooltip {
     pointer-events: none;
     text-align: center;
-    display: none;
     background-color: #fff;
     border: 1px solid $accent-color-5;
-    padding: 0px 2px 1px 2px;
+    padding: 2px 3px 0px 3px;
     font-family: "ITC Officina Sans Std", Helvetica;
     font-size: 14px;
-    height: 16px;
-    position: absolute;
-    top: -24px;
+    height: 18px;
     white-space: nowrap;
+    z-index: 1000;
+
+    position: absolute;
+    top: -28px;
     transform: translateX(-50%);
-    left: 50%;
 
     .leaflet-popup-tip-container {
-      top: -4px;
       height: 10px;
+      top: 0px;
       .leaflet-popup-tip {
         width: 10px;
         height: 10px;
