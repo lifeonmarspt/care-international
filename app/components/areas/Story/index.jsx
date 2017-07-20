@@ -31,9 +31,9 @@ class Story extends React.Component {
       <div className="close-button" onClick={this.props.handleCloseStory} />
       <div className="story-content">
         <div className="content">
+          <h2 className="">{programs.find((p) => p.id === this.props.story.outcome).label}</h2>
+          <h3 className="">{this.props.story.country}</h3>
           <h1 className="show-desktop">{this.props.story.story}</h1>
-          <h2 className="show-mobile">{programs.find((p) => p.id === this.props.story.outcome).label}</h2>
-          <h3 className="show-mobile">{this.props.story.country}</h3>
           <hr />
           <div className="markup" dangerouslySetInnerHTML={{ __html: this.props.story.content }} />
         </div>
