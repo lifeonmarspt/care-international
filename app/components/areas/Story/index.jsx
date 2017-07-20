@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import images from "images/stories";
 import programs from "resources/programs.json";
 import momImage from "images/mom.png";
 import "./style.scss";
@@ -25,14 +26,17 @@ class Story extends React.Component {
         </ul>
       </div>
       <div className="img-wrapper">
-        <img src={momImage} alt="Mom" />
+        <img src={images[this.props.story.image] || momImage} alt={this.props.story.story} />
       </div>
       <div className="close-button" onClick={this.props.handleCloseStory} />
-      <div className="content">
-        <h1 className="show-desktop">{this.props.story.story}</h1>
-        <h2 className="show-mobile">{programs.find((p) => p.id === this.props.story.outcome).label}</h2>
-        <h3 className="show-mobile">{this.props.story.country}</h3>
-        <hr />
+      <div className="story-content">
+        <div className="content">
+          <h1 className="show-desktop">{this.props.story.story}</h1>
+          <h2 className="show-mobile">{programs.find((p) => p.id === this.props.story.outcome).label}</h2>
+          <h3 className="show-mobile">{this.props.story.country}</h3>
+          <hr />
+          <div className="markup" dangerouslySetInnerHTML={{ __html: this.props.story.content }} />
+        </div>
       </div>
     </div>);
   }

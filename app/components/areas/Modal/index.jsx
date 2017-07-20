@@ -1,7 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { ModalBox, AboutContent, ShareContent, GenericContent } from "components/elements/ModalBox";
+import ModalBox from "components/elements/ModalBox";
+import AboutModalContent from "components/content/AboutModal";
+import ShareModalContent from "components/content/ShareModal";
+import GenericModalContent from "components/content/GenericModal";
 import ReachLegendContent from "components/content/ReachLegend";
 import ImpactLegendContent from "components/content/ImpactLegend";
 
@@ -24,14 +27,14 @@ class ModalArea extends React.Component {
     let modals = [
       {
         id: "about",
-        component: AboutContent,
+        component: AboutModalContent,
         props: {
           handleClose: () => this.props.handleToggleModal(null),
         },
       },
       {
         id: "share",
-        component: ShareContent,
+        component: ShareModalContent,
       },
       {
         id: "reachLegend",
@@ -51,7 +54,7 @@ class ModalArea extends React.Component {
       },
       {
         id: "aboutReach",
-        component: GenericContent,
+        component: GenericModalContent,
         props: {
           title: "About Reach Data",
           text: this.props.texts.reach_data && this.props.texts.reach_data.message,
@@ -59,7 +62,7 @@ class ModalArea extends React.Component {
       },
       {
         id: "aboutImpact",
-        component: GenericContent,
+        component: GenericModalContent,
         props: {
           title: "About Impact Data",
           text: this.props.texts.impact_data && this.props.texts.impact_data.message,
@@ -67,7 +70,7 @@ class ModalArea extends React.Component {
       },
       {
         id: "aboutDirectReach",
-        component: GenericContent,
+        component: GenericModalContent,
         props: {
           title: "About Direct Reach",
           text: this.props.texts.direct && this.props.texts.direct.message,
@@ -75,7 +78,7 @@ class ModalArea extends React.Component {
       },
       {
         id: "aboutIndirectReach",
-        component: GenericContent,
+        component: GenericModalContent,
         props: {
           title: "About Indirect Reach",
           text: this.props.texts.indirect && this.props.texts.indirect.message,
