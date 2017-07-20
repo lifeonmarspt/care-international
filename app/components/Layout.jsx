@@ -98,7 +98,7 @@ class Layout extends React.Component {
     </div>);
   }
 
-  renderImpact() {
+  renderImpact(story) {
     let {
       loading,
       navigation,
@@ -134,9 +134,11 @@ class Layout extends React.Component {
           handleProgramChange,
         }}
       />
-      {navigation.story && (<Story
+
+      {story && (<Story
         handleCloseStory={handlers.handleCloseStory}
-        story={this.context.data.stories.find((story) => story.cartodb_id === Number(navigation.story))} />)}
+        story={story} />)}
+
       <LeafletWrapper
         bounds={bounds}
         handlers={{
@@ -166,16 +168,24 @@ class Layout extends React.Component {
   render() {
     let { modal, navigation, handlers } = this.props;
 
+    let { mainView } = navigation;
+
+    /* prevent the possibility that a story is rendered with a wrong country in the background */
+    let story = navigation.story && this.context.data.stories.find((story) => story.cartodb_id === Number(navigation.story));
+    if (story && story.country !== navigation.country) {
+      mainView = "notfound";
+    }
+
     return (<div id="app">
       <Header
         handleAboutClick={() => handlers.handleToggleModal("about")}
       />
 
-      {navigation.mainView === "notfound" && this.renderNotFound()}
+      {mainView === "notfound" && this.renderNotFound()}
 
-      {navigation.mainView === "reach" && this.renderReach()}
+      {mainView === "reach" && this.renderReach()}
 
-      {navigation.mainView === "impact" && this.renderImpact()}
+      {mainView === "impact" && this.renderImpact(story)}
 
       <Modal
         modal={modal}
