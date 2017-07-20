@@ -13,7 +13,7 @@ class AreaSummary extends React.Component {
   render() {
     let { title, value, program } = this.props;
     return (<div className="content">
-      <dl>
+      <dl className="summary">
         <dt>
           {title}
           {program !== "overall" && (<span className="subtitle">

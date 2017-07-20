@@ -92,14 +92,21 @@
   .content, .filters {
     span.subtitle {
       display: block;
-      font-family: ITC Officina Sans Std;
+      font-family: ITC Officina Sans Std, Helvetica;
       font-size: 14px;
       line-height: 20px;
     }
 
+    dl.summary {
+      font-size: 18px;
+      dt {
+        margin-bottom: 0px;
+      }
+    }
+
     dl {
       dt {
-        font-family: Libre Baskerville, serif;
+        font-family: ITC Officina Sans Std, Helvetica;
         margin-bottom: 8px;
       }
 
