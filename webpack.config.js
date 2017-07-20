@@ -4,6 +4,17 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const VirtualModulePlugin = require("virtual-module-webpack-plugin");
 
+// given a layerid id, get a cartodb layer url
+const layerURL = (id) => `https://careinternational.carto.com/api/v2/viz/${id}/viz.json`;
+
+// stop if required env variables aren't found
+
+["CARTODB_ACCOUNT", "BASE_LAYER_ID", "LABEL_LAYER_ID"].forEach((k) => {
+  if (!process.env[k]) {
+    throw new Error(`Undefined required env variable ${k}`);
+  }
+});
+
 const basePlugins = [
   new HtmlWebpackPlugin({
     template: "./app/index.html",
@@ -17,6 +28,10 @@ const basePlugins = [
       cartodb: {
         account: process.env.CARTODB_ACCOUNT,
         apikey: process.env.CARTODB_API_KEY,
+        layer: {
+          base: layerURL(process.env.BASE_LAYER_ID),
+          label: layerURL(process.env.LABEL_LAYER_ID),
+        },
       },
     },
   }),
