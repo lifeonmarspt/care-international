@@ -58,6 +58,10 @@ class SidebarArea extends React.Component {
       program,
     } = this.props.navigation;
 
+    if (!program) {
+      program = "overall";
+    }
+
     let {
       statistics,
       stories,
