@@ -1,9 +1,4 @@
-import Squel from "squel";
-
 import buckets from "resources/buckets.json";
-// https://github.com/hiddentao/squel/issues/148
-const SquelPostgres = Squel.useFlavour("postgres");
-SquelPostgres.cls.DefaultQueryBuilderOptions.tableAliasQuoteCharacter = "\"";
 
 const reachVariables = {
   overall: ["num_direct_participants", "num_indirect_participants"],
@@ -15,11 +10,7 @@ const reachVariables = {
 };
 
 const getTextsSQL = () => {
-  let query = SquelPostgres.select({ replaceSingleQuotes: true})
-    .field("*")
-    .from("messages");
-
-  return query.toString();
+  return "SELECT * FROM messages";
 };
 
 const getReachMapCountriesSQL = (program) => {
@@ -41,12 +32,8 @@ const getReachMapCountriesSQL = (program) => {
     `CASE ${caseColumn} END AS bucket`,
     "category ILIKE '%member%' AS care_member",
   ];
-  let query = SquelPostgres.select({ replaceSingleQuotes: true })
-    .fields(fields)
-    .from("reach_data")
-    .where(`${dataField} IS NOT NULL`);
 
-  return query.toString();
+  return `SELECT ${fields.join(", ")} FROM reach_data WHERE ${dataField} IS NOT NULL`;
 
 };
 
@@ -67,13 +54,8 @@ const getReachMapRegionsSQL = (program) => {
     `CASE ${caseColumn} END AS bucket`,
     "false as care_member",
   ];
-  let query = SquelPostgres.select({ replaceSingleQuotes: true })
-    .fields(fields)
-    .from("reach_data")
-    .join("regions_complete_geometries", null, "reach_data.region = regions_complete_geometries.region")
-    .group("reach_data.region, regions_complete_geometries.the_geom_webmercator");
 
-  return query.toString();
+  return `SELECT ${fields.join(", ")} FROM reach_data INNER JOIN regions_complete_geometries ON reach_data.region = regions_complete_geometries.region GROUP BY reach_data.region, regions_complete_geometries.the_geom_webmercator`;
 
 };
 
@@ -118,12 +100,7 @@ const getReachStatisticsCountriesSQL = (country) => {
     "COALESCE(percent_srmh_women_indirect_participants, 0) * num_srmh_indirect_participants AS srmh_indirect_participants_women",
   ];
 
-  let query = SquelPostgres.select({ replaceSingleQuotes: true })
-    .fields(fields)
-    .from("reach_data")
-    .where("country = ?", country || "Total");
-
-  return query.toString();
+  return `SELECT ${fields.join(", ")} FROM reach_data WHERE country = '${country || "Total"}'`;
 };
 
 const getReachStatisticsRegionsSQL = (region) => {
@@ -166,13 +143,7 @@ const getReachStatisticsRegionsSQL = (region) => {
     "SUM(COALESCE(percent_srmh_women_indirect_participants, 0) * num_srmh_indirect_participants) AS srmh_indirect_participants_women",
   ];
 
-  let query = SquelPostgres.select({ replaceSingleQuotes: true })
-    .fields(fields)
-    .from("reach_data")
-    .where("region = ?", region)
-    .group("region");
-
-  return query.toString();
+  return `SELECT ${fields.join(", ")} FROM reach_data WHERE region = '${region}'`;
 };
 
 
@@ -186,19 +157,17 @@ const getImpactStatisticsSQL = (region, country) => {
     "ROUND(SUM(women_s_economic_empowerment)) AS wee_impact",
   ];
 
-  let query = SquelPostgres.select({ replaceSingleQuotes: true })
-    .fields(fields)
-    .from("impact_data");
+  let query = `SELECT ${fields.join(", ")} FROM impact_data`;
 
   if (country) {
-    query = query.where("country = ?", country);
+    query += ` WHERE country = '${country}'`;
+  } else if (region) {
+    query += ` WHERE region = '${region}'`;
+  } else if (region && country) {
+    query += ` WHERE country = '${country}' AND region = '${region}'`;
   }
 
-  if (region) {
-    query = query.where("region = ?", region);
-  }
-
-  return query.toString();
+  return query;
 };
 
 const getImpactRegionDataSQL = (region) => {
@@ -232,15 +201,14 @@ const getImpactRegionDataSQL = (region) => {
     subfields.push("country");
   }
 
-  let subquery = SquelPostgres.select({ replaceSingleQuotes: true })
-    .fields(subfields)
-    .from("impact_data");
+  let subquery = `SELECT ${subfields.join(", ")} FROM impact_data`;
+
 
   if (!region) {
-    subquery = subquery.group("region");
+    subquery += " GROUP BY region";
   } else {
-    subquery = subquery.where("region = ?", region);
-    subquery = subquery.group("country");
+    subquery += ` WHERE region = '${region}'`;
+    subquery += " GROUP BY country";
   }
 
   let fields = [
@@ -249,11 +217,7 @@ const getImpactRegionDataSQL = (region) => {
     "*",
   ];
 
-  let query = SquelPostgres.select()
-    .fields(fields)
-    .from(subquery, "sq");
-
-  return query.toString();
+  return `SELECT ${fields.join(", ")} FROM (${subquery}) sq`;
 };
 
 const getImpactStoriesSQL = () => {
@@ -263,22 +227,18 @@ const getImpactStoriesSQL = () => {
     "ST_Y(the_geom) as lat",
   ];
 
-  let query = SquelPostgres.select({ replaceSingleQuotes: true })
-    .fields(fields)
-    .from("story");
-
-  return query.toString();
+  return `SELECT ${fields.join(", ")} FROM story`;
 };
 
 const getBoundsSQL = (table, region, country) => {
-  let query = SquelPostgres.select({ replaceSingleQuotes: true }).field("the_geom").from(table);
+  let query = `SELECT the_geom FROM ${table}`;
 
   if (country) {
-    query = query.where("country = ?", country);
+    query += ` WHERE country = '${country}'`;
   } else if (region) {
     // Fiji's geometry has points lying on both sides of the 180º longitude line
     // this causes issues with cartojs's get bounds function.
-    query = query.where("region = ? and country != 'Fiji'", region);
+    query += ` WHERE region = '${region}' AND country != 'Fiji'`;
   }
 
 
