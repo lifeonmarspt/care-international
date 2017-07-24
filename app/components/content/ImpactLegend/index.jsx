@@ -32,7 +32,7 @@ class ImpactLegend extends React.Component {
               <CircleSVG size={bucket[2]/2} />
             </li>))}
             <li>
-              12M population impacted
+              1M population impacted
             </li>
           </ul>
         </li>

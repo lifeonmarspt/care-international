@@ -173,7 +173,7 @@ const getImpactStatisticsSQL = (region, country) => {
 const getImpactRegionDataSQL = (region) => {
 
   let caseColumn = (caseVariable) => buckets.impact
-    .map((bucket, n) => n + 1 < buckets.reach.length ?
+    .map((bucket, n) => n + 1 < buckets.impact.length ?
       `WHEN ${caseVariable} BETWEEN ${bucket[0]} AND ${bucket[1]} THEN ${bucket[2]}` :
       `WHEN ${caseVariable} >= ${bucket[0]} THEN ${bucket[2]}`
     )
