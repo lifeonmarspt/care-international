@@ -13,6 +13,7 @@
   color: $font-color-1;
 }
 
+
 #sidebar {
 
   @media #{$mq-mobile} {
@@ -171,7 +172,7 @@
 
     ul.story {
       border-bottom: 1px solid $accent-color-5;
-      margin-bottom: 50px;
+      margin-bottom: 20px;
 
       li {
         margin-bottom: 5px;
@@ -197,6 +198,10 @@
         margin-bottom: 20px;
       }
     }
+  }
+
+  .sidebar-content-reach, .sidebar-content-impact {
+    margin-bottom: 70px;
   }
 
   .clear-filters {
