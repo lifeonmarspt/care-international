@@ -171,8 +171,12 @@ class Layout extends React.Component {
     let { mainView } = navigation;
 
     /* prevent the possibility that a story is rendered with a wrong country in the background */
-    let story = navigation.story && this.context.data.stories.find((story) => story.cartodb_id === Number(navigation.story));
-    if (story && story.country !== navigation.country) {
+    let story = navigation.story && this.context.data.stories
+      .filter((story) => story.story_number === Number(navigation.story))
+      .filter((story) => story.country === navigation.country)
+      .find(s => s);
+
+    if (navigation.story && !story) {
       mainView = "notfound";
     }
 

@@ -1,16 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
+import AppLink from "components/elements/AppLink";
 import AreaSummary from "components/elements/AreaSummary";
 import RadioButton from "components/elements/Radio";
 import BarWrapper from "components/wrappers/Bar";
 import ValueBar from "components/elements/ValueBar";
 import RhombusSVG from "components/svg/Rhombus";
 
-import uniq from "lib/uniq";
+import groupStories from "lib/groupStories";
 import getLocation from "lib/location";
 import programs from "resources/programs.json";
+
 
 class ImpactSidebarArea extends React.Component {
 
@@ -31,10 +32,13 @@ class ImpactSidebarArea extends React.Component {
 
   render() {
     let {
+      stories,
       program,
       statistics,
       handleProgramChange,
     } = this.props;
+
+    let groupedStories = groupStories(stories);
 
     return (<div className="sidebar-content-impact">
 
@@ -89,25 +93,30 @@ class ImpactSidebarArea extends React.Component {
           </dt>
           <dd>
             <ul>
-              {uniq(this.props.stories, (s) => s.story_number).map((story) => {
-
-                let location = getLocation({
-                  mainView: "impact",
-                  country: story.country,
-                  story: story.cartodb_id,
-                });
-
-                return (<li key={story.cartodb_id}>
+              {groupedStories.map((story) => {
+                return (<li key={story.story_number}>
                   <ul className="story">
                     <li className="title">
-                      <Link to={location}>{story.story}</Link>
+                      <AppLink mainView="impact" country={story.country[0]} story={story.story_number}>
+                        {story.story}
+                      </AppLink>
                     </li>
-                    <li className="outcome">
-                      <RhombusSVG size={15} program={story.outcome} />
-                      {story.outcome}
+                    <li>
+                      <ul className="outcomes">
+                        {story.outcome.map((outcome) => (<li key={outcome}>
+                          <RhombusSVG size={15} program={outcome} />
+                          {outcome}
+                        </li>))}
+                      </ul>
                     </li>
-                    <li className="location">
-                      {story.country}
+                    <li>
+                      <ul className="locations">
+                        {story.country.map((country) => (<li key={country}>
+                          <AppLink mainView="impact" country={country} story={story.story_number}>
+                            {country}
+                          </AppLink>
+                        </li>))}
+                      </ul>
                     </li>
                   </ul>
                 </li>);
