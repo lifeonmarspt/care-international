@@ -1,7 +1,5 @@
 # CARE International
 
-[![Build Status](https://travis-ci.org/Vizzuality/care-international.svg?branch=develop)](https://travis-ci.org/Vizzuality/care-international)
-
 ![CARE International Screenshot](screenshot.png)
 
 ## Installation
@@ -13,7 +11,7 @@ Requirements:
 To install run command:
 
 ```bash
-npm install
+yarn install
 ```
 
 ## Usage
@@ -21,22 +19,9 @@ npm install
 In development mode, we can start a local server running:
 
 ```bash
-npm start
+BASE_LAYER_ID=aa0b663e-b8af-4433-9ab0-4dbeb7c1b981 LABEL_LAYER_ID=3cb14d6b-49ab-423b-8290-7a19d374381e CARTODB_ACCOUNT=careinternational yarn run start
+
 ```
-
-To build in production mode we can use:
-
-```bash
-npm run build
-```
-
-To publish in gh-pages (staging mode):
-
-```bash
-npm run publish
-```
-
-**NOTE: we are using continous integration with Travis, so every commit in develop branch will be publish to gh-pages.**
 
 ## Contributing
 
