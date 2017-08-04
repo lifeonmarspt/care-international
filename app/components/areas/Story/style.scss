@@ -77,10 +77,19 @@
       font-size: 14px;
     }
 
-    h3 {
+    ul.locations {
+      margin-bottom: 1em;
       font-size: 14px;
       color: $font-color-5;
-      margin-bottom: 1em;
+
+      li {
+        display: inline-block;
+
+        &:not(:last-child)::after {
+          content: ",";
+          margin-right: 3px;
+        }
+      }
     }
 
     @media #{$mq-desktop} {

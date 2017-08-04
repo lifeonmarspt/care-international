@@ -13,7 +13,22 @@ class Story extends React.Component {
     handleCloseStory: PropTypes.func.isRequired,
   };
 
+  static contextTypes = {
+    data: PropTypes.shape({
+      stories: PropTypes.array.isRequired,
+    }).isRequired,
+  };
+
   render() {
+    let {
+      stories,
+    } = this.context.data;
+
+    let countries = stories
+      .filter((story) => story.story_number === this.props.story.story_number)
+      .map((story) => story.country)
+      .filter((value, index, self) => (self.indexOf(value) === index));
+
     return (<div id="story">
       <div className="show-mobile">
         <ul className="mobile-title">
@@ -31,8 +46,12 @@ class Story extends React.Component {
       <div className="close-button" onClick={this.props.handleCloseStory} />
       <div className="story-content">
         <div className="content">
-          <h2 className="">{programs.find((p) => p.id === this.props.story.outcome).label}</h2>
-          <h3 className="">{this.props.story.country}</h3>
+          <h2>{programs.find((p) => p.id === this.props.story.outcome).label}</h2>
+          <ul className="locations">
+            {countries.map((country) => (<li key={country}>
+              {country}
+            </li>))}
+          </ul>
           <h1 className="show-desktop">{this.props.story.story}</h1>
           <hr />
           <div className="markup" dangerouslySetInnerHTML={{ __html: this.props.story.content }} />
