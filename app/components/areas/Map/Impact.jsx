@@ -63,6 +63,7 @@ class ImpactMapArea extends React.Component {
   initMarkers() {
     let {
       program,
+      story,
       regions,
       stories,
       handleMapChange,
@@ -72,7 +73,7 @@ class ImpactMapArea extends React.Component {
 
       let value = region[`${program}_impact`];
 
-      if (!value) {
+      if (!value || story) {
         return null;
       }
 

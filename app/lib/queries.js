@@ -223,10 +223,10 @@ const getImpactRegionDataSQL = (region) => {
 const getImpactStoriesSQL = () => {
   const bounds = ["XMIN", "XMAX", "YMIN", "YMAX"].map(s => `ST_${s}(ST_EXTENT(i.the_geom)) AS ${s}`).join(",");
   return [
-    "SELECT g.*, s.*, ST_X(the_geom) AS lat, ST_Y(the_geom) AS lon",
+    "SELECT g.*, s.*, ST_X(s.the_geom) AS lon, ST_Y(s.the_geom) AS lat",
     "FROM story s INNER JOIN (",
     `  SELECT story_number, ${bounds}`,
-    "  FROM story s INNER JOIN impact_data i ON s.country = i.country",
+    "  FROM story s INNER JOIN impact_data i ON s.iso = i.iso",
     "  GROUP BY story_number",
     ") g ON s.story_number = g.story_number",
   ].join(" ");
