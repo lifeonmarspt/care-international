@@ -5,6 +5,7 @@ import {
   getImpactStatisticsSQL,
   getImpactRegionDataSQL,
   getImpactStoriesSQL,
+  getImpactStoriesByCountrySQL,
   getBoundsSQL,
 } from "lib/queries";
 import config from "config.json";
@@ -42,9 +43,16 @@ const fetchGlobalData = () => {
       .error((error) => reject(error));
   });
 
+  let getStoriesByCountry = new window.Promise((resolve, reject) => {
+    cartoSQL.execute(getImpactStoriesByCountrySQL())
+      .done((result) => resolve(result.rows))
+      .error((error) => reject(error));
+  });
+
   return window.Promise.all([
     getTexts,
     getStories,
+    getStoriesByCountry,
   ]);
 
 };

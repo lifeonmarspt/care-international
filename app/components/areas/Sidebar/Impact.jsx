@@ -8,7 +8,6 @@ import BarWrapper from "components/wrappers/Bar";
 import ValueBar from "components/elements/ValueBar";
 import RhombusSVG from "components/svg/Rhombus";
 
-import groupStories from "lib/groupStories";
 import getLocation from "lib/location";
 import programs from "resources/programs.json";
 
@@ -37,8 +36,6 @@ class ImpactSidebarArea extends React.Component {
       statistics,
       handleProgramChange,
     } = this.props;
-
-    let groupedStories = groupStories(stories);
 
     return (<div className="sidebar-content-impact">
 
@@ -93,7 +90,7 @@ class ImpactSidebarArea extends React.Component {
           </dt>
           <dd>
             <ul>
-              {groupedStories.map((story) => {
+              {stories.map((story) => {
                 return (<li key={story.story_number}>
                   <ul className="story">
                     <li className="title">
@@ -103,7 +100,7 @@ class ImpactSidebarArea extends React.Component {
                     </li>
                     <li>
                       <ul className="outcomes">
-                        {story.outcome.map((outcome) => (<li key={outcome}>
+                        {story.outcomes.map((outcome) => (<li key={outcome}>
                           <RhombusSVG size={15} program={outcome} />
                           {outcome}
                         </li>))}
@@ -111,7 +108,7 @@ class ImpactSidebarArea extends React.Component {
                     </li>
                     <li>
                       <ul className="locations">
-                        {story.country.map((country) => (<li key={country}>
+                        {story.countries.map((country) => (<li key={country}>
                           {country}
                         </li>))}
                       </ul>

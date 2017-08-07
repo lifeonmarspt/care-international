@@ -113,6 +113,7 @@ class Layout extends React.Component {
 
     let {
       stories,
+      storiesByCountry,
     } = this.context.data;
 
 
@@ -156,6 +157,7 @@ class Layout extends React.Component {
           data={{
             regions,
             stories,
+            storiesByCountry,
           }}
           handlers={{
             handleMapChange,

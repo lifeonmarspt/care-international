@@ -25,14 +25,14 @@ class ImpactMapArea extends React.Component {
   static propTypes = {
     program: PropTypes.string,
     regions: PropTypes.array,
-    stories: PropTypes.array,
+    storiesByCountry: PropTypes.array,
     handleMapChange: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     program: "overall",
     regions: [],
-    stories: [],
+    storiesByCountry: [],
   }
 
   static contextTypes = {
@@ -65,7 +65,7 @@ class ImpactMapArea extends React.Component {
       program,
       story,
       regions,
-      stories,
+      storiesByCountry,
       handleMapChange,
     } = this.props;
 
@@ -123,15 +123,14 @@ class ImpactMapArea extends React.Component {
 
     }).filter((s) => s);
 
-    this.qualitativeMarkers = stories.map((story) => {
-
-      if (program !== "overall" && story.outcome !== program) {
+    this.qualitativeMarkers = storiesByCountry.map((story) => {
+      if (program !== "overall" && !story.outcomes.includes(program)) {
         return null;
       }
 
       return window.L.marker([story.lat, story.lon], {
         icon: getSVGIcon(RhombusSVG, {
-          program: story.outcome,
+          program: story.outcomes.length > 1 ? "overall" : story.outcomes[0],
           size: 18,
         }),
         zIndexOffset: 200,

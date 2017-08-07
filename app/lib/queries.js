@@ -226,13 +226,42 @@ const getImpactRegionDataSQL = withEscapedArgs((region) => {
 
 const getImpactStoriesSQL = withEscapedArgs(() => {
   const bounds = ["XMIN", "XMAX", "YMIN", "YMAX"].map(s => `ST_${s}(ST_EXTENT(i.the_geom)) AS ${s}`).join(",");
+
+  const fields = [
+    "s.story_number AS story_number",
+    "MIN(g.XMIN) AS xmin, MIN(g.XMAX) AS xmax, MIN(g.YMIN) as ymin, MIN(g.YMAX) ymax",
+    "MIN(image) AS image",
+    "MIN(content) AS content",
+    "MIN(story) AS story",
+    "ARRAY_AGG(DISTINCT s.outcome) AS outcomes",
+    "ARRAY_AGG(DISTINCT s.country) AS countries",
+  ];
+
   return [
-    "SELECT g.*, s.*, ST_X(s.the_geom) AS lon, ST_Y(s.the_geom) AS lat",
+    `SELECT ${fields.join(", ")}`,
     "FROM story s INNER JOIN (",
     `  SELECT story_number, ${bounds}`,
     "  FROM story s INNER JOIN impact_data i ON s.iso = i.iso",
     "  GROUP BY story_number",
     ") g ON s.story_number = g.story_number",
+    "GROUP BY s.story_number",
+  ].join(" ");
+});
+
+const getImpactStoriesByCountrySQL = withEscapedArgs(() => {
+  const fields = [
+    "s.story_number AS story_number",
+    "s.country AS country",
+    "AVG(ST_X(the_geom)) AS lon",
+    "AVG(ST_Y(the_geom)) AS lat",
+    "MIN(story) AS story",
+    "ARRAY_AGG(s.outcome) AS outcomes",
+  ];
+
+  return [
+    `SELECT ${fields.join(", ")}`,
+    "FROM story s",
+    "GROUP BY s.story_number, s.country",
   ].join(" ");
 });
 
@@ -260,5 +289,6 @@ export {
   getImpactStatisticsSQL,
   getImpactRegionDataSQL,
   getImpactStoriesSQL,
+  getImpactStoriesByCountrySQL,
   getBoundsSQL,
 };

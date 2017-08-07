@@ -17,6 +17,7 @@ class MapArea extends React.Component {
     data: PropTypes.shape({
       regions: PropTypes.array,
       stories: PropTypes.array,
+      storiesByCountry: PropTypes.array,
     }).isRequired,
 
     handlers: PropTypes.shape({
@@ -40,7 +41,7 @@ class MapArea extends React.Component {
         program={navigation.program}
         story={navigation.story}
         regions={data.regions}
-        stories={data.stories}
+        storiesByCountry={data.storiesByCountry}
         handleMapChange={handlers.handleMapChange}
       />)}
 

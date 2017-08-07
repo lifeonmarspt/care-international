@@ -31,11 +31,12 @@ class DataProvider extends React.Component {
 
   componentWillMount() {
     fetchGlobalData()
-      .then(([texts, stories]) => {
+      .then(([texts, stories, storiesByCountry]) => {
         this.setState({
           data: {
-            texts: texts,
-            stories: stories,
+            texts,
+            stories,
+            storiesByCountry,
           },
           loading: false,
         });
