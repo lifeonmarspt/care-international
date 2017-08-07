@@ -1,5 +1,9 @@
 import buckets from "resources/buckets.json";
 
+const escapeArg = (s) => s && s.replace("'", "''");
+
+const withEscapedArgs = (func) => (...args) => func(...args.map(escapeArg));
+
 const reachVariables = {
   overall: ["num_direct_participants", "num_indirect_participants"],
   hum: ["num_hum_direct_participants", "num_hum_indirect_participants"],
@@ -9,11 +13,11 @@ const reachVariables = {
   fnscc: ["num_fnscc_direct_participants", "num_fnscc_indirect_participants"],
 };
 
-const getTextsSQL = () => {
+let getTextsSQL = withEscapedArgs(() => {
   return "SELECT * FROM messages";
-};
+});
 
-const getReachMapCountriesSQL = (program) => {
+const getReachMapCountriesSQL = withEscapedArgs((program) => {
 
   let directParticipantsVariable = reachVariables[program][0];
   let caseColumn = buckets.reach
@@ -35,9 +39,9 @@ const getReachMapCountriesSQL = (program) => {
 
   return `SELECT ${fields.join(", ")} FROM reach_data WHERE ${dataField} IS NOT NULL`;
 
-};
+});
 
-const getReachMapRegionsSQL = (program) => {
+const getReachMapRegionsSQL = withEscapedArgs((program) => {
 
   let directParticipantsVariable = `SUM(${reachVariables[program][0]})`;
   let caseColumn = buckets.reach
@@ -57,9 +61,9 @@ const getReachMapRegionsSQL = (program) => {
 
   return `SELECT ${fields.join(", ")} FROM reach_data INNER JOIN regions_complete_geometries ON reach_data.region = regions_complete_geometries.region GROUP BY reach_data.region, regions_complete_geometries.the_geom_webmercator`;
 
-};
+});
 
-const getReachStatisticsCountriesSQL = (country) => {
+const getReachStatisticsCountriesSQL = withEscapedArgs((country) => {
   let fields = [
     "fnscc_data::BOOL AS has_fnscc_data",
     "hum_data::BOOL AS has_hum_data",
@@ -101,9 +105,9 @@ const getReachStatisticsCountriesSQL = (country) => {
   ];
 
   return `SELECT ${fields.join(", ")} FROM reach_data WHERE country = '${country || "Total"}'`;
-};
+});
 
-const getReachStatisticsRegionsSQL = (region) => {
+const getReachStatisticsRegionsSQL = withEscapedArgs((region) => {
   let fields = [
     "true AS has_fnscc_data",
     "true AS has_hum_data",
@@ -144,10 +148,10 @@ const getReachStatisticsRegionsSQL = (region) => {
   ];
 
   return `SELECT ${fields.join(", ")} FROM reach_data WHERE region = '${region}'`;
-};
+});
 
 
-const getImpactStatisticsSQL = (region, country) => {
+const getImpactStatisticsSQL = withEscapedArgs((region, country) => {
   let fields = [
     "ROUND(SUM(total_impact)) AS overall_impact",
     "ROUND(SUM(humanitarian_response)) AS hum_impact",
@@ -168,9 +172,9 @@ const getImpactStatisticsSQL = (region, country) => {
   }
 
   return query;
-};
+});
 
-const getImpactRegionDataSQL = (region) => {
+const getImpactRegionDataSQL = withEscapedArgs((region) => {
 
   let caseColumn = (caseVariable) => buckets.impact
     .map((bucket, n) => n + 1 < buckets.impact.length ?
@@ -218,9 +222,9 @@ const getImpactRegionDataSQL = (region) => {
   ];
 
   return `SELECT ${fields.join(", ")} FROM (${subquery}) sq`;
-};
+});
 
-const getImpactStoriesSQL = () => {
+const getImpactStoriesSQL = withEscapedArgs(() => {
   const bounds = ["XMIN", "XMAX", "YMIN", "YMAX"].map(s => `ST_${s}(ST_EXTENT(i.the_geom)) AS ${s}`).join(",");
   return [
     "SELECT g.*, s.*, ST_X(s.the_geom) AS lon, ST_Y(s.the_geom) AS lat",
@@ -230,9 +234,9 @@ const getImpactStoriesSQL = () => {
     "  GROUP BY story_number",
     ") g ON s.story_number = g.story_number",
   ].join(" ");
-};
+});
 
-const getBoundsSQL = (table, region, country) => {
+const getBoundsSQL = withEscapedArgs((table, region, country) => {
   let query = `SELECT the_geom FROM ${table}`;
 
   if (country) {
@@ -244,7 +248,8 @@ const getBoundsSQL = (table, region, country) => {
   }
 
   return query.toString();
-};
+});
+
 
 export {
   getTextsSQL,
