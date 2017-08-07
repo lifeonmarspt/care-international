@@ -1,0 +1,53 @@
+@import "styles/colors.scss";
+
+.custom-radio {
+
+  font-family: ITC Officina Sans Std, Helvetica;
+  font-size: 16px;
+
+
+  input[type="radio"] {
+    display: none;
+  }
+
+  label {
+    display: flex;
+    align-items: flex-start;
+    color: $font-color-1;
+    cursor: pointer;
+
+    svg {
+      margin-right: 5px;
+      min-width: 14px;
+
+      circle.inner {
+        fill: none;
+        stroke: none;
+      }
+
+      circle.outer {
+        stroke: $accent-color-2;
+      }
+    }
+  }
+}
+
+#sidebar {
+  @each $program, $color in $programColors {
+    li.#{$program} {
+      input[type="radio"]:checked + label {
+        svg {
+          circle.inner {
+            fill: $color;
+            stroke: $color;
+          }
+
+          circle.outer {
+            stroke: $color;
+          }
+        }
+      }
+    }
+  }
+
+}

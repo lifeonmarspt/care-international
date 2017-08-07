@@ -1,0 +1,42 @@
+@import "styles/colors.scss";
+@import "styles/values.scss";
+@import "styles/mixins.scss";
+
+.modal-content {
+
+  @media #{$mq-desktop} {
+    padding: 40px 60px;
+    height: calc(100% - 80px);
+  }
+
+  @media #{$mq-mobile} {
+    padding: 30px 15px 20px;
+  }
+
+  h1 {
+    font-family: Libre Baskerville, serif;
+    @media #{$mq-mobile} {
+      font-size: 20px;
+    }
+    @media #{$mq-desktop} {
+      font-size: 36px;
+    }
+  }
+}
+
+li.about-button {
+  margin-top: 2em;
+  @media #{$mq-desktop} {
+    display: none;
+  }
+  @media #{$mq-mobile} {
+    text-align: center;
+    button {
+      display: inline;
+      text-transform: uppercase;
+      width: 100px;
+    }
+  }
+}
+
+

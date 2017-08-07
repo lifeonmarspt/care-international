@@ -1,0 +1,43 @@
+@import "styles/colors.scss";
+@import "styles/mixins.scss";
+
+#about {
+  @media #{$mq-desktop} {
+    display: flex;
+    align-items: flex-start;
+
+    .right {
+      padding: 80px 75px;
+      img {
+        margin-bottom: 3em;
+      }
+
+      p:not(:last-child) {
+        margin-bottom: 2em;
+      }
+
+      img.img-care-mom {
+        display: none;
+      }
+    }
+  }
+
+  @media #{$mq-mobile} {
+    .left {
+      display: none;
+    }
+    .right {
+      img.img-care {
+        display: none;
+      }
+      p, button {
+        margin: 10px;
+      }
+      img {
+        margin: auto;
+        max-width: 100%;
+      }
+    }
+  }
+
+}
