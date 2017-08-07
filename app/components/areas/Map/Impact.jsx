@@ -63,80 +63,70 @@ class ImpactMapArea extends React.Component {
   initMarkers() {
     let {
       program,
-      story,
+      story: currentStory,
       regions,
       storiesByCountry,
       handleMapChange,
     } = this.props;
 
-    this.quantitativeMarkers = regions.map((region) => {
+    this.quantitativeMarkers = regions
+      .filter((region) => region[`${program}_impact`] && !currentStory)
+      .map((region) => {
+        let marker =  window.L.marker([region.region_center_y, region.region_center_x], {
+          icon: getSVGIcon(CircleSVG, {
+            value: region[`${program}_impact`],
+            program: program,
+            size: region[`${program}_size`],
+            label: region.region || region.country,
+          }),
+          zIndexOffset: 100,
+        }).addTo(this.context.map).on("click", () => {
+          handleMapChange(region.region, region.country);
+        });
 
-      let value = region[`${program}_impact`];
+        marker.on("mouseover", (e) => {
+          let target = e.originalEvent.target;
+          if (target.tagName === "circle") {
+            let {
+              left,
+              top,
+              width,
+            } = target.parentNode.parentNode.getBoundingClientRect();
 
-      if (!value || story) {
-        return null;
-      }
+            this.setState({
+              tooltip: {
+                left: left + width / 2,
+                top: top,
+                label: region.region || region.country,
+              },
+            });
+          }
+        });
 
-      let iconSize = region[`${program}_size`];
+        marker.on("mouseout", (e) => {
+          let target = e.originalEvent.target;
+          if (target.tagName === "circle") {
+            this.setState({
+              tooltip: null,
+            });
+          }
+        });
 
-      let marker =  window.L.marker([region.region_center_y, region.region_center_x], {
-        icon: getSVGIcon(CircleSVG, {
-          value: value,
-          program: program,
-          size: iconSize,
-          label: region.region || region.country,
-        }),
-        zIndexOffset: 100,
-      }).addTo(this.context.map).on("click", () => {
-        handleMapChange(region.region, region.country);
+        return marker;
+
       });
 
-      marker.on("mouseover", (e) => {
-        let target = e.originalEvent.target;
-        if (target.tagName === "circle") {
-          let {
-            left,
-            top,
-            width,
-          } = target.parentNode.parentNode.getBoundingClientRect();
-
-          this.setState({
-            tooltip: {
-              left: left + width / 2,
-              top: top,
-              label: region.region || region.country,
-            },
-          });
-        }
+    this.qualitativeMarkers = storiesByCountry
+      .filter((story) => (program === "overall" || story.outcomes.includes(program)) && (!currentStory || currentStory == story.story_number))
+      .map((story) => {
+        return window.L.marker([story.lat, story.lon], {
+          icon: getSVGIcon(RhombusSVG, {
+            program: story.outcomes.length > 1 ? "overall" : story.outcomes[0],
+            size: 18,
+          }),
+          zIndexOffset: 200,
+        }).bindPopup(this.getPopup(story)).addTo(this.context.map);
       });
-
-      marker.on("mouseout", (e) => {
-        let target = e.originalEvent.target;
-        if (target.tagName === "circle") {
-          this.setState({
-            tooltip: null,
-          });
-        }
-      });
-
-      return marker;
-
-    }).filter((s) => s);
-
-    this.qualitativeMarkers = storiesByCountry.map((story) => {
-      if (program !== "overall" && !story.outcomes.includes(program)) {
-        return null;
-      }
-
-      return window.L.marker([story.lat, story.lon], {
-        icon: getSVGIcon(RhombusSVG, {
-          program: story.outcomes.length > 1 ? "overall" : story.outcomes[0],
-          size: 18,
-        }),
-        zIndexOffset: 200,
-      }).bindPopup(this.getPopup(story)).addTo(this.context.map);
-
-    }).filter((s) => s);
 
   }
 
