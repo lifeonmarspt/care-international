@@ -122,6 +122,11 @@ class Layout extends React.Component {
       handleToggleModal,
     } = this.props.handlers;
 
+    // use bounds from story data if impact section is displaying a story
+    if (story) {
+      bounds = [[story.ymin, story.xmin], [story.ymax, story.xmax]];
+    }
+
     return (<div>
       <Sidebar
         loading={loading}
@@ -173,7 +178,6 @@ class Layout extends React.Component {
     /* prevent the possibility that a story is rendered with a wrong country in the background */
     let story = navigation.story && this.context.data.stories
       .filter((story) => story.story_number === Number(navigation.story))
-      .filter((story) => story.country === navigation.country)
       .find(s => s);
 
     if (navigation.story && !story) {

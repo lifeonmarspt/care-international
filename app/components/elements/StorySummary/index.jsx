@@ -17,7 +17,6 @@ class StorySummary extends React.Component {
 
     let location = getLocation({
       mainView: "impact",
-      country: this.props.story.country,
       story: this.props.story.story_number,
     });
 

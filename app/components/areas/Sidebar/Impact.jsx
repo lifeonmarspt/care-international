@@ -97,7 +97,7 @@ class ImpactSidebarArea extends React.Component {
                 return (<li key={story.story_number}>
                   <ul className="story">
                     <li className="title">
-                      <AppLink mainView="impact" country={story.country[0]} story={story.story_number}>
+                      <AppLink mainView="impact" story={story.story_number}>
                         {story.story}
                       </AppLink>
                     </li>
@@ -112,9 +112,7 @@ class ImpactSidebarArea extends React.Component {
                     <li>
                       <ul className="locations">
                         {story.country.map((country) => (<li key={country}>
-                          <AppLink mainView="impact" country={country} story={story.story_number}>
-                            {country}
-                          </AppLink>
+                          {country}
                         </li>))}
                       </ul>
                     </li>

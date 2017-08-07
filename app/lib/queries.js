@@ -221,13 +221,15 @@ const getImpactRegionDataSQL = (region) => {
 };
 
 const getImpactStoriesSQL = () => {
-  let fields = [
-    "*",
-    "ST_X(the_geom) AS lon",
-    "ST_Y(the_geom) as lat",
-  ];
-
-  return `SELECT ${fields.join(", ")} FROM story`;
+  const bounds = ["XMIN", "XMAX", "YMIN", "YMAX"].map(s => `ST_${s}(ST_EXTENT(i.the_geom)) AS ${s}`).join(",");
+  return [
+    "SELECT g.*, s.*, ST_X(the_geom) AS lat, ST_Y(the_geom) AS lon",
+    "FROM story s INNER JOIN (",
+    `  SELECT story_number, ${bounds}`,
+    "  FROM story s INNER JOIN impact_data i ON s.country = i.country",
+    "  GROUP BY story_number",
+    ") g ON s.story_number = g.story_number",
+  ].join(" ");
 };
 
 const getBoundsSQL = (table, region, country) => {
@@ -240,7 +242,6 @@ const getBoundsSQL = (table, region, country) => {
     // this causes issues with cartojs's get bounds function.
     query += ` WHERE region = '${region}' AND country != 'Fiji'`;
   }
-
 
   return query.toString();
 };
