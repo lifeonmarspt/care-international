@@ -10,6 +10,7 @@
     "url": "https://github.com/Vizzuality/care-international/issues"
   },
   "dependencies": {
+    "babel-plugin-wildcard": "^2.1.2",
     "babel-polyfill": "^6.23.0",
     "classnames": "^2.2.5",
     "colors": "^1.1.2",

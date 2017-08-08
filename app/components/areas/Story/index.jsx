@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import images from "images/stories";
+import * as images from "../../../images/stories/";
 import programs from "resources/programs.json";
-import momImage from "images/mom.png";
 import "./style.scss";
 
 class Story extends React.Component {
@@ -25,6 +24,8 @@ class Story extends React.Component {
       handleCloseStory,
     } = this.props;
 
+    let image = story.image && images[story.image.substr(0, story.image.lastIndexOf("."))];
+
     return (<div id="story">
       <div className="show-mobile">
         <ul className="mobile-title">
@@ -36,9 +37,7 @@ class Story extends React.Component {
           </li>
         </ul>
       </div>
-      <div className="img-wrapper">
-        <img src={images[story.image] || momImage} alt={story.story} />
-      </div>
+      {image && (<div className="img-wrapper" style={{ backgroundImage: `url(${image})` }} />)}
       <div className="close-button" onClick={handleCloseStory} />
       <div className="story-content">
         <div className="content">
