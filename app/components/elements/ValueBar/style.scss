@@ -1,0 +1,37 @@
+@import "styles/colors.scss";
+
+.valuebar__container {
+  font-size: 14px;
+  color: $accent-color-3;
+}
+
+.valuebar {
+  margin-right: 0.5em;
+  height: 6px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.valuebar__current {
+  display: block;
+  position: relative;
+  background-color: black;
+  height: 100%;
+  text-align: right;
+}
+
+.neutral.valuebar {
+  .valuebar__current {
+    background-color: $accent-color-2;
+  }
+}
+
+
+@each $program, $color in $programColors {
+  .#{$program}.valuebar {
+    .valuebar__current {
+      background-color: $color;
+    }
+  }
+}
+

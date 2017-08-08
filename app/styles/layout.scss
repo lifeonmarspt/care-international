@@ -1,0 +1,68 @@
+@import "colors.scss";
+@import "values.scss";
+@import "mixins.scss";
+
+body {
+  width: 100%;
+}
+
+#app {
+  @include absolute-fills-container;
+
+  #header {
+    width: 100%;
+    height: $header-height;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  #map {
+    position: absolute;
+    top: $header-height;
+    @media #{$mq-desktop} {
+      left: $sidebar-width;
+    }
+    @media #{$mq-mobile} {
+      left: 0;
+    }
+    right: 0;
+    bottom: 0;
+
+    .leaflet-container {
+      @include absolute-fills-container;
+    }
+  }
+
+  #sidebar {
+    position: absolute;
+    top: $header-height;
+    @media #{$mq-desktop} {
+      left: 0;
+    }
+    @media #{$mq-mobile} {
+      width: 100%;
+      left: -100%;
+    }
+    bottom: 0;
+    width: $sidebar-width;
+  }
+
+  #story {
+    position: absolute;
+    top: $header-height;
+    @media #{$mq-desktop} {
+      left: $sidebar-width;
+    }
+    @media #{$mq-mobile} {
+      width: 100%;
+      left: 0;
+      .close-button {
+        display: none;
+      }
+    }
+    bottom: 0;
+    width: $sidebar-width;
+    z-index: 10;
+  }
+}

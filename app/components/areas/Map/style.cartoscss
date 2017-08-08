@@ -1,0 +1,23 @@
+// vim: ft=sass:
+
+@import "../../../styles/colors.scss";
+
+@each $program, $colors in $choroColors {
+  @for $i from 1 through 5 {
+    #layer[data="carto(=,1)"][bucket="carto(=,#{$i})"][program="#{$program}"] {
+      polygon-fill: nth($colors, $i);
+      line-color: #CCC;
+    }
+  }
+}
+
+#layer[data="carto(=,0)"] {
+  polygon-fill: #888;
+  polygon-opacity: 0.6;
+  line-color: #888;
+}
+
+#layer[care_member=true] {
+  polygon-pattern-file: url(https://careinternational.herokuapp.com/stripes-pattern.png);
+  polygon-pattern-alignment: global;
+}

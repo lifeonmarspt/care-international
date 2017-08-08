@@ -1,0 +1,78 @@
+@import "colors.scss";
+@import "mixins.scss";
+
+.custom-tooltip {
+
+  font-family: Libre Baskerville, serif;
+  font-size: 18px;
+
+  .leaflet-popup-content-wrapper {
+    border-radius: 0;
+    border: 1px solid $accent-color-5;
+    background: $bg-color-1;
+    color: $font-color-1;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .leaflet-popup-tip-container {
+    top: -1px;
+  }
+
+  .leaflet-popup-tip {
+  }
+
+  a {
+    color: $font-color-3;;
+  }
+
+  a.leaflet-popup-close-button {
+    @include close-button;
+    top: 10px;
+    right: -16px;
+    color: transparent;
+
+    &:hover {
+      color: transparent;
+    }
+  }
+
+}
+
+.custom-tooltip-wrapper {
+  position: fixed;
+
+  .custom-tooltip {
+    pointer-events: none;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid $accent-color-5;
+    padding: 2px 3px 0px 3px;
+    font-family: "ITC Officina Sans Std", Helvetica;
+    font-size: 14px;
+    height: 18px;
+    white-space: nowrap;
+    z-index: 1000;
+
+    position: absolute;
+    top: -28px;
+    transform: translateX(-50%);
+
+    .leaflet-popup-tip-container {
+      height: 10px;
+      top: 0px;
+      .leaflet-popup-tip {
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
+}
+
+.show-tooltip {
+  .custom-tooltip-wrapper {
+    .custom-tooltip {
+       display: block;
+    }
+  }
+}

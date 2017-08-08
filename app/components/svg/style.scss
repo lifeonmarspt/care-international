@@ -1,0 +1,42 @@
+@import "styles/colors.scss";
+@import "styles/values.scss";
+
+.leaflet-div-icon {
+  background-color: transparent !important;
+  border: 0 !important;
+}
+
+svg.circle {
+  text {
+    fill: #fff;
+  }
+}
+
+svg.circle.shadow {
+  border-radius: 50%;
+  box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
+}
+
+svg.rhombus.shadow {
+  rect {
+    stroke: $accent-color-8;
+    stroke-width: 1;
+    stroke-opacity: 0.2;
+  }
+}
+
+@each $program, $color in $programColors {
+
+  svg.circle.#{$program} {
+    circle {
+      fill: $color
+    }
+  }
+
+  svg.rhombus.#{$program} {
+    rect {
+      fill: $color;
+    }
+  }
+
+}

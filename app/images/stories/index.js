@@ -34,7 +34,6 @@ const storyImages = {
   "rural_sales_kenya_rural_sales_program_and_lighting_up_kenya.png": rural_sales_kenya_rural_sales_program_and_lighting_up_kenya,
   "safpac.png": safpac,
   "ser_saludable.png": ser_saludable,
-  "shouhardo_ii.png": shouhardo_ii,
   "somalia_el_nino_drought_response.png": somalia_el_nino_drought_response,
   "tropical_cyclone_pam.jpg": tropical_cyclone_pam,
   "typhoon_haiyan.png": typhoon_haiyan

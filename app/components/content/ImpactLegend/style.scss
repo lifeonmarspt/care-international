@@ -1,0 +1,25 @@
+#legend-impact {
+
+  font-size: 14px;
+
+  > ul {
+    > li:nth-child(odd) {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    > li:nth-child(2) {
+      margin-bottom: 10px;
+    }
+    > li {
+      > ul {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+        li {
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+
+}
