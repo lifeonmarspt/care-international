@@ -1,7 +1,12 @@
 {
   "presets": [
-    "react",
-    "env",
-    "stage-2"
+    "es2015", "react", "stage-0"
+  ],
+  "plugins": [
+    "transform-class-properties",
+    ["wildcard", {
+      "exts": ["png", "jpg"],
+      "noCamelCase": true
+    }]
   ]
 }

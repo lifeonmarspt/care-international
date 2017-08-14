@@ -1,0 +1,41 @@
+@import "values.scss";
+
+@mixin absolute-fills-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+@mixin close-button {
+  position: absolute;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  box-shadow: 0 0 4px 0 rgba(0,0,0,0.1);
+  background-color: $bg-color-1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(~images/plus.png);
+  transform: rotate(45deg);
+}
+
+@mixin centered-background-image($image) {
+    background-image: url($image);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+@mixin hide-on-mobile {
+  @media #{$mq-mobile} {
+    display: none;
+  }
+}
+
+@mixin hide-on-desktop {
+  @media #{$mq-desktop} {
+    display: none;
+  }
+}

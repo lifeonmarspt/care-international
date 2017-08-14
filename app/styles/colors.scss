@@ -1,0 +1,42 @@
+$programColors: (
+  overall: #F9781C,
+  hum: #DB1469,
+  wee: #129EAD,
+  srmh: #FF595A,
+  lffv: #FFB403,
+  fnscc: #99B74D,
+  default: #B3B1AF,
+);
+
+$choroColors: (
+  overall: #FFD8BD #FEBB8B #FF984E #F9781C #A03B0D,
+  hum: #FFE7F1 #FFB6D5 #F575AD #DC1169 #7D0036,
+  wee: #D2EFF2 #93EAF3 #57D0DD #129EAD #005760,
+  srmh: #FCE5E6 #FFC4C5 #FF8B8D #F95659 #E30004,
+  lffv: #FEF3D9 #FFE9B4 #FFD46C #FFB400 #CE9200,
+  fnscc: #EDFFDC #D3FAAE #B0E180 #86B15C #4A7A1C,
+);
+
+$bg-color-1: #FFFFFF;
+$bg-color-2: map-get($programColors, "overall");
+$bg-color-3: #F2F2F2;
+
+$font-color-1: #444444;
+$font-color-2: $bg-color-1;
+$font-color-3: $bg-color-2;
+$font-color-4: #FED6BA;
+$font-color-5: #888888;
+
+$accent-color-1: #FDD70F;
+$accent-color-2: #727272;
+$accent-color-3: #959595;
+$accent-color-4: #DADADA;
+$accent-color-5: #E3E3E3;
+$accent-color-6: $bg-color-2;
+$accent-color-7: $font-color-1;
+$accent-color-8: $bg-color-1;
+
+$hover-color-1: #F9781C;
+$hover-color-2: #F46508;
+
+$overlay-color: rgba(0, 0, 0, 0.6);

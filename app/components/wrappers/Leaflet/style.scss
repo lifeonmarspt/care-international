@@ -1,0 +1,67 @@
+@import "styles/colors.scss";
+@import "styles/values.scss";
+@import "styles/mixins.scss";
+
+#map {
+  #leaflet {
+    background-color: $bg-color-1;
+
+    &.clickable {
+      cursor: pointer;
+    }
+
+    .leaflet-control-attribution {
+      display: none;
+    }
+  }
+
+  #leaflet-custom-controls {
+    position: absolute;
+    @media #{$mq-desktop} {
+      top: 35px;
+      right: 35px;
+    }
+    @media #{$mq-mobile} {
+      top: 15px;
+      right: 15px;
+    }
+    padding: 2px;
+
+    > div {
+      width: 35px;
+      height: 35px;
+      border: 1px solid $accent-color-6;
+      cursor: pointer;
+      background-color: $bg-color-1;
+      box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.15);
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    #leaflet-zoom-plus {
+      @include hide-on-mobile
+      margin-bottom: 10px;
+      background-image: url(~images/plus.png);
+    }
+
+    #leaflet-zoom-minus {
+      @include hide-on-mobile
+      margin-bottom: 15px;
+      background-image: url(~images/minus.png);
+    }
+
+    #leaflet-share {
+      background-color: $bg-color-2;
+      margin-bottom: 5px;
+      background-image: url(~images/share.png);
+    }
+
+    #mobile-legend {
+      @include hide-on-desktop
+      background-color: $bg-color-2;
+      background-image: url(~images/menu.png);
+    }
+
+  }
+
+}
